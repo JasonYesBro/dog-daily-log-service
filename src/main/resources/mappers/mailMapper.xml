@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.dogdailylog.mail.dao.MailMapper">
+	<insert id="insertSmtpCodeByEmail" parameterType="map">
+		INSERT INTO `smtp_pwd`
+		(
+			`userEmail`
+			, `verifyCode`
+			, `createdAt`
+		)
+		VALUES
+		(
+			#{email}
+			, #{verifyCode}
+			, NOW()
+		)
+	</insert>
+	
+	<select id="selectSmtpCodeByVerifyCode" resultType="com.dogdailylog.mail.model.SmtpCode">
+		SELECT
+			`id`
+			, `userEmail`
+			, `verifyCode`
+			, `createdAt`
+		FROM
+			`smtp_pwd`
+		WHERE
+			`verifyCode` = #{verifyCode}
+	</select>
+</mapper>
