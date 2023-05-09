@@ -10,9 +10,6 @@ a:hover {
     font-weight: bold;
 }
 
-a> li {
-}
-
 body {
     height :800px;
 }
@@ -41,11 +38,8 @@ header {
 	cursor : pointer;
 }
 
-#liContainer {
-    /* display: none !important; */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+#liContainer{
+    display: none;
     width: 100%;
     height: 270px;
     margin-top: 40%;
@@ -55,7 +49,7 @@ header {
 }
 
 #navBackground {
-    /* display: none; */
+   	display: none;
     position: absolute;
     top: 0;
     left: 0;
