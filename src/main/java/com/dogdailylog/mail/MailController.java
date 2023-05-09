@@ -33,10 +33,10 @@ public class MailController {
 		Map<String, Object> result = new HashMap<>();
 		
 		// 인증코드 생성
-		boolean isCreateKey = mailBO.createKey();
+		String code = mailBO.createKey();
 		
-		if(isCreateKey == true) {
-			mailBO.send(email); // send 로 분기문 구현하고 싶은데 void임 TODO
+		if(!code.equals(null)) {
+			mailBO.send(email);
 			
 			// email - verifyCode DB insert
 			mailBO.setSmtpCodeByEmail(email);
