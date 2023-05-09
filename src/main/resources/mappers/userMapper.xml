@@ -29,4 +29,21 @@
 		, NOW() 
 		)
  	</insert>
+ 	
+ 	<select id="selectUserByName" resultType="com.dogdailylog.user.model.User">
+ 		SELECT
+	 		`id` 
+	 		, `loginEmail`
+			, `name`
+			, `puppyName`
+			, `profileImagePath`
+			, `password`
+			, `adoptionDate`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`name` = #{name}
+ 	</select>
  </mapper>

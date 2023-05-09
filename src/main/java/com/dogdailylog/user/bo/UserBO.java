@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dogdailylog.common.FileManagerService;
 import com.dogdailylog.user.dao.UserMapper;
+import com.dogdailylog.user.model.User;
 
 @Service
 public class UserBO {
@@ -23,7 +24,13 @@ public class UserBO {
 			// 서버에 이미지 업로드 후 profileImagePath 받아옴
 			profileImagePath = fileManager.saveFile(email, file);
 		}
-		int result = userMapper.insertUser(name, puppyName, profileImagePath, email, password, adoptionDate);
+		int result = userMapper.insertUser(email, name, puppyName, profileImagePath, password, adoptionDate);
 		return result;
+	}
+
+	public User getUserByName(String name) {
+		User user = null;
+		user = userMapper.selectUserByName(name);
+		return user;
 	}
 }
