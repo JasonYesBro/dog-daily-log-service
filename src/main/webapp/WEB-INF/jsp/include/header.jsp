@@ -5,21 +5,21 @@
 		<div id="navContainer">
 			<img src="/static/img/menu-bar.png" alt="메뉴바이미지" id="navImg" width="30" height="30">
 		</div>
-		<div id="liContainer" class="">
+		<div id="liContainer">
 			<a href="">
-				<li>일지 작성하러가기</li>
+				일지 작성하러가기
 			</a>
 			<a href="">
-				<li>훈련일지 보기</li>
+				훈련일지 보기
 			</a> 
 			<a href="">
-				<li>유기견을 보살펴주세요!</li>
+				유기견을 보살펴주세요!
 			</a> 
 			<a href="">
-				<li>훈련 꿀팁 보러가기</li>
+				훈련 꿀팁 보러가기
 			</a> 
 			<a href="">
-				<li>훈련 꿀팁 작성하기</li>
+				훈련 꿀팁 작성하기
 			</a>
 		</div>
 	</div>
@@ -49,8 +49,15 @@
 		
 		$(document).ready(function() {
 			$("#navImg").on("click", function(e) {
+				
 				if($("#liContainer").css("display") == "none" && $("#navBackground").css("display") == "none") {
 					$("#liContainer").show(200);
+					// display none 과 flex 가 한번에 적용이 안되는 현상으로 인해 이벤트가 발생할 시에 css 추가
+				    $("#liContainer").css({
+				    	"display":"flex", 
+				    	"flex-direction": "column",
+				    	"justify-content": "space-between"
+				    });
 					$("#navBackground").show(300);
 				} else {
 					$("#liContainer").hide(200);
