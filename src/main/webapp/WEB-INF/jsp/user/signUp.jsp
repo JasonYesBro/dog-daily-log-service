@@ -234,7 +234,7 @@
 	            	, success : function(data) {
 	            		if (data.code == 1) {
 	            			alert("가입을 환영합니다. 바로 일지를 작성해보세요!");
-	            			//location.href("/"); // 메인페이지로 이동 
+	            			location.href("/main"); // 메인페이지로 이동 
 	            		} else {
 	            			alert(data.errorMessage);
 	            		}
