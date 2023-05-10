@@ -18,14 +18,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
+@RequestMapping("/api")
 @Api(value = "Mail API")
-public class MailController {
-	private static final Logger logger = LoggerFactory.getLogger(MailController.class);
+public class MailRestController {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private MailBO mailBO;
 	
-	@PostMapping("/api/mail")
+	@PostMapping("/mail")
 	@ApiOperation(value = "인증코드 메일보내기 API")
 	public Map<String, Object> verifyCodeMail(
 			@RequestParam("email") String email) {
@@ -53,7 +54,7 @@ public class MailController {
 		return result;
 	}
 	
-	@PostMapping("/api/verify")
+	@PostMapping("/verify")
 	@ApiOperation(value = "인증하기 API")
 	public Map<String, Object> checkVerifyCode(
 			@RequestParam("verifyCode") String verifyCode) { // email 과 verifyCode 두가지로 조회할 필요?
