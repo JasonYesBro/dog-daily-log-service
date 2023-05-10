@@ -8,7 +8,7 @@
 	    </div>
 	    <div class="form-group input-box">
 	        <div class="d-flex justify-content-between align-items-center">
-	            <label for="password">비밀번호</label><a href="" class="reset-pwd">비밀번호 재설정</a>
+	            <label for="password">비밀번호</label><a href="/user/reset_pwd_view" class="reset-pwd">비밀번호 재설정</a>
 	        </div>
 	        <input type="password" name="password" class="form-control col-12" id="password" placeholder="비밀번호를 입력해주세요">
 	    </div>
