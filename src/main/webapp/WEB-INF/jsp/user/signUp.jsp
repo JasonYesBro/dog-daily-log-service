@@ -89,7 +89,7 @@
             
             // name 중복확인
             $('#nameCheckBtn').on('click', function(e) {
-    			e.preventDefault();
+            	e.preventDefault();
     			// validation box 초기화
     			$('#nameCheckLength').addClass("d-none");
     			$('#nameCheckDuplicated').addClass("d-none");
@@ -124,35 +124,40 @@
     			
     		});
             
-            // 
+            // 인증코드 보내기
             $('#verifyCodeEmailBtn').on('click', function(e) {
             	e.preventDefault();
+            	
 				let email = $("#email").val().trim();
 				let domain = $("#domain option:selected").val();
             	
 				let emailAddress = email + '@' + domain;
-				
-            	$.ajax({
-            		type : "post"
-            		, url : "/api/mail"
-            		, data : { "email" : emailAddress }
-            		, success : function(data) {
-            			if (data.result == true) {
-            				alert("인증코드를 보냈습니다. 메일을 확인해 주세요.");
-            			} else {
-            				alert("메일발송에 실패했습니다.");
-            			}
-            		}
-            		, error : function(status, request, error) {
-            			alert("관리자에게 문의바랍니다.");
-            		}
-            	});
+				if (emailAddress != null) {
+	            	$.ajax({
+	            		type : "post"
+	            		, url : "/api/mail"
+	            		, data : { "email" : emailAddress }
+	            		, success : function(data) {
+	            			if (data.result == true) {
+	            				alert("인증코드를 보냈습니다. 메일을 확인해 주세요.");
+	            			} else {
+	            				alert("메일발송에 실패했습니다.");
+	            			}
+	            		}
+	            		, error : function(status, request, error) {
+	            			alert("관리자에게 문의바랍니다.");
+	            		}
+	            	});
+            	} else {
+            		alert("이메일을 입력해주세요.");
+            	}
             });
             
             
             // 이메일 인증하기
             $('#verifyBtn').on('click', function(e) {
             	e.preventDefault();
+            	
             	let verifyCode = $('#verifyCode').val().trim();
             	
             	$.ajax({
@@ -234,7 +239,7 @@
 	            	, success : function(data) {
 	            		if (data.code == 1) {
 	            			alert("가입을 환영합니다. 바로 일지를 작성해보세요!");
-	            			location.href("/main"); // 메인페이지로 이동 
+	            			location.href="/main"; // 메인페이지로 이동 
 	            		} else {
 	            			alert(data.errorMessage);
 	            		}
