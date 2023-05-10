@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,10 +42,16 @@ public class UserRestController {
 			) {
 		Map<String, Object> result = new HashMap<>();
 
-		String hashedPassword = Encrypt.md5(password);
+		// TODO salt 값
+		String salt = Encrypt.getSalt();
+		
+		// 해싱 처리완료된 비밀번호
+		String hashedPassword = Encrypt.md5(password, salt);
 		
 		int rowCnt = 0;
-		rowCnt = userBO.addUser(email, name, puppyName, file, hashedPassword, adoptionDate);
+		
+		// TODO salt 값 넣어야 함
+		rowCnt = userBO.addUser(email, name, puppyName, file, hashedPassword, salt, adoptionDate);
 		
 		if(rowCnt > 0) {
 			result.put("code", 1);
@@ -75,4 +84,40 @@ public class UserRestController {
 		return result;
 	}
 	
+	@PostMapping("/sign_in")
+	@ApiOperation(value = "로그인 API")
+	public Map<String, Object> signIn(
+			@RequestParam("email") String email
+			, @RequestParam("password") String password
+			, HttpSession session
+			, Model model) {
+		Map<String, Object> result = new HashMap<>();
+		
+		// TODO loginEmail 로 유저의 salt 값가져오기
+		String salt = userBO.getUserByLoginEmail(email);
+		
+		// pwd + 가져온 salt 값 비밀번호 해싱
+		String hashedPassword = Encrypt.md5(password, salt);
+		
+		User user = null;
+		user = userBO.getUserByLoginEmailAndPassword(email, hashedPassword);
+		
+		if (user != null) {
+			result.put("code", 1);
+			result.put("result", "로그인에 성공하였습니다.");
+			
+			// 프로필 이미지
+			model.addAttribute("profileImagePath", user.getProfileImagePath());
+			
+			// 세션에 유저 정보 저장
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userEmail", user.getLoginEmail());
+			session.setAttribute("userName", user.getName());
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "로그인에 실패하였습니다.");
+		}
+		
+		return result;
+	}
 }

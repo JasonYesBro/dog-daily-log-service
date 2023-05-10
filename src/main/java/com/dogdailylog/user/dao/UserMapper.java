@@ -16,8 +16,15 @@ public interface UserMapper {
 			, @Param("puppyName") String puppyName
 			, @Param("profileImagePath") String profileImagePath
 			, @Param("password")  String password
+			, @Param("salt") String salt
 			, @Param("adoptionDate")  Date adoptionDate);
 
 	public User selectUserByName(String name);
+	
+	public User selectUserByLoginEmail(String email);
+
+	public User selectUserByLoginEmailAndPassword(
+			@Param("email") String email
+			, @Param("password") String password);
 
 }

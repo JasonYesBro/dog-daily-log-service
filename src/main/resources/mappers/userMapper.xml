@@ -13,6 +13,7 @@
 		, `puppyName`
 		, `profileImagePath`
 		, `password`
+		, `salt`
 		, `adoptionDate`
 		, `createdAt`
 		, `updatedAt`	
@@ -24,6 +25,7 @@
 		, #{puppyName}
 		, #{profileImagePath}
 		, #{password}
+		, #{salt}
 		, #{adoptionDate}
 		, NOW()
 		, NOW() 
@@ -45,5 +47,43 @@
 			`user`
 		WHERE
 			`name` = #{name}
+ 	</select>
+ 	
+ 	<select id="selectUserByLoginEmail" resultType="com.dogdailylog.user.model.User">
+ 		SELECT
+	 		`id` 
+	 		, `loginEmail`
+			, `name`
+			, `puppyName`
+			, `profileImagePath`
+			, `password`
+			, `salt`
+			, `adoptionDate`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`loginEmail` = #{email}
+ 	</select>
+ 	
+ 	<select id="selectUserByLoginEmailAndPassword" parameterType="map" resultType="com.dogdailylog.user.model.User">
+ 		SELECT
+	 		`id` 
+	 		, `loginEmail`
+			, `name`
+			, `puppyName`
+			, `profileImagePath`
+			, `password`
+			, `salt`
+			, `adoptionDate`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`loginEmail` = #{email}
+		AND
+			`password` = #{password}
  	</select>
  </mapper>

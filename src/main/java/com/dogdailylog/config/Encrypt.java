@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory;
 public class Encrypt{
 	private static final Logger logger = LoggerFactory.getLogger(Encrypt.class);
 
-	public static String md5(String password) {
-		String salt = getSalt();
+	public static String md5(String password, String salt) {
 		String hashingPassword = getEncrypt(password, salt);
-		
 		return hashingPassword;
 	}
 	

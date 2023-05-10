@@ -14,6 +14,7 @@ public class User {
 	private int id;
 	private String loginEmail;
 	private String password;
+	private String salt;
 	private String name;
 	private String puppyName;		
 	private String profileImagePath	;		
@@ -23,9 +24,11 @@ public class User {
 
 	
 	@Builder
-    public User(String loginEmail, String password, String name, String puppyName, Date adoptionDate, String profileImagePath){
-        this.loginEmail = loginEmail;
+    public User(int id, String loginEmail, String password, String salt, String name, String puppyName, Date adoptionDate, String profileImagePath){
+        this.id = id;
+		this.loginEmail = loginEmail;
         this.password = password;
+        this.salt = salt;
         this.name = name;
         this.puppyName = puppyName;
         this.adoptionDate = adoptionDate;
