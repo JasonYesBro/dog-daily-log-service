@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <header>
 	<div id="navWrapper">
 		<div id="navContainer">
@@ -37,10 +38,17 @@
 			<div class="d-flex justify-content-center align-items-center">
 				<hr>
 				<div id="signStatus" class="d-flex justify-content-between ml-2">
+				<c:if test="${ empty userId }">
 					<!-- session 유무 -->
-					<!-- <span><a href="">로그인</a></span>
-                            <span><a href="">회원가입</a></span> -->
-					<span><a href="">회원 이름</a></span> <span><a href="">강아지이름</a></span>
+					<span><a href="/user/sign_in_view">로그인</a></span>
+                    <span><a href="/user/sign_up_view">회원가입</a></span>
+				</c:if>
+				<c:if test="${ not empty userId }">
+					<!-- 프로필 이미지 나 닉네임 클릭 시 mypage로 이동 -->
+					<span><a href="">${userName}</a></span>
+					<span><a href="">${puppyName}</a></span>
+					<span><a href="/user/sign_out">로그아웃</a></span>	
+				</c:if>
 				</div>
 			</div>
 		</div>
