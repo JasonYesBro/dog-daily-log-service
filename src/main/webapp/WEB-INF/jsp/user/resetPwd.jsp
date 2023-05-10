@@ -8,6 +8,7 @@
     </div>
     <div class="form-group input-box d-flex align-items-center justify-content-around">
         <input type="text" id="verifyCode" placeholder="인증코드를 입력해주세요" class="form-control col-7">
+        <input type="hidden" id="verifyCheck" value="0" />
         <button type="button" class="btn col-3 reset-btn" id="verifyBtn">인증하기</button>
     </div>
     <div class="form-group input-box d-flex flex-column align-items-center justify-content-around">
@@ -17,6 +18,8 @@
     
     <script>
     	$(document).ready(function() {
+    		// 0으로 초기화
+    		$("#verifyCheck").val(0);
     		
     		// email 로 인증코드 보내기
     		$("#codeMailBtn").on('click', function() {
@@ -65,6 +68,7 @@
     					if (data.code == 1) {
     						alert("인증되었습니다.");
     						// 인증 처리 flag 필요
+    						$("#verifyCheck").val(1);
     					} else {
     						alert(data.errorMessage);
     					}
@@ -81,6 +85,7 @@
     		$("#resetBtn").on('click', function() {
     			let email = $("#email").val().trim();
     			let password = $("#password").val();
+    			let verifyCheck = $("#verifyCheck").val();
     			
     			if(!email) {
     				alert("이메일을 입력해주세요.");
@@ -88,6 +93,10 @@
     			}
     			if(!password) {
     				alert("비밀번호를 입력해주세요.");
+    				return false;
+    			}
+    			if(verifyCheck == 0) {
+    				alert("인증코드를 인증해주세요.");
     				return false;
     			}
     			
