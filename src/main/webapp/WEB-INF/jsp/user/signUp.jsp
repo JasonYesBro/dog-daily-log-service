@@ -6,6 +6,7 @@
 		    <label for="name">닉네임</label>
 		    <div class="d-flex justify-content-between">
 		        <input type="text" name="name" class="form-control col-8" id="name" placeholder="닉네임을 입력해주세요">
+		        <input type="hidden" id="nameDupCheck" value="0"/>
 		        <button class="btn sign-up-btn" id="nameCheckBtn">중복확인</button>
 		    </div>
 		    <small id="nameCheckLength" class="text-danger d-none">닉네임을 4자 이상 입력해주세요.</small>
@@ -97,6 +98,8 @@
     			
     			// 사용자가 입력한 loginId 변수에 할당
     			let name = $('#name').val().trim();
+    			
+    			
     			if (name.length < 4) {
     				$('#nameCheckLength').removeClass("d-none");
     				return false;
@@ -112,6 +115,7 @@
     				, success : function(data) {
     					if(data.result) {
     						$('#nameCheckDuplicated').removeClass("d-none");
+    						$("#nameDupCheck").val(1);
     					} else {
     						$('#nameCheckOk').removeClass("d-none");
     					}
@@ -191,11 +195,16 @@
 	            let confirmPassword = $("#passwordConfirm").val();
 	            let adoptionDate = $(".adoptionDate").val();
 	            let file = $("#imgUrl").val();
+	            let nameDupCheck = $("#nameDupCheck").val();
 	            
 	            // validation
 	            if (!name) {
 	            	alert("닉네임을 입력해주세요.");
 					return false;
+	            }
+	            if (nameDupCheck == 0) {
+	            	alert("닉네임 중복확인을 해주세요.");
+	            	return false;
 	            }
 	            if (!puppyName) {
 	            	alert("반려견이름을 입력해주세요.");
@@ -217,6 +226,7 @@
 	            	alert("비밀번호를 확인해주세요.");
 	            	return false;
 	            }
+	            
 	            
 	            let url = $(this).attr('action');
 	            let params = $(this).serialize();
