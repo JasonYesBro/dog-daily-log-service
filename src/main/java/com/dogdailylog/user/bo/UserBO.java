@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dogdailylog.common.FileManagerService;
+import com.dogdailylog.config.Encrypt;
 import com.dogdailylog.user.dao.UserMapper;
 import com.dogdailylog.user.model.User;
 
@@ -34,14 +35,29 @@ public class UserBO {
 		return user;
 	}
 	
-	public String getUserByLoginEmail(String email) {
+	// getUser 가 아닌 getSalt 가 맞음 + getUser를 하나더 생성 ByLoginEmail
+	public String getSaltByLoginEmail(String email) {
 		User user = userMapper.selectUserByLoginEmail(email);
 		return user.getSalt();
+	}
+	
+	public User getUserByLoginEmail(String email) {
+		User user = null;
+		user = userMapper.selectUserByLoginEmail(email);
+		return user;
 	}
 
 	public User getUserByLoginEmailAndPassword(String email, String password) {
 		User user = null;
 		user = userMapper.selectUserByLoginEmailAndPassword(email, password);
 		return user;
+	}
+
+	public int resetPasswordByUserEmail(String email, String password) {
+		// salt의 값이랑 password 둘다 변경해줘야 함
+		String salt = Encrypt.getSalt();
+		String hashedPassword = Encrypt.md5(password, salt);
+
+		return userMapper.updatePasswordByUserEmail(email, salt, hashedPassword);
 	}
 }

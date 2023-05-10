@@ -86,4 +86,14 @@
 		AND
 			`password` = #{password}
  	</select>
+ 	
+ 	<update id="updatePasswordByUserEmail">
+ 		UPDATE `user`
+ 		SET
+ 			`password` = #{password}
+ 			, `salt` = #{salt}
+ 		WHERE
+ 			`loginEmail` = #{email}
+ 			
+ 	</update>
  </mapper>

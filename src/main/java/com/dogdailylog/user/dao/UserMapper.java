@@ -27,4 +27,9 @@ public interface UserMapper {
 			@Param("email") String email
 			, @Param("password") String password);
 
+	public int updatePasswordByUserEmail(
+			@Param("email") String email
+			, @Param("salt") String salt
+			, @Param("password") String password);
+
 }

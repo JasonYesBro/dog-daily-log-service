@@ -25,6 +25,19 @@ public class UserController {
 	}
 	
 	/**
+	 * 비밀번호 재설정 화면
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/reset_pwd_view")
+	public String resetPwdView(Model model) {
+		model.addAttribute("title", "비밀번호 재설정 페이지입니다.");
+		model.addAttribute("view", "user/resetPwd");
+		
+		return "template/layout";
+	}
+	
+	/**
 	 * 로그인 화면
 	 * @param model
 	 * @return
@@ -37,6 +50,11 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 로그아웃
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/sign_out")
 	public String signOut(HttpSession session) {
 

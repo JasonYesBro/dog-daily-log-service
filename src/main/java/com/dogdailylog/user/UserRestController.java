@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,16 @@ public class UserRestController {
 	@Autowired
 	private UserBO userBO;
 	
+	/**
+	 * 회원가입 API
+	 * @param email
+	 * @param name
+	 * @param puppyName
+	 * @param file
+	 * @param password
+	 * @param adoptionDate
+	 * @return
+	 */
 	@PostMapping("/sign_up")
 	@ApiOperation(value = "회원가입 API")
 	public Map<String, Object> signUp(
@@ -64,6 +75,11 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 닉네임 중복확인 API
+	 * @param name
+	 * @return
+	 */
 	@PostMapping("is_duplicated_name")
 	@ApiOperation(value = "닉네임중복 API")
 	public Map<String, Object> isDuplicatedName(@RequestParam("name") String name) {
@@ -93,8 +109,8 @@ public class UserRestController {
 			, Model model) {
 		Map<String, Object> result = new HashMap<>();
 		
-		// TODO loginEmail 로 유저의 salt 값가져오기
-		String salt = userBO.getUserByLoginEmail(email);
+		// loginEmail 로 유저의 salt 값가져오기
+		String salt = userBO.getSaltByLoginEmail(email);
 		
 		// pwd + 가져온 salt 값 비밀번호 해싱
 		String hashedPassword = Encrypt.md5(password, salt);
@@ -116,6 +132,40 @@ public class UserRestController {
 		} else {
 			result.put("code", 500);
 			result.put("errorMessage", "로그인에 실패하였습니다.");
+		}
+		
+		return result;
+	}
+	
+	@PutMapping("/reset_pwd")
+	@ApiOperation(value="비밀번호 재설정 API")
+	public Map<String, Object> resetPwd(
+			@RequestParam("email") String email
+			, @RequestParam("password") String password) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		// email 로 이미 사용자가 있는지 check
+		User user = null;
+		user = userBO.getUserByLoginEmail(email);
+		
+		// user null 체크
+		if (user == null) {
+			result.put("code", 500);
+			result.put("errorMessage", "해당 email로 가입된 사용자가 없습니다.");
+			return result;
+		}
+		
+		// DB update
+		int rowCnt = 0;
+		rowCnt = userBO.resetPasswordByUserEmail(email, password);
+		
+		if (rowCnt > 0) {
+			result.put("code", 1);
+			result.put("result", "비밀번호가 재설정되었습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "비밀번호 재설정에 실패하였습니다.");
 		}
 		
 		return result;
