@@ -28,7 +28,7 @@
 	<div id="headerWrapper">
 		<div id="headerContainer" class="d-flex align-items-center">
 			<div id="title">
-				<p>우리집 강형욱</p>
+				<p><a href="/main">우리집 강형욱</a></p>
 			</div>
 			<div id="subTitle" class="d-flex align-items-end">
 				<p>반려견 훈련일지를 작성해보세요!</p>
@@ -37,7 +37,7 @@
 		<div>
 			<div class="d-flex justify-content-center align-items-center">
 				<hr>
-				<div id="signStatus" class="d-flex justify-content-between ml-2">
+				<div id="signStatus" class="d-flex justify-content-around ml-2">
 				<c:if test="${ empty userId }">
 					<!-- session 유무 -->
 					<span><a href="/user/sign_in_view">로그인</a></span>
