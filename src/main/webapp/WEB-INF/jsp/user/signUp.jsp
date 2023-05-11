@@ -45,6 +45,7 @@
 	        <div class="d-flex align-items-center justify-content-between mt-3">
 	        	<label for="verifyCode">인증코드</label>
 	        	<input type="text" name="verifyCode" id="verifyCode" class="form-control col-7" placeholder="인증코드를 입력해주세요." />
+	        	<input type="hidden" id="verifyCheck" value="0" />
 	        	<button class="btn sign-up-btn" id="verifyBtn">인증하기</button>
 	        </div>
 		    <div class="font-weight-bold" style="font-size:13px">
@@ -95,6 +96,7 @@
     			$('#nameCheckLength').addClass("d-none");
     			$('#nameCheckDuplicated').addClass("d-none");
     			$('#nameCheckOk').addClass("d-none");
+    			$("#nameDupCheck").val(0);
     			
     			// 사용자가 입력한 loginId 변수에 할당
     			let name = $('#name').val().trim();
@@ -162,6 +164,8 @@
             $('#verifyBtn').on('click', function(e) {
             	e.preventDefault();
             	
+            	// 초기화
+            	$("#verifyCheck").val(0);
             	let verifyCode = $('#verifyCode').val().trim();
             	
             	$.ajax({
@@ -171,6 +175,7 @@
             		, success : function(data) {
             			if (data.code == 1) {
             				alert("인증되었습니다.");
+            				$("#verifyCheck").val(1);
             			} else {
             				alert("인증에 실패했습니다.");
             			}
@@ -214,6 +219,10 @@
 	            	alert("이메일을 입력해주세요.");
 	            	return false;
 	            }
+	            if(verifyCheck == 0) {
+    				alert("인증코드를 인증해주세요.");
+    				return false;
+    			}
 	            if (!adoptionDate) {
 	            	alert("입양날짜를 입력해주세요.");
 	            	return false;
