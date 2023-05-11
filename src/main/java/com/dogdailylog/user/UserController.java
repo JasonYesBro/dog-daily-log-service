@@ -66,4 +66,13 @@ public class UserController {
 		// 로그인 화면으로 이동
 		return "redirect:/user/sign_in_view";
 	}
+	
+	@GetMapping("/my_page_view")
+	public String myPageView(Model model) {
+		
+		model.addAttribute("title", "마이페이지입니다.");
+		model.addAttribute("view", "user/myPage");
+		
+		return "template/layout";
+	}
 }
