@@ -45,7 +45,7 @@
 				</c:if>
 				<c:if test="${ not empty userId }">
 					<!-- 프로필 이미지 나 닉네임 클릭 시 mypage로 이동 -->
-					<span><a href="">${userName}</a></span>
+					<span><a href="/training/my_page_view">${userName}</a></span>
 					<span><a href="">${puppyName}</a></span>
 					<span><a href="/user/sign_out">로그아웃</a></span>	
 				</c:if>
