@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container" id="myPageWrapper">
     <div id="myPageTitleContainer">
         <h3 id="myPageTitle">마이페이지</h3>
@@ -18,69 +19,51 @@
         <div><img src="/static/img/greenBc.png" alt="" width="150"></div>
     </div>
     <div id="trainingContainer" class="d-flex flex-wrap justify-content-start">
-        <div class="training-box d-flex flex-column">
-            <h3 class="training-type display-5">기본 훈련</h3>
-            <div class="d-flex justify-content-end">
-                <span>2</span>
-                <span>/</span>
-                <span>10</span>
-            </div>
-            <div id="myProgress">
-                <div id="myBar"></div>
-            </div>
-            <div class="cheerUpContainer">
-                <!-- 진행상황 기준에 따른 응원의 말 동적 변화 -->
-                <p class="cheerUpStatus d-none">시작이 반이에요!</p>
-                <p class="cheerUpStatus ">조금만 더 화이팅해요!</p>
-                <p class="cheerUpStatus d-none">아주 잘하고 있어요!</p>
-                <p class="cheerUpStatus d-none">대회에 나가도 되겠어요!</p>
-            </div>
-            <div class="plusContainer d-flex justify-content-end align-items-end">
-                <img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img">
-            </div>
-        </div>
-        <div class="training-box d-flex flex-column">
-            <h3 class="training-type display-5">기본 훈련</h3>
-            <div class="d-flex justify-content-end">
-                <span>2</span>
-                <span>/</span>
-                <span>10</span>
-            </div>
-            <div id="myProgress">
-                <div id="myBar"></div>
-            </div>
-            <div class="cheerUpContainer">
-                <!-- 진행상황 기준에 따른 응원의 말 동적 변화 -->
-                <p class="cheerUpStatus d-none">시작이 반이에요!</p>
-                <p class="cheerUpStatus ">조금만 더 화이팅해요!</p>
-                <p class="cheerUpStatus d-none">아주 잘하고 있어요!</p>
-                <p class="cheerUpStatus d-none">대회에 나가도 되겠어요!</p>
-            </div>
-            <div class="plusContainer d-flex justify-content-end align-items-end">
-                <img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img">
-            </div>
-        </div>
-        <div class="training-box d-flex flex-column">
-            <h3 class="training-type display-5">기본 훈련</h3>
-            <div class="d-flex justify-content-end">
-                <span>2</span>
-                <span>/</span>
-                <span>10</span>
-            </div>
-            <div id="myProgress">
-                <div id="myBar"></div>
-            </div>
-            <div class="cheerUpContainer">
-                <!-- 진행상황 기준에 따른 응원의 말 동적 변화 -->
-                <p class="cheerUpStatus d-none">시작이 반이에요!</p>
-                <p class="cheerUpStatus ">조금만 더 화이팅해요!</p>
-                <p class="cheerUpStatus d-none">아주 잘하고 있어요!</p>
-                <p class="cheerUpStatus d-none">대회에 나가도 되겠어요!</p>
-            </div>
-            <div class="plusContainer d-flex justify-content-end align-items-end">
-                <img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img">
-            </div>
-        </div>
+    	
+    	<c:forEach items="${trainingTypeList}" var="trainingType">
+	        <div class="training-box d-flex flex-column">
+	        	<div class="d-flex align-items-center">
+	        <c:choose>
+	        	<c:when test="${trainingType.trainingType == 0}">
+	        	
+		            <h3 class="training-type display-5">배변 훈련</h3>	        	
+	        	</c:when>
+	        	<c:when test="${trainingType.trainingType == 1}">
+	        	
+	        		<h3 class="training-type display-5">사회화 훈련</h3>	
+	        	</c:when>
+	        	<c:when test="${trainingType.trainingType == 2}">
+	        	
+	        		<h3 class="training-type display-5">기본 훈련</h3>	
+	        	</c:when>
+	        	<c:when test="${trainingType.trainingType == 3}">
+	        		<h3 class="training-type display-5">고급 훈련</h3>	
+	        	</c:when>
+	        </c:choose>
+	        		<span class="ml-3"><${trainingType.trainingTitle}></span>
+	        	</div>
+	            <div class="d-flex justify-content-end">
+	                <span>2</span>
+	                <span>/</span>
+	                <span>10</span>
+	            </div>
+	            <div id="myProgress">
+	                <div id="myBar"></div>
+	            </div>
+	            <div class="cheerUpContainer">
+	                <!-- 진행상황 기준에 따른 응원의 말 동적 변화 -->
+	                <p class="cheerUpStatus d-none">시작이 반이에요!</p>
+	                <p class="cheerUpStatus ">조금만 더 화이팅해요!</p>
+	                <p class="cheerUpStatus d-none">아주 잘하고 있어요!</p>
+	                <p class="cheerUpStatus d-none">대회에 나가도 되겠어요!</p>
+	            </div>
+	            <div class="plusContainer d-flex justify-content-end align-items-end">
+	                <a href=""><img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img"></a>
+	            </div>
+	        </div>
+        
+        </c:forEach>
+        
         <!-- 빈 상자 : 훈련타입 생성 상자 -->
         <!-- 훈련타입 생성 상자가 무조건 1개는 존재해야함-->
         <!-- 만약 사용자가 상자를 클릭해서 타입을 하나 만들었다면 동적으로 하나더 빈상자를 생성시켜야 함-->
@@ -97,15 +80,16 @@
 	            <div class="modal-body">
 	                <h3 class="mb-4">훈련 타입을 생성해주세요.</h3>
 	                <div class="form-group col-5">
-	                    <select class="custom-select form-control">
+	                    <select class="custom-select form-control" id="trainingType">
 	                        <option value="" selected disabled>선택하세요</option>
-	                        <option value="basicTraining">기본 훈련</option>
-	                        <option value="basicTraining">배변 훈련</option>
-	                        <option value="basicTraining">고급 훈련</option>
+	                        <option value="0">배변 훈련</option>
+	                        <option value="1">사회화 훈련</option>
+	                        <option value="2">기본 훈련</option>
+	                        <option value="3">고급 훈련</option>
 	                    </select>
 	                </div>
 	                <div class="form-group col-10">
-	                    <input type="text" class="form-control" placeholder="훈련제목을 입력해주세요.">
+	                    <input type="text" id="trainingTypeTitle" class="form-control" placeholder="훈련제목을 입력해주세요.">
 	                </div>
 	                <div class="form-group d-flex align-items-center justify-content-between col-11">
 	                    <input type="text" class="form-control col-5" placeholder="훈련시작 날짜" id="trainingStartDate">
@@ -132,6 +116,50 @@
 	        
 	        $( "#trainingStartDate" ).datepicker();
 	        $( "#traingingFinishDate" ).datepicker();
+	        
+	        $(".type-create-btn").on('click', function() {
+	        	let trainingType = $("#trainingType option:selected").val();
+	        	let trainingTitle = $("#trainingTypeTitle").val();
+	        	let startedAt = $("#trainingStartDate").val();
+	        	let finishedAt = $("#traingingFinishDate").val();
+	        	
+	        	// validation
+	        	if (!trainingType) {
+	        		alert("훈련타입을 선택해주세요.");
+	        	}
+	        	if (!trainingTitle) {
+	        		alert("훈련제목을 입력해주세요.");
+	        	}
+	        	if (!startedAt) {
+	        		alert("훈련시작날짜를 선택해주세요.");
+	        	}
+	        	if (!finishedAt) {
+	        		alert("훈련종료날짜를 선택해주세요.");
+	        	}
+	        	
+	        	$.ajax({
+	        		type: "post",
+	        		url : "/training/type/create",
+	        		data : {
+	        			"trainingType" : trainingType
+	        			, "trainingTitle" : trainingTitle
+	        			, "startedAt" : startedAt
+	        			, "finishedAt" : finishedAt
+	        		},
+	        		
+	        		success : function(data) {
+	        			if(data.code == 1){
+	        				alert("훈련타입이 추가되었습니다.");
+	        				location.reload(true);
+	        			} else {
+	        				alert(data.errorMessage)
+	        			}
+	        		},
+	        		error : function(status, error, request) {
+	        			alert("관리자에게 문의바랍니다.");
+	        		}
+	        	});
+	        });
 	    })
 	</script>
 </div>
