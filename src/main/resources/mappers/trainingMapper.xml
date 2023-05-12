@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.dogdailylog.training.dao.TrainingMapper">
+
+	<select id="selectTrainingTypeListByUserId" parameterType="int" resultType="com.dogdailylog.training.model.TrainingType">
+		SELECT
+			`id`
+			, `userId`
+			, `trainingType`
+			, `trainingTitle`
+			, `startedAt`
+			, `finishedAt`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_type`
+		WHERE
+			`userId` = #{userId}
+	</select>
+
+	<insert id="insertTrainingType" parameterType="map">
+		INSERT INTO `training_type`
+		(
+			`userId`
+			, `trainingType`
+			, `trainingTitle`
+			, `startedAt`
+			, `finishedAt`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{trainingType}
+			, #{trainingTitle}
+			, #{startedAt}
+			, #{finishedAt}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+
+</mapper>
