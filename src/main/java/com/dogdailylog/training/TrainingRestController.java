@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dogdailylog.training.bo.TrainingBO;
 
@@ -48,6 +49,38 @@ public class TrainingRestController {
 			result.put("errorMessage", "훈련타입 추가가 실패했습니다.");
 		}
 		
+		return result;
+	}
+	
+	@PostMapping("/log/create")
+	public Map<String, Object> createTrainingLog(
+			@RequestParam("typeId") int typeId
+			, @RequestParam("title") String title
+			, @RequestParam("successCheck") boolean successCheck
+			, @RequestParam(value="problem", required=false) String problem
+			, @RequestParam("content") String content
+			, @RequestParam("file") MultipartFile file
+			, HttpSession session) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		int rowCnt = 0;
+		int userId = (int)session.getAttribute("userId");
+		String userEmail = (String)session.getAttribute("userEmail");
+		
+		// DB insert
+		rowCnt = trainingBO.addTrainingLog(userEmail, userId, typeId, title, successCheck, problem, content, file);
+		
+		// 분기문
+		if (rowCnt > 0) {
+			result.put("code", 1);
+			result.put("result", "일지 작성이 되었습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "일지 작성이 되지 않았습니다.");
+		}
+		
+		// return result
 		return result;
 	}
 }

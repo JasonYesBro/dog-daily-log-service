@@ -19,6 +19,22 @@
 		WHERE
 			`userId` = #{userId}
 	</select>
+	
+	<select id="selectTrainingTypeById" parameterType="int" resultType="com.dogdailylog.training.model.TrainingType">
+		SELECT
+			`id`
+			, `userId`
+			, `trainingType`
+			, `trainingTitle`
+			, `startedAt`
+			, `finishedAt`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_type`
+		WHERE
+			`id` = #{typeId}
+	</select>
 
 	<insert id="insertTrainingType" parameterType="map">
 		INSERT INTO `training_type`
@@ -38,6 +54,33 @@
 			, #{trainingTitle}
 			, #{startedAt}
 			, #{finishedAt}
+			, NOW()
+			, NOW()
+		)
+	</insert>
+	
+	<insert id="insertTrainingLog" parameterType="map">
+		INSERT INTO `training_log`
+		(
+			`userId`
+			, `typeId`
+			, `title`
+			, `problem`
+			, `content`
+			, `imagePath`
+			, `successCheck`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{typeId}
+			, #{title}
+			, #{problem}
+			, #{content}
+			, #{logImagePath}
+			, #{successCheck}
 			, NOW()
 			, NOW()
 		)
