@@ -1,5 +1,7 @@
 package com.dogdailylog.interceptor;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,14 +12,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-@Component // 스프링 빈
+@Component// 스프링 빈
 public class PermissionInterceptor implements HandlerInterceptor {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 		
 		// 요청 url을 가져온다.
 		String uri = request.getRequestURI(); // 요청 들어온 것에 대한 path를 가져올 수 있음
@@ -28,7 +29,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		Integer userId = (Integer)session.getAttribute("userId"); // 비로그인일 수 있음
 		
 		// 비로그인 이면서 post 로 시작하는 주소로 접속한 경우 => 로그인페이지로 이동 redirect , return false 를 하여 기존 controller 수행 방지
-		if (userId == null && uri.startsWith("/user/my_page_view")) {
+		if (userId == null && uri.startsWith("/training")) {
 			response.sendRedirect("/user/sign_in_view");
 			
 			return false; // 컨트롤러 수행안함
