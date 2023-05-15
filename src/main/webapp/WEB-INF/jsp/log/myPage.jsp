@@ -8,10 +8,10 @@
     </div>
     <div id="infoContainer" class="d-flex align-items-center">
         <div>
-            <img src="/static/img/basicPuppyProfile.png" alt="반려견 사진" width="150">
+            <img src="/images/tmdgus5611@gmail.com_1683701297206/profileImg.png" alt="반려견 사진" width="150">
         </div>
         <div class="d-flex align-items-center ml-5">
-            <span>반려견 이름</span>
+            <span>${userInfo.puppyName}</span>
         </div>
     </div>
     <div class="text-center" id="trainingSubTitle">
@@ -23,30 +23,32 @@
     	<c:forEach items="${trainingTypeList}" var="trainingType">
 	        <div class="training-box d-flex flex-column">
 	        	<div class="d-flex align-items-center">
-	        <c:choose>
-	        	<c:when test="${trainingType.trainingType == 0}">
-	        	
-		            <h3 class="training-type display-5">배변 훈련</h3>	        	
-	        	</c:when>
-	        	<c:when test="${trainingType.trainingType == 1}">
-	        	
-	        		<h3 class="training-type display-5">사회화 훈련</h3>	
-	        	</c:when>
-	        	<c:when test="${trainingType.trainingType == 2}">
-	        	
-	        		<h3 class="training-type display-5">기본 훈련</h3>	
-	        	</c:when>
-	        	<c:when test="${trainingType.trainingType == 3}">
-	        		<h3 class="training-type display-5">고급 훈련</h3>	
-	        	</c:when>
-	        </c:choose>
+		        <c:choose>
+		        	<c:when test="${trainingType.trainingType == 0}">
+		        	
+			            <h3 class="training-type display-5">배변 훈련</h3>	        	
+		        	</c:when>
+		        	<c:when test="${trainingType.trainingType == 1}">
+		        	
+		        		<h3 class="training-type display-5">사회화 훈련</h3>	
+		        	</c:when>
+		        	<c:when test="${trainingType.trainingType == 2}">
+		        	
+		        		<h3 class="training-type display-5">기본 훈련</h3>	
+		        	</c:when>
+		        	<c:when test="${trainingType.trainingType == 3}">
+		        		<h3 class="training-type display-5">고급 훈련</h3>	
+		        	</c:when>
+		        </c:choose>
 	        		<span class="ml-3"><${trainingType.trainingTitle}></span>
 	        	</div>
+	        	
 	            <div class="d-flex justify-content-end">
 	                <span>2</span>
 	                <span>/</span>
 	                <span>10</span>
 	            </div>
+	            
 	            <div id="myProgress">
 	                <div id="myBar"></div>
 	            </div>
@@ -58,10 +60,9 @@
 	                <p class="cheerUpStatus d-none">대회에 나가도 되겠어요!</p>
 	            </div>
 	            <div class="plusContainer d-flex justify-content-end align-items-end">
-	                <a href=""><img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img"></a>
-	            </div>
-	        </div>
-        
+	                <a href="/training/log_create_view?typeId=${trainingType.id}"><img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img" data-type-id="${trainingType.id}"></a>
+	        	</div>
+       		</div>
         </c:forEach>
         
         <!-- 빈 상자 : 훈련타입 생성 상자 -->
@@ -126,15 +127,19 @@
 	        	// validation
 	        	if (!trainingType) {
 	        		alert("훈련타입을 선택해주세요.");
+	        		return false;
 	        	}
 	        	if (!trainingTitle) {
 	        		alert("훈련제목을 입력해주세요.");
+	        		return false;
 	        	}
 	        	if (!startedAt) {
 	        		alert("훈련시작날짜를 선택해주세요.");
+	        		return false;
 	        	}
 	        	if (!finishedAt) {
 	        		alert("훈련종료날짜를 선택해주세요.");
+	        		return false;
 	        	}
 	        	
 	        	$.ajax({
@@ -160,6 +165,13 @@
 	        		}
 	        	});
 	        });
+	        
+	        /* $('.plus-training-img').on('click', function() {
+	        	
+	        	// typeId 넘겨주기
+	        	let typeId = $(this).data('type-id');
+	        
+	        }); */
 	    })
 	</script>
 </div>
