@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 @Controller
 public class UserController {
-	
+
 	/**
 	 * 회원가입 화면
 	 * @param model
@@ -67,12 +67,5 @@ public class UserController {
 		return "redirect:/user/sign_in_view";
 	}
 	
-	@GetMapping("/my_page_view")
-	public String myPageView(Model model) {
-		
-		model.addAttribute("title", "마이페이지입니다.");
-		model.addAttribute("view", "user/myPage");
-		
-		return "template/layout";
-	}
+
 }

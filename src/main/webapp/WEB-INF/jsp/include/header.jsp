@@ -57,7 +57,7 @@
 		
 		$(document).ready(function() {
 			$("#navImg").on("click", function(e) {
-				
+			
 				if($("#liContainer").css("display") == "none" && $("#navBackground").css("display") == "none") {
 					$("#liContainer").show(200);
 					// display none 과 flex 가 한번에 적용이 안되는 현상으로 인해 이벤트가 발생할 시에 css 추가
@@ -72,6 +72,7 @@
 					$("#navBackground").hide(300);
 				}
 			});
+			
 		})
 	</script>
 </header>

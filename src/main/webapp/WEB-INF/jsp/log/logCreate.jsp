@@ -81,7 +81,6 @@
 	            let problem = $('#logProblem').val();
 	            let content = $('#logContent').val();
 	            let file = $('#file').val();
-	            alert(typeId);
 	            
 	            //validation
 	        	if (!title) {
@@ -101,7 +100,6 @@
 	        		return false;
 	        	}
 	            
-	            
 	            let formData = new FormData();
 	            formData.append("typeId", typeId);
 	            formData.append("title", title);
@@ -112,7 +110,7 @@
 	    
 	            $.ajax({
 	            	type: "post",
-	            	url : "/training/log_create",
+	            	url : "/training/log/create",
 	            	data : formData,
 					enctype : "multipart/form-data" // 파일 업로드를 위한 필수 설정
 					, processData : false // 파일 업로드를 위한 필수 설정
