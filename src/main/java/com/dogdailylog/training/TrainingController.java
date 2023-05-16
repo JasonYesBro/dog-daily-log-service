@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dogdailylog.training.bo.TrainingBO;
+import com.dogdailylog.training.model.TrainingLog;
 import com.dogdailylog.training.model.TrainingType;
 import com.dogdailylog.user.bo.UserBO;
 import com.dogdailylog.user.model.User;
@@ -59,7 +60,11 @@ public class TrainingController {
 	}
 	
 	@GetMapping("/log_create_view")
-	public String logCreateView(Model model, HttpSession session, @RequestParam("typeId") int typeId) {
+	public String logCreateView(Model model, HttpSession session, @RequestParam(value="typeId", required=false) Integer typeId) {
+		
+		if (typeId == null) {
+			return "redirect:/training/my_page_view";
+		}
 		
 		// 파라미터로 넘겨진 타입이 있는지 확인
 		TrainingType trainingType = null;		
@@ -68,11 +73,33 @@ public class TrainingController {
 		if (trainingType != null) {
 			model.addAttribute("title", "훈련일지를 작성해보세요.");
 			model.addAttribute("view", "log/logCreate");
-			model.addAttribute("typeId", typeId);
+			model.addAttribute("trainingType", trainingType);
 			
 		} else {
 			return "redirect:/training/my_page_view";
 		}
+		
+		return "template/layout";
+	}
+	
+	@GetMapping("/calendar_view")
+	public String calendarView(Model model, HttpSession session) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		// 훈련타입 가져오기
+//		List<TrainingType> trainingTypeList = new ArrayList<>();
+//		
+//		trainingTypeList = trainingBO.getTrainingTypeListByUserId(userId);
+		
+		// 훈련로그 가져오기
+		List<TrainingLog> trainingLogList = new ArrayList<>();
+		
+		trainingLogList = trainingBO.getTrainingLogListByUserId(userId);
+		
+		model.addAttribute("title", "훈련달력입니다.");
+		model.addAttribute("view", "log/calendar");
+		model.addAttribute("trainingLogList", trainingLogList);
 		
 		return "template/layout";
 	}
