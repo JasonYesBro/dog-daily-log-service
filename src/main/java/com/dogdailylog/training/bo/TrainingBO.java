@@ -66,4 +66,9 @@ public class TrainingBO {
 		return trainingMapper.selectTrainingLogListByUserId(userId);
 	}
 
+	public List<TrainingLog> getTrainingLogListByUserIdAndTypeId(int userId, Integer typeId) {
+
+		return trainingMapper.selectTrainingLogListByUserIdAndTypeId(userId, typeId);
+	}
+
 }

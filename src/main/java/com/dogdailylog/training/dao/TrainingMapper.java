@@ -35,4 +35,8 @@ public interface TrainingMapper {
 			, @Param("logImagePath") String logImagePath);
 
 	public List<TrainingLog> selectTrainingLogListByUserId(int userId);
+
+	public List<TrainingLog> selectTrainingLogListByUserIdAndTypeId(
+			@Param("userId") int userId
+			, @Param("typeId") Integer typeId);
 }

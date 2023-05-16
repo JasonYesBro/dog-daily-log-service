@@ -103,4 +103,21 @@ public class TrainingController {
 		
 		return "template/layout";
 	}
+	
+	@GetMapping("/log_list_view")
+	public String logListView(Model model, HttpSession session, @RequestParam(value="typeId", required=false) Integer typeId) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		List<TrainingLog> trainingLogList = new ArrayList<>();
+		
+		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeId(userId, typeId);
+		
+
+		model.addAttribute("title", "작성한 훈련일지입니다.");
+		model.addAttribute("view", "log/logList");
+		model.addAttribute("trainingLogList", trainingLogList);
+		
+		return "template/layout";
+	}
 }
