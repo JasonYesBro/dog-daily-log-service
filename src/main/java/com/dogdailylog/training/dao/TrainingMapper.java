@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dogdailylog.training.model.TrainingLog;
 import com.dogdailylog.training.model.TrainingType;
 
 @Repository
@@ -32,4 +33,6 @@ public interface TrainingMapper {
 			, @Param("problem") String problem
 			, @Param("content") String content
 			, @Param("logImagePath") String logImagePath);
+
+	public List<TrainingLog> selectTrainingLogListByUserId(int userId);
 }

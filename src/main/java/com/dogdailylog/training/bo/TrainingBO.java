@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dogdailylog.common.FileManagerService;
 import com.dogdailylog.training.dao.TrainingMapper;
+import com.dogdailylog.training.model.TrainingLog;
 import com.dogdailylog.training.model.TrainingType;
 
 @Service
@@ -21,6 +22,16 @@ public class TrainingBO {
 	
 	// 훈련타입 가져오기
 	public List<TrainingType> getTrainingTypeListByUserId(int userId) {
+		
+//		List<TrainingType> trainingTypeList = trainingMapper.selectTrainingTypeListByUserId(userId);
+//		Date date = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		
+//		for(TrainingType type : trainingTypeList) {
+//			// String -> date 문
+//			type.setStartedAt(sdf.format(type.getStartedAt()));
+//		}
+		
 		return trainingMapper.selectTrainingTypeListByUserId(userId);
 	}
 
@@ -48,6 +59,11 @@ public class TrainingBO {
 		
 		
 		return trainingMapper.insertTrainingLog(userId, typeId, title, successCheck, problem, content, logImagePath);
+	}
+
+	public List<TrainingLog> getTrainingLogListByUserId(int userId) {
+		
+		return trainingMapper.selectTrainingLogListByUserId(userId);
 	}
 
 }

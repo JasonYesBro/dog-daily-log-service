@@ -35,6 +35,24 @@
 		WHERE
 			`id` = #{typeId}
 	</select>
+	
+	<select id="selectTrainingLogListByUserId" parameterType="int" resultType="com.dogdailylog.training.model.TrainingLog">
+		SELECT
+			`id`
+			, `userId`
+			, `typeId`
+			, `title`
+			, `problem`
+			, `content`
+			, `imagePath`
+			, `successCheck`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_log`
+		WHERE
+			`userId` = #{userId}
+	</select>
 
 	<insert id="insertTrainingType" parameterType="map">
 		INSERT INTO `training_type`
