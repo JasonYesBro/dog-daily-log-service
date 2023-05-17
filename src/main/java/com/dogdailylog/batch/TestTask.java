@@ -1,10 +1,6 @@
 package com.dogdailylog.batch;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.dogdailylog.training.bo.TrainingBO;
-import com.dogdailylog.training.model.TrainingType;
 
 @Component
 public class TestTask {
@@ -22,43 +17,21 @@ public class TestTask {
 	@Autowired
 	TrainingBO trainingBO;
 	
-	@Scheduled(cron="45 37 21 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
+	@Scheduled(cron="40 18 01 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
 	public void testTask() {
 		// job 내용이 들어감
 		// 훈련 종료 날짜를 기준으로 1주일 지났다 -> 삭제 1주일 마다 실행?
-		// 오늘 날짜를 가져옴
-//		Date date = new Date();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		String date1 = sdf.format(date);
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
-		Date date = new Date();
-		
-		String strDate = sdf.format(date);
-
 		try {
-			date = sdf.parse(strDate);
-		} catch (ParseException e) {
-			logger.debug(strDate);
-		}
-		
-		
-		// trainingType의 종료날짜를 가져옴
-		List<TrainingType> trainingTypeList = new ArrayList<>();
-		
-		try {
-			trainingBO.getTrainingTypeList();
-			
-			
+			int deleteRowCnt = 0;
+			deleteRowCnt = trainingBO.deleteOverduedTypeList();
+			if ( deleteRowCnt > 0 ) {
+				logger.info("############## 기간이 지난 훈련은 종료처리되었습니다. ############## 처리된 행의 갯수 : {}", deleteRowCnt);
+			} else {
+				logger.info("############## 종료처리할 훈련이 없습니다. ##############");
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		
-		//trainingBO.getTrainingTypeList();
-		
-		// trainingType의 종료날짜 + 7일과 오늘날짜가 일치한다면 
-		// 해당 trainingType 삭제
-		// 
 	}
 }

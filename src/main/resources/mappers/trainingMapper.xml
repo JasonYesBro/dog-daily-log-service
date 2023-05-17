@@ -4,6 +4,20 @@
  
 <mapper namespace="com.dogdailylog.training.dao.TrainingMapper">
 
+	<select id="selectTrainingTypeList" resultType="com.dogdailylog.training.model.TrainingType">
+		SELECT
+			`id`
+			, `userId`
+			, `trainingType`
+			, `trainingTitle`
+			, `startedAt`
+			, `finishedAt`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_type`
+	</select>
+
 	<select id="selectTrainingTypeListByUserId" parameterType="int" resultType="com.dogdailylog.training.model.TrainingType">
 		SELECT
 			`id`
@@ -165,4 +179,13 @@
 		AND
 			`userId` = #{userId}
 	</delete>
+	
+	<update id="updateTrainingTypeByFinishedAt">
+		UPDATE `training_type`
+		SET
+			`status` = 0
+			, `updatedAt` = NOW()
+		WHERE
+			`finishedAt` = #{finishedAt}
+	</update>
 </mapper>

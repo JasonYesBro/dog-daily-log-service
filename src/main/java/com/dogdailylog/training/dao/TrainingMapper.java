@@ -55,6 +55,8 @@ public interface TrainingMapper {
 	public int deleteLogByLogIdAndUserId(
 			@Param("logId") int logId
 			, @Param("userId") int userId);
+
+	public int updateTrainingTypeByFinishedAt(Date finishedAt);
 	
 
 }
