@@ -19,5 +19,4 @@ public class TrainingType {
 	private Date finishedAt;
 	private Date createdAt;
 	private Date updatedAt;
-
 }
