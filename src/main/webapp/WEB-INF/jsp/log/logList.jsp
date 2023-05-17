@@ -29,7 +29,7 @@
 		$(document).ready(function() {
 			$('.type-log-box').on('click', function() {
 				let logId = $(this).data('log-id');
-				alert(logId);
+				location.href = "/training/log_detail_view/" + logId;	
 			});
 		})
 	</script>

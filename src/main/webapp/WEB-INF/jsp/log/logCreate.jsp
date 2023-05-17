@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div class="container" id="pageWrapper">
     <div id="logWrapper">
         <h3>일지 작성</h3>
-        <div class="log-header d-flex align-items-end justify-content-around">
+        <div class="log-header d-flex justify-content-between">
             <!-- <div>
                 <select name="" id="logType" class="custom-select form-control">
                     <option value="0">배변훈련</option>
@@ -12,9 +14,18 @@
                     <option value="3">고급훈련</option>
                 </select>
            </div> -->
-           <input type="hidden" data-type-id="${typeId}" id="logTypeValue"/>
-           <div>2023-02-02</div>
-           <div>2023-04-10</div>
+           <input type="hidden" data-type-id="${trainingType.id}" id="logTypeValue"/>
+           <fmt:formatDate var="startedAt" value="${trainingType.startedAt}" pattern="yyyy-MM-dd" />
+           <fmt:formatDate var="finishedAt" value="${trainingType.finishedAt}" pattern="yyyy-MM-dd" />
+           <div>
+               <h5>훈련타입 : ${trainingType.trainingTitle}</h5>
+           </div>
+           <div class="d-flex">
+	           <span class="mr-3">훈련기간</span>
+	           <span>${startedAt}</span>
+	           <span>~</span>
+	           <span>${finishedAt}</span>
+           </div>
        </div>
        <hr class="log-hr">
        <div class="d-flex mt-5 align-items-center justify-content-between">
@@ -118,7 +129,7 @@
 	            	, success : function(data) {
 	            		
 	            		if (data.code == 1) {
-	            			location.href="/main"; // 임시 : 메인페이지로 이동 완성되면 일지 리스트로 가기 
+	            			location.href = "/training/log_list_view?typeId="+ typeId; 
 	            		} else {
 	            			alert(data.errorMessage);
 	            		}

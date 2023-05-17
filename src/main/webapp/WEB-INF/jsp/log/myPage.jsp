@@ -21,7 +21,7 @@
     <div id="trainingContainer" class="d-flex flex-wrap justify-content-start">
     	
     	<c:forEach items="${trainingTypeList}" var="trainingType">
-	        <div class="training-box d-flex flex-column">
+	        <div class="training-box d-flex flex-column" data-type-id="${trainingType.id}">
 	        	<div class="d-flex align-items-center">
 		        <c:choose>
 		        	<c:when test="${trainingType.trainingType == 0}">
@@ -172,6 +172,14 @@
 	        	let typeId = $(this).data('type-id');
 	        
 	        }); */
+	        
+	        // type 클릭시 -> log List 화면
+	        $('.training-box').on('click', function() {
+	        	let typeId = $(this).data('type-id');
+	        	
+	        	location.href = "/training/log_list_view?typeId="+ typeId;
+	        	
+	        })
 	    })
 	</script>
 </div>

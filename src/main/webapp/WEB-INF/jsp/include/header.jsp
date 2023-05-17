@@ -7,10 +7,10 @@
 			<img src="/static/img/menu-bar.png" alt="메뉴바이미지" id="navImg" width="30" height="30">
 		</div>
 		<div id="liContainer">
-			<a href="">
+			<a href="/training/my_page_view">
 				일지 작성하러가기
 			</a>
-			<a href="">
+			<a href="/training/calendar_view">
 				훈련일지 보기
 			</a> 
 			<a href="">
