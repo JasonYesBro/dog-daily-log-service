@@ -16,10 +16,10 @@ public class FileManagerService {
 	public static final String FILE_UPLOAD_PATH = "/Users/jasonmilian/Desktop/megaProject/6_spring_project/dogdailylog/workspace/images/";
 	private static final Logger logger = LoggerFactory.getLogger(FileManagerService.class);
 	
-	public String saveFile(String loginId, MultipartFile file) {
+	public String saveFile(String loginEmail, MultipartFile file) {
 		
 		// 저장 path
-		String dirName = loginId + "_" +  System.currentTimeMillis() + "/";// 사용자의 id + 저장한 시간으로 폴더명을 지음
+		String dirName = loginEmail + "_" +  System.currentTimeMillis() + "/";// 사용자의 id + 저장한 시간으로 폴더명을 지음
 		String filePath = FILE_UPLOAD_PATH + dirName;
 		
 		File directory = new File(filePath);
