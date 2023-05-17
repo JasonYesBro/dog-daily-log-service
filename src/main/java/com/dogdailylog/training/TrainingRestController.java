@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -84,7 +86,7 @@ public class TrainingRestController {
 		return result;
 	}
 	
-	@PostMapping("/log/update")
+	@PutMapping("/log/update")
 	public Map<String, Object> logUpdate(
 			@RequestParam("logId") int logId
 			, @RequestParam("title") String title
@@ -100,6 +102,28 @@ public class TrainingRestController {
 		
 		trainingBO.updateLogByLogId(logId, userId, userEmail, title, successCheck, problem, content, file);
 		
+		result.put("code", 1);
+		result.put("result", "성공");
+		
+		return result;
+	}
+	
+	@DeleteMapping("/log/delete")
+	public Map<String, Object> logDelete(
+			@RequestParam("logId") int logId
+			, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		
+		int userId = (int)session.getAttribute("userId");
+		int rowCnt = trainingBO.deleteLogByLogIdAndUserId(logId, userId);
+		
+		if (rowCnt > 0) {
+			result.put("code", 1);
+			result.put("result", "성공");			
+		} else {
+			result.put("code", 500);
+			result.put("errorMessage", "댓글 삭제하는데 실패하였습니다.");
+		}
 		return result;
 	}
 }

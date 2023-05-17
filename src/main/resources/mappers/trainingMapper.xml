@@ -157,4 +157,12 @@
 			`id` = #{logId}
 	</update>
 	
+	<delete id="deleteLogByLogIdAndUserId" parameterType="map">
+		DELETE FROM
+			`training_log`
+		WHERE
+			`id` = #{logId}
+		AND
+			`userId` = #{userId}
+	</delete>
 </mapper>

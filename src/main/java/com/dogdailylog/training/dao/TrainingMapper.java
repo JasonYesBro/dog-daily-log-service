@@ -52,6 +52,9 @@ public interface TrainingMapper {
 			, @Param("content") String content
 			, @Param("imagePath") String imagePath);
 
+	public int deleteLogByLogIdAndUserId(
+			@Param("logId") int logId
+			, @Param("userId") int userId);
 	
 
 }
