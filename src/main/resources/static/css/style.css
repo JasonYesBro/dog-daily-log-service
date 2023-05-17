@@ -6,8 +6,9 @@
     font-weight: 400;
     font-style: normal;
 }
+video { max-width: 80%; display: block; margin: 20px auto; }
 
-body {
+section {
 	font-family: 'Pretendard-Regular';
 }
 
@@ -475,7 +476,7 @@ hr {
 
 .type-log-box {
     width:33.3%;
-    height:300px;
+    height:260px;
     padding: 1.5px !important;
 }
 
