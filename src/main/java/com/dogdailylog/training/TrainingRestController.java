@@ -83,4 +83,23 @@ public class TrainingRestController {
 		// return result
 		return result;
 	}
+	
+	@PostMapping("/log/update")
+	public Map<String, Object> logUpdate(
+			@RequestParam("logId") int logId
+			, @RequestParam("title") String title
+			, @RequestParam("successCheck") boolean successCheck
+			, @RequestParam(value="problem", required=false) String problem
+			, @RequestParam("content") String content
+			, @RequestParam("file") MultipartFile file
+			, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		
+		int userId = (int)session.getAttribute("userId");
+		String userEmail = (String)session.getAttribute("userEmail");
+		
+		trainingBO.updateLogByLogId(logId, userId, userEmail, title, successCheck, problem, content, file);
+		
+		return result;
+	}
 }

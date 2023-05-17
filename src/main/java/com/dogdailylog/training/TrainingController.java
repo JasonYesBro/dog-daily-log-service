@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -117,6 +118,20 @@ public class TrainingController {
 		model.addAttribute("title", "작성한 훈련일지입니다.");
 		model.addAttribute("view", "log/logList");
 		model.addAttribute("trainingLogList", trainingLogList);
+		
+		return "template/layout";
+	}
+	
+	@GetMapping("/log_detail_view/{logId}")
+	public String logDetailView(Model model, @PathVariable("logId") int logId, HttpSession session) {
+		int userId = (int) session.getAttribute("userId");
+		
+		TrainingLog trainingLog = null;
+		
+		trainingLog = trainingBO.getTrainingLogByLogIdAndUserId(logId, userId);
+		model.addAttribute("title", trainingLog.getTitle());
+		model.addAttribute("view", "log/logDetail");
+		model.addAttribute("trainingLog", trainingLog);
 		
 		return "template/layout";
 	}

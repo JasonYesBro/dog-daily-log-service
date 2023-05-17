@@ -53,6 +53,46 @@
 		WHERE
 			`userId` = #{userId}
 	</select>
+	
+	<select id="selectTrainingLogListByUserIdAndTypeId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
+		SELECT
+			`id`
+			, `userId`
+			, `typeId`
+			, `title`
+			, `problem`
+			, `content`
+			, `imagePath`
+			, `successCheck`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_log`
+		WHERE
+			`userId` = #{userId}
+		AND
+			`typeId`= #{typeId}
+	</select>
+	
+	<select id="selectTrainingLogByLogIdAndUserId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
+		SELECT
+			`id`
+			, `userId`
+			, `typeId`
+			, `title`
+			, `problem`
+			, `content`
+			, `imagePath`
+			, `successCheck`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_log`
+		WHERE
+			`id` = #{logId}
+		AND
+			`userId` = #{userId}
+	</select>
 
 	<insert id="insertTrainingType" parameterType="map">
 		INSERT INTO `training_type`
@@ -103,5 +143,18 @@
 			, NOW()
 		)
 	</insert>
-
+	
+	<update id="updateLogByLogId" parameterType="map">
+		UPDATE `training_log`
+		SET
+			`title` = #{title}
+			, `problem` = #{problem}
+			, `content` = #{content}
+			, `imagePath` = #{imagePath}
+			, `successCheck` = #{successCheck}
+			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{logId}
+	</update>
+	
 </mapper>

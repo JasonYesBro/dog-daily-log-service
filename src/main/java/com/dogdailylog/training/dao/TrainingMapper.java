@@ -39,4 +39,19 @@ public interface TrainingMapper {
 	public List<TrainingLog> selectTrainingLogListByUserIdAndTypeId(
 			@Param("userId") int userId
 			, @Param("typeId") Integer typeId);
+
+	public TrainingLog selectTrainingLogByLogIdAndUserId(
+			@Param("logId") int logId
+			, @Param("userId") int userId);
+
+	public void updateLogByLogId(
+			@Param("logId") int logId
+			, @Param("title") String title
+			, @Param("successCheck") boolean successCheck
+			, @Param("problem") String problem
+			, @Param("content") String content
+			, @Param("imagePath") String imagePath);
+
+	
+
 }
