@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="container" id="myPageWrapper">
     <div id="myPageTitleContainer">
         <h3 id="myPageTitle">마이페이지</h3>
@@ -41,6 +42,12 @@
 		        	</c:when>
 		        </c:choose>
 	        		<span class="ml-3"><${trainingType.trainingTitle}></span>
+	        	</div>
+	        	
+	        	<div class="text-muted">
+	        		<fmt:formatDate var="startedAt" value="${trainingType.startedAt}" pattern="yyyy-MM-dd" />
+          			<fmt:formatDate var="finishedAt" value="${trainingType.finishedAt}" pattern="yyyy-MM-dd" />
+	        		<span>${startedAt} ~ ${finishedAt} </span>
 	        	</div>
 	        	
 	            <div class="d-flex justify-content-end">

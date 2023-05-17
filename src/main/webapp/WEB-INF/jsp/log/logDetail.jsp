@@ -66,9 +66,9 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-around mt-5">
-            <button type="button" class="btn btn-lg" data-log-id="${trainingLog.id}" id="logDeleteBtn">삭제하기</button>
-            <button type="button" class="btn btn-lg" data-log-id="${trainingLog.id}" id="logUpdateBtn">수정하기</button>
+        <div class="d-flex justify-content-between mt-5" style="width:55%">
+	            <button type="button" class="btn btn-lg" data-log-id="${trainingLog.id}" id="logDeleteBtn">삭제하기</button>
+	            <button type="button" class="btn btn-lg" data-log-id="${trainingLog.id}" id="logUpdateBtn">수정하기</button>
         </div>
     </div>
     <script>

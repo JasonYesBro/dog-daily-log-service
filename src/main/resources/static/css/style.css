@@ -491,3 +491,14 @@ hr {
     border-top: 1px solid #ffff;
     border-radius: 1.5%;
 }
+
+/* log 상세보기 */
+#logDeleteBtn {
+	color: #fff;
+	background-color: #E06469;
+}
+
+#logUpdateBtn {
+	color: #fff;
+	background-color: #6DA9E4;
+}
