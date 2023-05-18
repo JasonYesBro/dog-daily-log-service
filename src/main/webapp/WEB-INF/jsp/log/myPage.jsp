@@ -67,7 +67,14 @@
 	                <p class="cheerUpStatus d-none">대회에 나가도 되겠어요!</p>
 	            </div>
 	            <div class="plusContainer d-flex justify-content-end align-items-end">
-	                <a href="/training/log_create_view?typeId=${trainingType.id}"><img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img" data-type-id="${trainingType.id}"></a>
+	            	<c:if test="${trainingType.status == 1 }"> 
+		                <a href="/training/log_create_view?typeId=${trainingType.id}">
+		                	<img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img" data-type-id="${trainingType.id}">
+		                </a>
+	            	</c:if>
+	            	<c:if test="${trainingType.status == 0 }"> 
+	            		<p class="text-danger" style="font-size:13px">훈련기간이 종료되었습니다.</p>
+            		</c:if>
 	        	</div>
        		</div>
         </c:forEach>
@@ -122,8 +129,25 @@
 	            dateFormat: 'yy-mm-dd'
 	        });
 	        
-	        $( "#trainingStartDate" ).datepicker();
-	        $( "#traingingFinishDate" ).datepicker();
+	        $( "#trainingStartDate" ).datepicker(
+        		{
+					onClose: function( selectedDate ) {    
+						// 시작일(trainingStartDate) datepicker가 닫힐때
+						// 종료일(traingingFinishDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+						$("#traingingFinishDate").datepicker( "option", "minDate", selectedDate );
+					}    
+        		}
+       		);
+	        
+	        $( "#traingingFinishDate" ).datepicker(
+        		{
+        			onClose: function( selectedDate ) {
+                        // 종료일(trainingStartDate) datepicker가 닫힐때
+                        // 시작일(traingingFinishDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
+                        $("#trainingStartDate").datepicker( "option", "maxDate", selectedDate );
+                    }   
+       			}
+       		);
 	        
 	        $(".type-create-btn").on('click', function() {
 	        	let trainingType = $("#trainingType option:selected").val();
