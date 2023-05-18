@@ -12,6 +12,7 @@
 			, `trainingTitle`
 			, `startedAt`
 			, `finishedAt`
+			, `status`
 			, `createdAt`
 			, `updatedAt`
 		FROM
@@ -26,6 +27,7 @@
 			, `trainingTitle`
 			, `startedAt`
 			, `finishedAt`
+			, `status`
 			, `createdAt`
 			, `updatedAt`
 		FROM
@@ -42,6 +44,7 @@
 			, `trainingTitle`
 			, `startedAt`
 			, `finishedAt`
+			, `status`
 			, `createdAt`
 			, `updatedAt`
 		FROM
@@ -183,7 +186,7 @@
 	<update id="updateTrainingTypeByFinishedAt">
 		UPDATE `training_type`
 		SET
-			`status` = 1
+			`status` = 0
 			, `updatedAt` = NOW()
 		WHERE
 			`finishedAt` IN

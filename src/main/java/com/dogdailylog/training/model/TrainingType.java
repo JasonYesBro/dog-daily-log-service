@@ -17,6 +17,7 @@ public class TrainingType {
 	private String trainingTitle;
 	private Date startedAt;
 	private Date finishedAt;
+	private int status;
 	private Date createdAt;
 	private Date updatedAt;
 }
