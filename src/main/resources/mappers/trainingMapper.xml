@@ -53,7 +53,7 @@
 			`id` = #{typeId}
 	</select>
 	
-	<select id="selectTrainingLogListByUserId" parameterType="int" resultType="com.dogdailylog.training.model.TrainingLog">
+	<select id="selectTrainingLogListByUserId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
 		SELECT
 			`id`
 			, `userId`
@@ -69,6 +69,7 @@
 			`training_log`
 		WHERE
 			`userId` = #{userId}
+		LIMIT ${limit}
 	</select>
 	
 	<select id="selectTrainingLogListByUserIdAndTypeId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
@@ -89,6 +90,7 @@
 			`userId` = #{userId}
 		AND
 			`typeId`= #{typeId}
+		LIMIT ${limit}
 	</select>
 	
 	<select id="selectTrainingLogByLogIdAndUserId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">

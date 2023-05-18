@@ -34,11 +34,14 @@ public interface TrainingMapper {
 			, @Param("content") String content
 			, @Param("logImagePath") String logImagePath);
 
-	public List<TrainingLog> selectTrainingLogListByUserId(int userId);
+	public List<TrainingLog> selectTrainingLogListByUserId(
+			@Param("userId") int userId
+			, @Param("limit") int limit);
 
 	public List<TrainingLog> selectTrainingLogListByUserIdAndTypeId(
 			@Param("userId") int userId
-			, @Param("typeId") Integer typeId);
+			, @Param("typeId") Integer typeId
+			, @Param("limit") int limit);
 
 	public TrainingLog selectTrainingLogByLogIdAndUserId(
 			@Param("logId") int logId

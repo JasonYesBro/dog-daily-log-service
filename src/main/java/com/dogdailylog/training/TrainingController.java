@@ -135,4 +135,18 @@ public class TrainingController {
 		
 		return "template/layout";
 	}
+	
+	@GetMapping("/more_list_view")
+	public String moreLigListView(Model model, HttpSession session, @RequestParam(value="typeId", required=false) Integer typeId) {
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		List<TrainingLog> trainingLogList = new ArrayList<>();
+		
+		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeId(userId, typeId);
+		
+		model.addAttribute("trainingLogList", trainingLogList);
+		// 조각페이지 반환
+		return "log/moreList";
+	}
 }

@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,6 +21,8 @@ import com.dogdailylog.training.model.TrainingType;
 @Service
 public class TrainingBO {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	private static final int POST_MAX_SIZE = 6;
 	
 	@Autowired
 	private FileManagerService fileManager;
@@ -72,12 +73,12 @@ public class TrainingBO {
 
 	public List<TrainingLog> getTrainingLogListByUserId(int userId) {
 		
-		return trainingMapper.selectTrainingLogListByUserId(userId);
+		return trainingMapper.selectTrainingLogListByUserId(userId, POST_MAX_SIZE);
 	}
 
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeId(int userId, Integer typeId) {
 
-		return trainingMapper.selectTrainingLogListByUserIdAndTypeId(userId, typeId);
+		return trainingMapper.selectTrainingLogListByUserIdAndTypeId(userId, typeId, POST_MAX_SIZE);
 	}
 
 	public TrainingLog getTrainingLogByLogIdAndUserId(int logId, int userId) {
