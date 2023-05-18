@@ -125,10 +125,13 @@
 	</div>
 	<script>
 	    $(document).ready(function() {
+	    	
+	    	// datepicker 설정
 	        $.datepicker.setDefaults({
 	            dateFormat: 'yy-mm-dd'
 	        });
 	        
+	    	// 시작날짜 옵션
 	        $( "#trainingStartDate" ).datepicker(
         		{
 					onClose: function( selectedDate ) {    
@@ -139,6 +142,7 @@
         		}
        		);
 	        
+	    	// 종료날짜 옵션
 	        $( "#traingingFinishDate" ).datepicker(
         		{
         			onClose: function( selectedDate ) {
@@ -149,6 +153,7 @@
        			}
        		);
 	        
+	        // 타입 생성 img 클릭시
 	        $(".type-create-btn").on('click', function() {
 	        	let trainingType = $("#trainingType option:selected").val();
 	        	let trainingTitle = $("#trainingTypeTitle").val();
