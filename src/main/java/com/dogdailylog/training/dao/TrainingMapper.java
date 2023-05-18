@@ -56,7 +56,7 @@ public interface TrainingMapper {
 			@Param("logId") int logId
 			, @Param("userId") int userId);
 
-	public int updateTrainingTypeByFinishedAt(Date finishedAt);
+	public int updateTrainingTypeByFinishedAt(List<Date> finishedAtList);
 	
 
 }

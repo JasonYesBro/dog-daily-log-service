@@ -139,8 +139,44 @@ public class TrainingBO {
 		return trainingMapper.deleteLogByLogIdAndUserId(logId, userId);
 	}
 
-	public int deleteOverduedTypeList() throws ParseException {
-		int rowCnt = 0;
+//	public int deleteOverduedTypeList() throws ParseException {
+//		int rowCnt = 0;
+//		
+//		//typeList 를 DB에서 조회해옴
+//		List<TrainingType> typeList = trainingMapper.selectTrainingTypeList();
+//		
+//		// finishedAt을 담을 바구니 생성
+//		List<Date> finishedAtList = new ArrayList<>();
+//		
+//		// sdf
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		
+//		Date today = new Date();
+//		
+//		String strDate = sdf.format(today);
+//
+//		today = sdf.parse(strDate);
+//		
+//		// List<TrainingType> 돌면서 List<Date>에 담음
+//		for(TrainingType type : typeList) {
+//			finishedAtList.add(type.getFinishedAt());
+//		}
+//		
+//		// 5/13 5/14
+//		// 종료일이 오늘날짜 기준으로 지났는지 확인
+//		for (Date finishedAt : finishedAtList) {
+//			if( today.after( finishedAt ) ) {
+//				logger.info("@@@@@@@@@@@@@@@ 종료일이 지났습니다. @@@@@@@@@@@@@@@@@ 종료일 : {}, 오늘 :{}", finishedAt, today);
+//				
+//				// logic - code 구현
+//				rowCnt += trainingMapper.updateTrainingTypeByFinishedAt(finishedAt);
+//			}
+//		}
+//		
+//		return rowCnt;
+//	}
+	
+	public int updateOverduedTypeList() throws ParseException {
 		
 		//typeList 를 DB에서 조회해옴
 		List<TrainingType> typeList = trainingMapper.selectTrainingTypeList();
@@ -162,18 +198,7 @@ public class TrainingBO {
 			finishedAtList.add(type.getFinishedAt());
 		}
 		
-		// 5/13 5/14
-		// 종료일이 오늘날짜 기준으로 지났는지 확인
-		for (Date finishedAt : finishedAtList) {
-			if( today.after( finishedAt ) ) {
-				logger.info("@@@@@@@@@@@@@@@ 종료일이 지났습니다. @@@@@@@@@@@@@@@@@ 종료일 : {}, 오늘 :{}", finishedAt, today);
-				
-				// logic - code 구현
-				rowCnt += trainingMapper.updateTrainingTypeByFinishedAt(finishedAt);
-			}
-		}
-		
-		return rowCnt;
+		return trainingMapper.updateTrainingTypeByFinishedAt(finishedAtList);
 	}
 
 }

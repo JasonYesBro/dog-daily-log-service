@@ -183,9 +183,12 @@
 	<update id="updateTrainingTypeByFinishedAt">
 		UPDATE `training_type`
 		SET
-			`status` = 0
+			`status` = 1
 			, `updatedAt` = NOW()
 		WHERE
-			`finishedAt` = #{finishedAt}
+			`finishedAt` IN
+		<foreach item="item" index="index" collection="list" open="(" close=")" separator=",">
+        	#{item}
+    	</foreach>
 	</update>
 </mapper>
