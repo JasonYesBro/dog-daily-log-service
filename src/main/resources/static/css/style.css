@@ -474,14 +474,24 @@ hr {
     box-shadow: 10px 8px 14px 6px rgba(232, 232, 232, 0.988);
 }
 
+#logBoxListWrapper {
+	height: 100%;
+	overflow: hidden;
+}
+
 .type-log-box {
     width:33.3%;
-    height:260px;
-    padding: 1.5px !important;
+    height:320px;
+    padding: 1.8px !important;
 }
 
 .type-log-box:hover {
 	cursor: pointer;	
+}
+
+.log-img-box {
+	width:100%;
+    height:80%;
 }
 
 .log-img {
