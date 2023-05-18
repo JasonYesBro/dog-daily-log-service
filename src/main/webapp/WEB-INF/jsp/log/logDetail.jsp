@@ -31,17 +31,15 @@
                <div class="text-center"><img src="/static/img/bgPink1.png" alt="" width="160"></div>
                <div class="log-success-check-box d-flex justify-content-around">
                
-               <c:if test="${trainingLog.successCheck eq 1}">
-	               <label class="text-primary"><input type="radio" name="successCheck" value=1 checked>성공</label>               
-	               <label class="text-danger"><input type="radio" name="successCheck" value=0>실패</label>
-               </c:if>
-                <c:if test="${trainingLog.successCheck eq 0}">
-	               <label class="text-primary"><input type="radio" name="successCheck" value="1">성공</label>               
-	               <label class="text-danger"><input type="radio" name="successCheck" value="0" checked>실패</label>
-               </c:if>
-
-                   <!-- <div class="col-6 mx-auto text-center"><input type="checkbox" class="btn col-8">성공</div>
-                   <div class="col-6 mx-auto text-center"><input type="checkbox" class="btn col-8">실패</div> -->
+	               <c:if test="${trainingLog.successCheck eq 1}">
+		               <label class="text-primary"><input type="radio" name="successCheck" value=1 checked>성공</label>               
+		               <label class="text-danger"><input type="radio" name="successCheck" value=0>실패</label>
+	               </c:if>
+	                <c:if test="${trainingLog.successCheck eq 0}">
+		               <label class="text-primary"><input type="radio" name="successCheck" value="1">성공</label>               
+		               <label class="text-danger"><input type="radio" name="successCheck" value="0" checked>실패</label>
+	               </c:if>
+               
                </div>
            </div>
        </div>
@@ -83,7 +81,7 @@
 	            reader.readAsDataURL(file);
 	        });
     		
-    		// 수정하기
+    		// 수정하기버튼 클릭 시
     		$("#logUpdateBtn").on('click', function() {
     			let logId = $(this).data('log-id');
 	            let title = $('#logTitle').val();
@@ -118,6 +116,7 @@
 	            formData.append("content", content);
 				formData.append("file", $('#file')[0].files[0]);
 	    		
+				// 일지 수정 ajax 통신
 	           	$.ajax({
 	            	type: "put",
 	            	url : "/training/log/update",
@@ -135,6 +134,7 @@
 	            });
     		});
     		
+    		// 일지 삭제 버튼 클릭 시
     		$('#logDeleteBtn').on('click', function() {
     			let logId = $(this).data('log-id');
     			
