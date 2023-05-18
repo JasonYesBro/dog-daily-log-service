@@ -184,6 +184,9 @@ public class TrainingBO {
 		// finishedAt을 담을 바구니 생성
 		List<Date> finishedAtList = new ArrayList<>();
 		
+		// 기간이 지난 날짜만 담음
+		List<Date> overduedList = new ArrayList<>();
+		
 		// sdf
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -198,7 +201,15 @@ public class TrainingBO {
 			finishedAtList.add(type.getFinishedAt());
 		}
 		
-		return trainingMapper.updateTrainingTypeByFinishedAt(finishedAtList);
+		for (Date finishedAt : finishedAtList) {
+			if( today.after( finishedAt ) ) {
+				logger.info("@@@@@@@@@@@@@@@ 종료일이 지났습니다. @@@@@@@@@@@@@@@@@ 종료일 : {}, 오늘 :{}", finishedAt, today);
+				// logic - code 구현
+				overduedList.add(finishedAt);
+			}
+		}
+		
+		return trainingMapper.updateTrainingTypeByFinishedAt(overduedList);
 	}
 
 }
