@@ -18,13 +18,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dogdailylog.training.bo.TrainingBO;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/training")
+@Api(value="/training")
 public class TrainingRestController {
 
 	@Autowired
 	private TrainingBO trainingBO;
 	
+	@ApiOperation(value="타입 생성 API")	
 	@PostMapping("/type/create")
 	public Map<String, Object> createTrainingType(
 			@RequestParam("trainingType") int trainingType
@@ -54,11 +59,12 @@ public class TrainingRestController {
 		return result;
 	}
 	
+	@ApiOperation(value="일지 생성 API")	
 	@PostMapping("/log/create")
 	public Map<String, Object> createTrainingLog(
 			@RequestParam("typeId") int typeId
 			, @RequestParam("title") String title
-			, @RequestParam("successCheck") boolean successCheck
+			, @RequestParam("successCheck") int successCheck
 			, @RequestParam(value="problem", required=false) String problem
 			, @RequestParam("content") String content
 			, @RequestParam("file") MultipartFile file
@@ -86,11 +92,12 @@ public class TrainingRestController {
 		return result;
 	}
 	
+	@ApiOperation(value="일지 생성 API")	
 	@PutMapping("/log/update")
 	public Map<String, Object> logUpdate(
 			@RequestParam("logId") int logId
 			, @RequestParam("title") String title
-			, @RequestParam("successCheck") boolean successCheck
+			, @RequestParam("successCheck") int successCheck
 			, @RequestParam(value="problem", required=false) String problem
 			, @RequestParam("content") String content
 			, @RequestParam("file") MultipartFile file
@@ -108,6 +115,7 @@ public class TrainingRestController {
 		return result;
 	}
 	
+	@ApiOperation(value="타입 삭제 API")	
 	@DeleteMapping("/log/delete")
 	public Map<String, Object> logDelete(
 			@RequestParam("logId") int logId

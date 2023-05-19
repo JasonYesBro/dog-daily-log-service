@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RequestMapping("/user")
 @RestController
-@Api(value = "User API")
+@Api(value = "/user")
 public class UserRestController {
 	
 	@Autowired
