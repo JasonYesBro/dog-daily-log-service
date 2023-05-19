@@ -199,6 +199,18 @@ hr {
     height: 1500px;
 }
 
+#myPageTitleContainer {
+	margin-left: 35px;
+}
+
+#myPageTitle {
+	font-weight : bold;
+}
+
+#infoContainer {
+	width: 50%;
+}
+
 #trainingSubTitle {
     position: relative;
 }
@@ -250,17 +262,15 @@ hr {
     font-size:35px;
 }
 
-#myProgress {
+.myProgress {
     width: 100%;
     background-color: #ddd;
     border-radius: 20px;
 }
 
-#myBar {
+.myBar {
     /* width 가 훈련 성공 횟수만큼 동적으로 늘어나게 */
-    width: 20%;
     height: 20px;
-    background-color: #94E292;
     border-radius: 20px;
 
 }
