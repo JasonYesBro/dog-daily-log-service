@@ -29,14 +29,13 @@ public interface TrainingMapper {
 			@Param("userId") int userId
 			, @Param("typeId") int typeId
 			, @Param("title") String title
-			, @Param("successCheck") boolean successCheck
+			, @Param("successCheck") int successCheck
 			, @Param("problem") String problem
 			, @Param("content") String content
 			, @Param("logImagePath") String logImagePath);
 
 	public List<TrainingLog> selectTrainingLogListByUserId(
-			@Param("userId") int userId
-			, @Param("limit") int limit);
+			@Param("userId") int userId);
 	
 	public List<TrainingLog> selectTrainingLogListByUserIdAndTypeId(
 			@Param("userId") int userId
@@ -59,7 +58,7 @@ public interface TrainingMapper {
 	public void updateLogByLogId(
 			@Param("logId") int logId
 			, @Param("title") String title
-			, @Param("successCheck") boolean successCheck
+			, @Param("successCheck") int successCheck
 			, @Param("problem") String problem
 			, @Param("content") String content
 			, @Param("imagePath") String imagePath);
