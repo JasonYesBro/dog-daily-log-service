@@ -137,13 +137,15 @@ public class TrainingController {
 	}
 	
 	@GetMapping("/more_list_view")
-	public String moreLigListView(Model model, HttpSession session, @RequestParam(value="typeId", required=false) Integer typeId) {
+	public String moreLigListView(Model model, HttpSession session
+			, @RequestParam(value="typeId", required=false) Integer typeId
+			, @RequestParam("cnt") int cnt) {
 		
 		int userId = (int)session.getAttribute("userId");
 		
 		List<TrainingLog> trainingLogList = new ArrayList<>();
 		
-		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeId(userId, typeId);
+		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, cnt);
 		
 		model.addAttribute("trainingLogList", trainingLogList);
 		// 조각페이지 반환

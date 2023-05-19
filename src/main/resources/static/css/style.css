@@ -476,7 +476,7 @@ hr {
 
 #logBoxListWrapper {
 	height: 100%;
-	overflow: hidden;
+	overflow: scroll;
 }
 
 .type-log-box {

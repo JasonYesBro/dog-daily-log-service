@@ -42,6 +42,11 @@ public interface TrainingMapper {
 			@Param("userId") int userId
 			, @Param("typeId") Integer typeId
 			, @Param("limit") int limit);
+	
+	public List<TrainingLog> selectTrainingLogListByUserIdAndTypeIdAndCnt(
+			@Param("userId") int userId
+			, @Param("typeId") Integer typeId
+			, @Param("limit") int limit);
 
 	public TrainingLog selectTrainingLogByLogIdAndUserId(
 			@Param("logId") int logId

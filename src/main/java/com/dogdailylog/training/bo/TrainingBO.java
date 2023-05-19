@@ -77,8 +77,16 @@ public class TrainingBO {
 	}
 
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeId(int userId, Integer typeId) {
-
+		
 		return trainingMapper.selectTrainingLogListByUserIdAndTypeId(userId, typeId, POST_MAX_SIZE);
+	}
+	
+	// cnt 까지 실험
+	public List<TrainingLog> getTrainingLogListByUserIdAndTypeIdAndCnt(int userId, Integer typeId, int cnt) {
+
+		int showLogNum = POST_MAX_SIZE * cnt;
+		
+		return trainingMapper.selectTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, showLogNum);
 	}
 
 	public TrainingLog getTrainingLogByLogIdAndUserId(int logId, int userId) {

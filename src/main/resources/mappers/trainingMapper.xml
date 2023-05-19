@@ -93,6 +93,27 @@
 		LIMIT ${limit}
 	</select>
 	
+	<select id="selectTrainingLogListByUserIdAndTypeIdAndCnt" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
+		SELECT
+			`id`
+			, `userId`
+			, `typeId`
+			, `title`
+			, `problem`
+			, `content`
+			, `imagePath`
+			, `successCheck`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_log`
+		WHERE
+			`userId` = #{userId}
+		AND
+			`typeId`= #{typeId}
+		LIMIT ${limit}
+	</select>
+	
 	<select id="selectTrainingLogByLogIdAndUserId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
 		SELECT
 			`id`
