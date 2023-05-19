@@ -75,10 +75,15 @@ public class TrainingBO {
 		
 		return trainingMapper.selectTrainingLogListByUserId(userId, POST_MAX_SIZE);
 	}
-
+	
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeId(int userId, Integer typeId) {
 		
-		return trainingMapper.selectTrainingLogListByUserIdAndTypeId(userId, typeId, POST_MAX_SIZE);
+		return trainingMapper.selectTrainingLogListByUserIdAndTypeId(userId, typeId);
+	}
+
+	public List<TrainingLog> getTrainingLogListByUserIdAndTypeIdLimit(int userId, Integer typeId) {
+		
+		return trainingMapper.selectTrainingLogListByUserIdAndTypeIdLimit(userId, typeId, POST_MAX_SIZE);
 	}
 	
 	// cnt 까지 실험
