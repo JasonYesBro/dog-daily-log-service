@@ -88,7 +88,7 @@
 	        $("#logCreateBtn").on('click', function() {
 	        	let typeId = $('#logTypeValue').data('type-id');
 	            let title = $('#logTitle').val();
-	            let successCheck = $('input:radio[name=successCheck]').is(':checked');
+	            let successCheck = $('input:radio[name=successCheck]:checked').val();
 	            let problem = $('#logProblem').val();
 	            let content = $('#logContent').val();
 	            let file = $('#file').val();
