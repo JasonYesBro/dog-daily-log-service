@@ -32,11 +32,11 @@
 	
 	<script>
 		$(document).ready(function() {
-			$('.type-log-box').on('click', function() {
+			// 동적 추가된 log 클릭할 수 있게
+			$(document).on('click', '.type-log-box', function() {
 				let logId = $(this).data('log-id');
 				location.href = "/training/log_detail_view/" + logId;	
 			});
-			
 			
 			let cnt = 1;
 			
