@@ -5,14 +5,13 @@
 <div class="container" id="myPageWrapper">
     <div id="myPageTitleContainer">
         <h3 id="myPageTitle">마이페이지</h3>
-        <img src="/Cute dog logo template.png" alt="" width="30">
     </div>
-    <div id="infoContainer" class="d-flex align-items-center">
+    <div id="infoContainer" class="d-flex align-items-center mt-5 justify-content-center">
         <div>
-            <img src="/images/tmdgus5611@gmail.com_1683701297206/profileImg.png" alt="반려견 사진" width="150">
+            <img src="${userInfo.profileImagePath}" alt="반려견 사진" width="150">
         </div>
         <div class="d-flex align-items-center ml-5">
-            <span>${userInfo.puppyName}</span>
+            <span style="font-size:25px; font-weight:bold;">${userInfo.puppyName}</span>
         </div>
     </div>
     <div class="text-center" id="trainingSubTitle">
@@ -21,58 +20,80 @@
     </div>
     <div id="trainingContainer" class="d-flex flex-wrap justify-content-start">
     	
-    	<c:forEach items="${trainingTypeList}" var="trainingType">
-	        <div class="training-box d-flex flex-column" data-type-id="${trainingType.id}">
+    	<c:forEach items="${trainingTypeViewList}" var="trainingTypeView">
+	        <div class="training-box d-flex flex-column" data-type-id="${trainingTypeView.type.id}">
 	        	<div class="d-flex align-items-center">
 		        <c:choose>
-		        	<c:when test="${trainingType.trainingType == 0}">
+		        	<c:when test="${trainingTypeView.type.trainingType == 0}">
 		        	
 			            <h3 class="training-type display-5">배변 훈련</h3>	        	
 		        	</c:when>
-		        	<c:when test="${trainingType.trainingType == 1}">
+		        	<c:when test="${trainingTypeView.type.trainingType == 1}">
 		        	
 		        		<h3 class="training-type display-5">사회화 훈련</h3>	
 		        	</c:when>
-		        	<c:when test="${trainingType.trainingType == 2}">
+		        	<c:when test="${trainingTypeView.type.trainingType == 2}">
 		        	
 		        		<h3 class="training-type display-5">기본 훈련</h3>	
 		        	</c:when>
-		        	<c:when test="${trainingType.trainingType == 3}">
+		        	<c:when test="${trainingTypeView.type.trainingType == 3}">
 		        		<h3 class="training-type display-5">고급 훈련</h3>	
 		        	</c:when>
 		        </c:choose>
-	        		<span class="ml-3"><${trainingType.trainingTitle}></span>
+	        		<span class="ml-3"><${trainingTypeView.type.trainingTitle}></span>
 	        	</div>
 	        	
 	        	<div class="text-muted">
-	        		<fmt:formatDate var="startedAt" value="${trainingType.startedAt}" pattern="yyyy-MM-dd" />
-          			<fmt:formatDate var="finishedAt" value="${trainingType.finishedAt}" pattern="yyyy-MM-dd" />
+	        		<fmt:formatDate var="startedAt" value="${trainingTypeView.type.startedAt}" pattern="yyyy-MM-dd" />
+          			<fmt:formatDate var="finishedAt" value="${trainingTypeView.type.finishedAt}" pattern="yyyy-MM-dd" />
 	        		<span>${startedAt} ~ ${finishedAt} </span>
 	        	</div>
 	        	
 	            <div class="d-flex justify-content-end">
-	                <span>2</span>
+	                <span class="filled-bar">${trainingTypeView.successTrainingCnt}</span>
 	                <span>/</span>
-	                <span>10</span>
+	                <span class="empty-bar">${trainingTypeView.trainingLogCnt}</span>
 	            </div>
 	            
-	            <div id="myProgress">
-	                <div id="myBar"></div>
+	            <div class="myProgress">
+	           		<c:set var="result" value="${ trainingTypeView.successTrainingCnt / trainingTypeView.trainingLogCnt * 100 }"/>
+	           		<c:choose>
+		           		<c:when test="${result eq 'NaN' }">
+			                <div class="myBar" style="width:${result}%; background-color: #E1E5EA;"></div>
+		           		</c:when>
+	           			<c:otherwise>
+			                <div class="myBar" style="width:${result}%; background-color: #94E292;"></div>
+		           		</c:otherwise>
+	           		</c:choose>
 	            </div>
+	            
 	            <div class="cheerUpContainer">
 	                <!-- 진행상황 기준에 따른 응원의 말 동적 변화 -->
-	                <p class="cheerUpStatus d-none">시작이 반이에요!</p>
-	                <p class="cheerUpStatus ">조금만 더 화이팅해요!</p>
-	                <p class="cheerUpStatus d-none">아주 잘하고 있어요!</p>
-	                <p class="cheerUpStatus d-none">대회에 나가도 되겠어요!</p>
+	                <c:choose>
+	                	<c:when test="${result eq 'NaN' || result < 25 }">
+			                <p class="cheerUpStatus">시작이 반이에요!</p>
+	                	</c:when>
+	                	
+	                	<c:when test="${ result >= 25 && result < 50 }">
+			                <p class="cheerUpStatus">조금만 더 화이팅해요!</p>
+	                	</c:when>
+	                	
+	                	<c:when test="${ result >= 50 && result < 75 }">
+			                <p class="cheerUpStatus">아주 잘하고 있어요!</p>
+	                	</c:when>
+	                	
+	                	<c:when test="${ result >= 75}">
+			                <p class="cheerUpStatus">대회에 나가도 되겠어요!</p>
+	                	</c:when>
+	                </c:choose>
 	            </div>
 	            <div class="plusContainer d-flex justify-content-end align-items-end">
-	            	<c:if test="${trainingType.status == 1 }"> 
-		                <a href="/training/log_create_view?typeId=${trainingType.id}">
-		                	<img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img" data-type-id="${trainingType.id}">
+	            	<c:if test="${trainingTypeView.type.status == 1 }"> 
+		                <a href="/training/log_create_view?typeId=${trainingTypeView.type.id}">
+		                	<img src="/static/img/plusItem.png" alt="훈련일지 추가이미지" width="50" class="plus-training-img" data-type-id="${trainingTypeView.type.id}">
 		                </a>
 	            	</c:if>
-	            	<c:if test="${trainingType.status == 0 }"> 
+	            	<c:if test="${trainingTypeView.type.status == 0 }"> 
 	            		<p class="text-danger" style="font-size:13px">훈련기간이 종료되었습니다.</p>
             		</c:if>
 	        	</div>
@@ -152,6 +173,30 @@
                     }   
        			}
        		);
+	    	
+	    	// progress bar
+	    	// width를 가지고 구현
+	    	let barItems = $('.my-bar');
+	    	console.log(barItems);
+	    	
+	    	let filledBar = ( $('.filled-bar').html() / $('.empty-bar').html() ) * 100;
+	    	
+	    	let filledBarObj = { 
+	                'width': filledBar+"%", 
+	                'background-color': '#94E292' 
+        	};
+	    	
+	    	let emptyBarObj = {
+	    			'width': filledBar+"%",
+	    			'background-color': '#fff' 
+	    	}
+	    	
+	    	/* if (filledBar > 0) {
+		    	$('.myBar').css(filledBarObj);
+	    		
+	    	} else {
+	    		$('.myBar').css(emptyBarObj);
+	    	} */
 	        
 	        // 타입 생성 img 클릭시
 	        $(".type-create-btn").on('click', function() {
@@ -215,7 +260,7 @@
 	        	
 	        	location.href = "/training/log_list_view?typeId="+ typeId;
 	        	
-	        })
+	        });
 	    })
 	</script>
 </div>
