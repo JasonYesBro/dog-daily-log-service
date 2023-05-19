@@ -17,6 +17,7 @@ import com.dogdailylog.common.FileManagerService;
 import com.dogdailylog.training.dao.TrainingMapper;
 import com.dogdailylog.training.model.TrainingLog;
 import com.dogdailylog.training.model.TrainingType;
+import com.dogdailylog.training.model.TrainingTypeView;
 
 @Service
 public class TrainingBO {
@@ -31,18 +32,54 @@ public class TrainingBO {
 	private TrainingMapper trainingMapper;
 	
 	// 훈련타입 가져오기
-	public List<TrainingType> getTrainingTypeListByUserId(int userId) {
+	/**
+	 * 훈련타입리스트 가져오기
+	 * @param userId
+	 * @return
+	 */
+	public List<TrainingTypeView> getTrainingTypeViewListByUserId(int userId) {
 		
-//		List<TrainingType> trainingTypeList = trainingMapper.selectTrainingTypeListByUserId(userId);
-//		Date date = new Date();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		
-//		for(TrainingType type : trainingTypeList) {
-//			// String -> date 문
-//			type.setStartedAt(sdf.format(type.getStartedAt()));
-//		}
+		List<TrainingType> trainingTypeList = new ArrayList<>();
+		List<TrainingTypeView> trainingTypeViewList = new ArrayList<>();
 		
-		return trainingMapper.selectTrainingTypeListByUserId(userId);
+		trainingTypeList = trainingMapper.selectTrainingTypeListByUserId(userId);
+		
+		for (TrainingType type : trainingTypeList) {
+
+			TrainingTypeView  trainingTypeView = new TrainingTypeView();
+			List<TrainingLog> trainingLogList = new ArrayList<>();
+			
+			// DB에서 해당타입의 로그들을 select
+			trainingLogList = getTrainingLogListByUserIdAndTypeId(userId, type.getId());
+			int trainingLogCnt = 0;
+			int successCnt = 0;
+			
+			trainingLogCnt = trainingLogList.size();
+			
+			// 로그들을 돌면서 성공인 것만 추가
+			for (TrainingLog log : trainingLogList) {
+				int success = 0; 
+				
+				success = log.getSuccessCheck();
+				
+				if(success == 1) {
+					successCnt += 1;
+				}
+			}
+			
+			logger.debug("%%%%%%%%%%% 성공한 훈련 %%%%%%%%%%% 성공갯수 : {}, 전체 갯수 : {}", successCnt, trainingLogCnt);
+			
+			// view객체에 set
+			trainingTypeView.setType(type);
+			trainingTypeView.setTrainingLogList(trainingLogList); // 타입별 로그들 저장해야함 how?
+			trainingTypeView.setTrainingLogCnt(trainingLogCnt);
+			trainingTypeView.setSuccessTrainingCnt(successCnt);
+			
+			// viewList에 add
+			trainingTypeViewList.add(trainingTypeView);
+		}
+		
+		return trainingTypeViewList;
 	}
 
 	// 훈련타입 추가
@@ -57,7 +94,7 @@ public class TrainingBO {
 		
 	}
 
-	public int addTrainingLog(String email, int userId, int typeId, String title, boolean successCheck, String problem, String content,
+	public int addTrainingLog(String email, int userId, int typeId, String title, int successCheck, String problem, String content,
 			MultipartFile file) {
 		// file 처리
 		String logImagePath = null;
@@ -66,14 +103,12 @@ public class TrainingBO {
 			logImagePath = fileManager.saveFile(email, file);
 		}
 		
-		
-		
 		return trainingMapper.insertTrainingLog(userId, typeId, title, successCheck, problem, content, logImagePath);
 	}
 
 	public List<TrainingLog> getTrainingLogListByUserId(int userId) {
 		
-		return trainingMapper.selectTrainingLogListByUserId(userId, POST_MAX_SIZE);
+		return trainingMapper.selectTrainingLogListByUserId(userId);
 	}
 	
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeId(int userId, Integer typeId) {
@@ -100,7 +135,7 @@ public class TrainingBO {
 		
 	}
 
-	public void updateLogByLogId(int logId, int userId, String userEmail, String title, boolean successCheck, String problem, String content, MultipartFile file) {
+	public void updateLogByLogId(int logId, int userId, String userEmail, String title, int successCheck, String problem, String content, MultipartFile file) {
 		
 		TrainingLog trainingLog = getTrainingLogByLogIdAndUserId(logId, userId); // 실무에서는 select 를 하는 것이 부담이기 때문에 캐시라는 임시 바구니에 담아놓는다. 그것을 BO단계에서 진행하기 때문에 BO의 메서드를 불러옴 or BO에서 많은 가공을 하고 있기때문에 BO의 가공된 값을 사용하기 위해.
 		logger.warn("[update log] log is null. logId: {}. userId: {}", logId, userId);
@@ -152,43 +187,6 @@ public class TrainingBO {
 		
 		return trainingMapper.deleteLogByLogIdAndUserId(logId, userId);
 	}
-
-//	public int deleteOverduedTypeList() throws ParseException {
-//		int rowCnt = 0;
-//		
-//		//typeList 를 DB에서 조회해옴
-//		List<TrainingType> typeList = trainingMapper.selectTrainingTypeList();
-//		
-//		// finishedAt을 담을 바구니 생성
-//		List<Date> finishedAtList = new ArrayList<>();
-//		
-//		// sdf
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		
-//		Date today = new Date();
-//		
-//		String strDate = sdf.format(today);
-//
-//		today = sdf.parse(strDate);
-//		
-//		// List<TrainingType> 돌면서 List<Date>에 담음
-//		for(TrainingType type : typeList) {
-//			finishedAtList.add(type.getFinishedAt());
-//		}
-//		
-//		// 5/13 5/14
-//		// 종료일이 오늘날짜 기준으로 지났는지 확인
-//		for (Date finishedAt : finishedAtList) {
-//			if( today.after( finishedAt ) ) {
-//				logger.info("@@@@@@@@@@@@@@@ 종료일이 지났습니다. @@@@@@@@@@@@@@@@@ 종료일 : {}, 오늘 :{}", finishedAt, today);
-//				
-//				// logic - code 구현
-//				rowCnt += trainingMapper.updateTrainingTypeByFinishedAt(finishedAt);
-//			}
-//		}
-//		
-//		return rowCnt;
-//	}
 	
 	public int updateOverduedTypeList() throws ParseException {
 		

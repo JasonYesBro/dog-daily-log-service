@@ -24,8 +24,11 @@ import com.dogdailylog.training.model.TrainingTypeView;
 import com.dogdailylog.user.bo.UserBO;
 import com.dogdailylog.user.model.User;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
 @RequestMapping("/training")
+@ApiIgnore
 public class TrainingController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -39,63 +42,21 @@ public class TrainingController {
 	@GetMapping("/my_page_view") // userId 로 받아오는게 나을까?
 	public String myPageView(Model model, HttpSession session) {
 		
+		User user = null;
+		List<TrainingTypeView> trainingTypeViewList = new ArrayList<>();
+		
 		// 로그인한 유저의 훈련타입 목록 가져오기
 		Integer userId = (Integer)session.getAttribute("userId");
 		
-		List<TrainingType> trainingTypeList = new ArrayList<>();
-		List<TrainingTypeView> trainingTypeViewList = new ArrayList<>();
-		
-		trainingTypeList = trainingBO.getTrainingTypeListByUserId(userId);
-		
-		
-		for (TrainingType type : trainingTypeList) {
+		user = userBO.getUserByLoginEmail((String)session.getAttribute("userEmail"));		
 
-			TrainingTypeView  trainingTypeView = new TrainingTypeView();
-			List<TrainingLog> trainingLogList = new ArrayList<>();
-			
-			
-			// DB에서 해당타입의 로그들을 select
-			trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeId(userId, type.getId());
-			int trainingLogCnt = 0;
-			int successCnt = 0;
-			
-			trainingLogCnt = trainingLogList.size();
-			
-			// 로그들을 돌면서 성공인 것만 추가
-			for (TrainingLog log : trainingLogList) {
-				int success = 0; 
-				
-				success = log.getSuccessCheck();
-				
-				if(success == 1) {
-					successCnt += 1;
-				}
-			}
-			
-			logger.debug("%%%%%%%%%%% 성공한 훈련 %%%%%%%%%%% 성공갯수 : {}, 전체 갯수 : {}", successCnt, trainingLogCnt);
-			
-			// view객체에 set
-			trainingTypeView.setType(type);
-			trainingTypeView.setTrainingLogList(trainingLogList); // 타입별 로그들 저장해야함 how?
-			trainingTypeView.setTrainingLogCnt(trainingLogCnt);
-			trainingTypeView.setSuccessTrainingCnt(successCnt);
-			
-			// viewList에 add
-			trainingTypeViewList.add(trainingTypeView);
-		}
-		
-		
-
-		User user = null;
-		user = userBO.getUserByLoginEmail((String)session.getAttribute("userEmail"));
-		
+		trainingTypeViewList = trainingBO.getTrainingTypeViewListByUserId(userId);
 
 		Map<String, Object> userInfo = new HashMap<>();
 		
 		userInfo.put("userName", user.getName());
 		userInfo.put("puppyName", user.getPuppyName());
 		userInfo.put("profileImagePath", user.getProfileImagePath());
-		
 		
 		model.addAttribute("title", "마이페이지입니다.");
 		model.addAttribute("view", "log/myPage");
@@ -133,11 +94,6 @@ public class TrainingController {
 		
 		int userId = (int)session.getAttribute("userId");
 		
-		// 훈련타입 가져오기
-//		List<TrainingType> trainingTypeList = new ArrayList<>();
-//		
-//		trainingTypeList = trainingBO.getTrainingTypeListByUserId(userId);
-		
 		// 훈련로그 가져오기
 		List<TrainingLog> trainingLogList = new ArrayList<>();
 		
@@ -159,7 +115,6 @@ public class TrainingController {
 		
 		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeIdLimit(userId, typeId);
 		
-
 		model.addAttribute("title", "작성한 훈련일지입니다.");
 		model.addAttribute("view", "log/logList");
 		model.addAttribute("trainingLogList", trainingLogList);
