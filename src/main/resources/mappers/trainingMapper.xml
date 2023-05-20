@@ -69,10 +69,29 @@
 			`training_log`
 		WHERE
 			`userId` = #{userId}
-		LIMIT ${limit}
 	</select>
 	
 	<select id="selectTrainingLogListByUserIdAndTypeId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
+		SELECT
+			`id`
+			, `userId`
+			, `typeId`
+			, `title`
+			, `problem`
+			, `content`
+			, `imagePath`
+			, `successCheck`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`training_log`
+		WHERE
+			`userId` = #{userId}
+		AND
+			`typeId`= #{typeId}
+	</select>
+	
+	<select id="selectTrainingLogListByUserIdAndTypeIdLimit" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
 		SELECT
 			`id`
 			, `userId`
