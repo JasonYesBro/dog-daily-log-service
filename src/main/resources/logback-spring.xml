@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- <configuration debug="true">
+
+    Appenders
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d %5p [%c] %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    Logger
+    <logger name="com.dogdailylog" level="DEBUG" appender-ref="console" />
+
+    Root Logger
+    <root level="info">
+        <appender-ref ref="console" />
+    </root>
+</configuration> -->
+
 <configuration debug="true">
 
     <!-- Appenders -->
@@ -7,9 +25,23 @@
             <Pattern>%d %5p [%c] %m%n</Pattern>
         </encoder>
     </appender>
+    
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>/Users/jasonmilian/Desktop/megaProject/6_spring_project/dogdailylog/workspace/log.%d{yyyy-MM-dd}-${MYPID}.log</fileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>3</maxHistory>
+            <totalSizeCap>15mb</totalSizeCap>
+        </rollingPolicy>
 
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-10contextName %logger{36} - %msg%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
     <!-- Logger -->
-    <logger name="com.sns" level="DEBUG" appender-ref="console" />
+    <logger name="com.dogdailylog" level="DEBUG" appender-ref="console" />
 
     <!-- Root Logger -->
     <root level="info">
