@@ -28,7 +28,6 @@ public class YoutubeRestController {
 		String searchResult = youtube.search(search);
 		
 		JSONParser parser = new JSONParser();
-		
         JSONObject jsonObject = (JSONObject) parser.parse(searchResult);
 		
 		result.put("searchResult", jsonObject);

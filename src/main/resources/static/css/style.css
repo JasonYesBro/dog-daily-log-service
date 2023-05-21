@@ -522,3 +522,9 @@ hr {
 	color: #fff;
 	background-color: #6DA9E4;
 }
+
+/* 강아지 훈련영상 */
+#videoResultContainer {
+	width : 100%;
+	overflow: scroll;
+}

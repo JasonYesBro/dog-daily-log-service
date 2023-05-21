@@ -17,11 +17,13 @@ public class Youtube {
 	
 	public String search(String search) throws IOException {
 		
+		// api 호출 키
 		String apiurl = "https://www.googleapis.com/youtube/v3/search";
 		apiurl += "?key=AIzaSyAl_Pd_tt-bsWhqukpBncgQNw51UtnleUA";
 		apiurl += "&part=snippet&type=video&maxResults=10&videoEmbeddable=true";
 		apiurl += "&q="+URLEncoder.encode(search,"UTF-8");
 		
+		// url 설정
 		URL url = new URL(apiurl);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
