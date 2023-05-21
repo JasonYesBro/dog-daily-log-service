@@ -22,8 +22,15 @@ public class YoutubeRestController {
 	private Youtube youtube;
 
 	@GetMapping("/search")
-	public Map<String, Object> search(Model model, @RequestParam("search") String search) throws IOException, ParseException {
+	public Map<String, Object> search(Model model, @RequestParam(value="keyword", required=false) String keyword) throws IOException, ParseException {
 		Map<String, Object> result = new HashMap<>();
+		
+		// 검색어 값
+		String search = "반려견 훈련";
+		
+		if(keyword != null) {
+			search = keyword;
+		}
 		
 		String searchResult = youtube.search(search);
 		
