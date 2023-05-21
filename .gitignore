@@ -38,3 +38,6 @@ out/
 
 ### mail ###
 /src/main/java/com/dogdailylog/mail/bo
+
+### api ###
+/src/main/java/com/dogdailylog/youtube/Youtube.java
