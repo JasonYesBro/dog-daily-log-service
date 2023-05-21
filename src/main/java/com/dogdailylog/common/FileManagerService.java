@@ -40,10 +40,10 @@ public class FileManagerService {
 		
 		try {
 			byte[] bytes = file.getBytes();
-		
+
 			Path path = Paths.get(filePath + fileName);
 			Files.write(path, bytes); // 파일 업로드
-					
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;

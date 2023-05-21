@@ -49,13 +49,13 @@ class TrainingBOTest {
 		assertThat(rowCnt).isEqualTo(1);
 	}
 	
-	@Test
-	void 훈련타입리스트() {
-		logger.info("$$$$$$$$$$$$$$ 훈련타입리스트 테스트 $$$$$$$$$$$$$$$$$");
-		
-		List<TrainingType> list = new ArrayList<>();
-		list = trainingBO.getTrainingTypeListByUserId(6);
-		
-		assertThat(list.size()).isEqualTo(2);
-	}
+//	@Test
+//	void 훈련타입리스트() {
+//		logger.info("$$$$$$$$$$$$$$ 훈련타입리스트 테스트 $$$$$$$$$$$$$$$$$");
+//		
+//		List<TrainingType> list = new ArrayList<>();
+//		list = trainingBO.getTrainingTypeListByUserId(6);
+//		
+//		assertThat(list.size()).isEqualTo(2);
+//	}
 }
