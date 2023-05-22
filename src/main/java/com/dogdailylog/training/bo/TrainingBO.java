@@ -82,18 +82,44 @@ public class TrainingBO {
 		return trainingTypeViewList;
 	}
 
-	// 훈련타입 추가
+	/**
+	 * 훈련타입 추가 API
+	 * @param userId
+	 * @param trainingType
+	 * @param trainingTitle
+	 * @param startedAt
+	 * @param finishedAt
+	 * @return
+	 */
 	public int addTrainingType(int userId, int trainingType, String trainingTitle, Date startedAt, Date finishedAt) {
 		
 		return trainingMapper.insertTrainingType(userId, trainingType, trainingTitle, startedAt, finishedAt);
 	}
 
+	/**
+	 * 훈련타입
+	 * @param typeId
+	 * @return
+	 */
 	public TrainingType getTrainingTypeById(int typeId) {
 		
 		return trainingMapper.selectTrainingTypeById(typeId);
 		
 	}
 
+	
+	/**
+	 * 일지추가하기 API
+	 * @param email
+	 * @param userId
+	 * @param typeId
+	 * @param title
+	 * @param successCheck
+	 * @param problem
+	 * @param content
+	 * @param file
+	 * @return
+	 */
 	public int addTrainingLog(String email, int userId, int typeId, String title, int successCheck, String problem, String content,
 			MultipartFile file) {
 		// file 처리
@@ -111,17 +137,36 @@ public class TrainingBO {
 		return trainingMapper.selectTrainingLogListByUserId(userId);
 	}
 	
+	/**
+	 * 타입뷰생성을위한 logList가져오기API
+	 * @param userId
+	 * @param typeId
+	 * @return
+	 */
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeId(int userId, Integer typeId) {
 		
 		return trainingMapper.selectTrainingLogListByUserIdAndTypeId(userId, typeId);
 	}
 
+	/**
+	 * 일지리스트가져오기API
+	 * @param userId
+	 * @param typeId
+	 * @return
+	 */
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeIdLimit(int userId, Integer typeId) {
 		
 		return trainingMapper.selectTrainingLogListByUserIdAndTypeIdLimit(userId, typeId, POST_MAX_SIZE);
 	}
 	
 	// cnt 까지 실험
+	/**
+	 * 일지더보기API
+	 * @param userId
+	 * @param typeId
+	 * @param cnt
+	 * @return
+	 */
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeIdAndCnt(int userId, Integer typeId, int cnt) {
 
 		int showLogNum = POST_MAX_SIZE * cnt;
@@ -129,12 +174,29 @@ public class TrainingBO {
 		return trainingMapper.selectTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, showLogNum);
 	}
 
+	/**
+	 * 클릭한 일지상세가져오기 API
+	 * @param logId
+	 * @param userId
+	 * @return
+	 */
 	public TrainingLog getTrainingLogByLogIdAndUserId(int logId, int userId) {
 		
 		return trainingMapper.selectTrainingLogByLogIdAndUserId(logId, userId);
 		
 	}
 
+	/**
+	 * 일지수정 API
+	 * @param logId
+	 * @param userId
+	 * @param userEmail
+	 * @param title
+	 * @param successCheck
+	 * @param problem
+	 * @param content
+	 * @param file
+	 */
 	public void updateLogByLogId(int logId, int userId, String userEmail, String title, int successCheck, String problem, String content, MultipartFile file) {
 		
 		TrainingLog trainingLog = getTrainingLogByLogIdAndUserId(logId, userId); // 실무에서는 select 를 하는 것이 부담이기 때문에 캐시라는 임시 바구니에 담아놓는다. 그것을 BO단계에서 진행하기 때문에 BO의 메서드를 불러옴 or BO에서 많은 가공을 하고 있기때문에 BO의 가공된 값을 사용하기 위해.
@@ -165,6 +227,12 @@ public class TrainingBO {
 		trainingMapper.updateLogByLogId(logId, title, successCheck, problem, content, imagePath);
 	}
 
+	/**
+	 * 일지삭제 API
+	 * @param logId
+	 * @param userId
+	 * @return
+	 */
 	public int deleteLogByLogIdAndUserId(int logId, int userId) {
 		
 		TrainingLog trainingLog = getTrainingLogByLogIdAndUserId(logId, userId); // 실무에서는 select 를 하는 것이 부담이기 때문에 캐시라는 임시 바구니에 담아놓는다. 그것을 BO단계에서 진행하기 때문에 BO의 메서드를 불러옴 or BO에서 많은 가공을 하고 있기때문에 BO의 가공된 값을 사용하기 위해.
@@ -188,6 +256,11 @@ public class TrainingBO {
 		return trainingMapper.deleteLogByLogIdAndUserId(logId, userId);
 	}
 	
+	/**
+	 * 훈련기간이 종료된 타입의 상태를 변경해줌
+	 * @return
+	 * @throws ParseException
+	 */
 	public int updateOverduedTypeList() throws ParseException {
 		
 		//typeList 를 DB에서 조회해옴
@@ -199,13 +272,11 @@ public class TrainingBO {
 		// 기간이 지난 날짜만 담음
 		List<Date> overduedList = new ArrayList<>();
 		
+		Date today = new Date();
 		// sdf
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Date today = new Date();
-		
 		String strDate = sdf.format(today);
-
 		today = sdf.parse(strDate);
 		
 		// List<TrainingType> 돌면서 List<Date>에 담음
