@@ -16,12 +16,9 @@
 			<a href="">
 				유기견을 보살펴주세요!
 			</a> 
-			<a href="">
+			<a href="/youtube/search_view">
 				훈련 꿀팁 보러가기
 			</a> 
-			<a href="">
-				훈련 꿀팁 작성하기
-			</a>
 		</div>
 	</div>
 	<div id="navBackground"></div>

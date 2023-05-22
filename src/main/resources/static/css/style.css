@@ -528,3 +528,7 @@ hr {
 	width : 100%;
 	overflow: scroll;
 }
+
+.keywordBtn {
+	margin-right: 20px;
+}
