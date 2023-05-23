@@ -41,3 +41,5 @@ out/
 
 ### api ###
 /src/main/java/com/dogdailylog/youtube/Youtube.java
+/src/main/java/com/dogdailylog/pethotel/PetHotelAPI.java
+
