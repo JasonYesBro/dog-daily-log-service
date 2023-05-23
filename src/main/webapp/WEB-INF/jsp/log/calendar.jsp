@@ -5,15 +5,8 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
 <style>
-  /* body 스타일 */
-/* html, body {
-overflow: hidden;
-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-font-size: 14px;
-} */
 /* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
 .fc-header-toolbar {
 padding-top: 1em;
