@@ -21,26 +21,4 @@
 			, NOW()
 		)
 	 </insert>
-	 <insert id="insertPayment" parameterType="map">
-	 	INSERT INTO `payment_info`
-	 	(
-	 		`bookingId`
-	 		, `userId`
-	 		, `price`
-	 		, `payment`
-	 		, `approval`
-	 		, `createdAt`
-	 		, `updatedAt`
-	 	)
-	 	VALUES
-	 	(
-	 		#{bookingId}
-	 		, #{userId}
-	 		, #{price}
-	 		, #{payment}
-	 		, #{approval}
-	 		, NOW()
-	 		, NOW()
-	 	)
-	 </insert>
 </mapper>
