@@ -30,6 +30,9 @@
 			<div id="subTitle" class="d-flex align-items-end">
 				<p>반려견 훈련일지를 작성해보세요!</p>
 			</div>
+			<div>
+			    <span><a href="/map">댕댕이를 데리러왔단다.</a></span>
+			</div>	
 		</div>
 		<div>
 			<div class="d-flex justify-content-center align-items-center">
