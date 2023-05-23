@@ -100,6 +100,14 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 로그인 API
+	 * @param email
+	 * @param password
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/sign_in")
 	@ApiOperation(value = "로그인 API")
 	public Map<String, Object> signIn(
@@ -140,6 +148,12 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 비밀번호 재설정 API
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	@PutMapping("/reset_pwd")
 	@ApiOperation(value="비밀번호 재설정 API")
 	public Map<String, Object> resetPwd(
@@ -173,7 +187,5 @@ public class UserRestController {
 		
 		return result;
 	}
-	
-//	@PostMapping("/mypage")
 	
 }

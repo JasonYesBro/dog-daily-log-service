@@ -21,6 +21,14 @@ public class YoutubeRestController {
 	@Autowired
 	private Youtube youtube;
 
+	/**
+	 * 반려견 훈련영상 API
+	 * @param model
+	 * @param keyword
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	@GetMapping("/search")
 	public Map<String, Object> search(Model model, @RequestParam(value="keyword", required=false) String keyword) throws IOException, ParseException {
 		Map<String, Object> result = new HashMap<>();

@@ -257,7 +257,7 @@ public class TrainingBO {
 	}
 	
 	/**
-	 * 훈련기간이 종료된 타입의 상태를 변경해줌
+	 * 훈련기간이 종료된 타입의 상태를 변경
 	 * @return
 	 * @throws ParseException
 	 */
