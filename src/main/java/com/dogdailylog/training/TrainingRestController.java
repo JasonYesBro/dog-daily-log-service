@@ -1,14 +1,18 @@
 package com.dogdailylog.training;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dogdailylog.training.bo.TrainingBO;
+import com.dogdailylog.training.model.TrainingLog;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -132,6 +137,29 @@ public class TrainingRestController {
 			result.put("code", 500);
 			result.put("errorMessage", "댓글 삭제하는데 실패하였습니다.");
 		}
+		return result;
+	}
+	
+	@GetMapping("/log/more")
+	public Map<String, Object> moreLigListView(HttpSession session
+			, @RequestParam(value="typeId", required=false) Integer typeId
+			, @RequestParam("cnt") int cnt) {
+		Map<String, Object> result = new HashMap<>();
+		
+		int userId = (int)session.getAttribute("userId");
+		
+		List<TrainingLog> trainingLogList = new ArrayList<>();
+		
+		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, cnt);
+		
+		// TODO list 가 null 이라면 아무것도 안함
+		if(trainingLogList == null) {
+			result.put("code", 500);
+		} else {
+			result.put("code", 1);
+			
+		}
+		// 조각페이지 반환
 		return result;
 	}
 }
