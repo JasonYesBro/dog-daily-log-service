@@ -26,29 +26,31 @@
 					</div>
 				</c:forEach>
 	    	</div>
-	    	<div class="bg-secondary" style="width:100%; height:200px;" id="moreDiv"></div>
-	    	<button class="d-none" id="moreBtn">더보기</button>
-			<!-- <div class='d-flex justify-content-center mt-3 pb-5'><button class="btn btn-secondary" id="moreBtn">더보기</button></div> -->
+	    	<div class="" style="width:100%; height:200px;" id="moreDiv">
+	    		<div id="mouse"></div>
+	    	</div>
+			
 	</div>
 	
 	<script>
+			// 하단 div
 			var footerDiv = document.getElementById('moreDiv');
-			var logList = document.getElementById("logBoxListWrapper");
+			// items 감싼 div
 			var logContainer = document.getElementById('logListContainer');
+			// 하단 div의 부모요소
 			var parent = footerDiv.parentElement;
 			
+			// item부르는 가중치
 			let cnt = 1;
+			
+			// 스크롤 감지
 			logContainer.onscroll = function(e) {
-			    //추가되는 임시 콘텐츠
-			    //window height + window scrollY 값이 document height보다 클 경우,
-			    /* console.log("aaa   "+logContainer.scrollTop);
-			    console.log("ccc   "+logList.offsetHeight);
-			    console.log( footerDiv.getBoundingClientRect().top - parent.getBoundingClientRect().top); */
+			    //추가
 			    
+			    // 하단의 박스의 높이에서 logListContainer의 높이를 뺌 -> 절대값
 			    var distance = footerDiv.getBoundingClientRect().top - parent.getBoundingClientRect().top;
 			    
-			    
-		    	let box = document.querySelector(".type-log-box:last-child");
+				// 옵션
 		    	let option = {
 					    threshold: 1.0,
 					};
@@ -59,146 +61,64 @@
 					    // 관찰 대상이 viewport 안에 들어온 경우
 					    if (entry.isIntersecting) {
 					    	
-					    	console.log('화면에 나타남');
 							let typeId = $('#logBoxListWrapper').data('type-id');
 							
 							// cnt 테스트 -> 12개까지는 되는데 18개까지 되는지 확인해야함
 							timer = setTimeout(() => $.ajax({
-								url:"/training/more_list_view?typeId="+typeId,
+								url:"/training/log/more?typeId="+typeId,
 								data: {"cnt" : cnt},
 								success : function(data) { // 해석된 html 전체가 내려온다. 조각페이지가 내려오겠지
-									console.log(cnt);
 									
-									cnt+=1;
-									$('#logBoxListWrapper').append(data); // 이전내용을 지우고 새로운 내용을 넣는다.
+									// 서버응답 성공 시
+									if(data.code == 1) {
+										$.ajax({
+											url:"/training/more_list_view?typeId="+typeId,
+											data: {"cnt" : cnt},
+											success : function(data) { 
+												cnt+=1;
+												$('#logBoxListWrapper').append(data); // 이전내용을 지우고 새로운 내용을 넣는다.
+												
+											}, 
+											error : function(request, error, status) {
+												alert("더보기를 실패했습니다. 관리자에게 문의바랍니다.");
+											}
+										});
+										
+									} else { // 서버에 요청했을때 더이상 부를 Item이 없을때
+										return;
+									}
 								}
-							}), 350);
-							
+							}), 450); // 불러지는 밀리세컨즈?설정
 							
 							io.unobserve(footerDiv);
 							
 							return;
 					    }
-					    // 그 외의 경우
+					    // 화면에서 제외된경우
 					    else {
-					    	console.log('화면에서 제외됨');
 					    	return;
 					    }
 					  })
 					}, option);
 			    
-
-			   if(distance == 435) {
-			    	//실행할 로직 (콘텐츠 추가)
-			    	
-		
-					io.observe(footerDiv);
-			    	return;
-			   	} else {
-			   		return;
-			   	}
+					// 실제 실행 위치 하단부와 listContainer를 뺀 절댓값이 435고정
+					// console.log(distance); 자신의 영역의 값이 얼만지 알아야함
+					if(distance == 435) {
+					  	//실행할 로직 (콘텐츠 추가)
+						io.observe(footerDiv);
+					  	return;
+					} else {
+						return;
+					}
 			};
 
 	
 		$(document).ready(function() {
-			// 추가된 마지막 요소 -> 동적추가된 요소라 다시 잡아야 할 수도,,,?
-
-				/* let box = document.querySelector(".type-log-box:last-child");
-				let logList = $("#logListContainer");
-				
-					let option = {
-					    threshold: 1.0,
-					}
-				
-	           
-				const io = new IntersectionObserver(entries => {
-					  entries.forEach(entry => {
-					    // 관찰 대상이 viewport 안에 들어온 경우
-					    if (entry.isIntersecting) {
-					    	console.log('화면에 나타남');
-							let typeId = $('#logBoxListWrapper').data('type-id');
-							cnt+=1;
-							
-							// cnt 테스트 -> 12개까지는 되는데 18개까지 되는지 확인해야함
-							timer = setTimeout(() => $.ajax({
-								url:"/training/more_list_view?typeId="+typeId,
-								data: {"cnt" : cnt},
-								success : function(data) { // 해석된 html 전체가 내려온다. 조각페이지가 내려오겠지
-									$('#logBoxListWrapper').html(data); // 이전내용을 지우고 새로운 내용을 넣는다.
-								}
-							}), 350)
-							
-					    }
-					    // 그 외의 경우
-					    else {
-					    	console.log('화면에서 제외됨');
-					    }
-					  })
-					}, option); */
-	
-				/* io.observe(box); */
-
-				
-
-				
-				/* 하단 div 가 어느정도 보이면 처리하자 그러면 ajax로 생성된 동적 div 를 잡을 필요도 없음 */
-				
-				
-				/* if((logList.innerHeight() + logList.scrollTop()) >= footerDiv.height()) {
-					console.log('asda');
-					console.log(logList.scrollTop());
-					console.log(logList.innerHeight());
-				} */
-				
-				/* const io1 = new IntersectionObserver(entries => {
-					  entries.forEach(entry => {
-					    // 관찰 대상이 viewport 안에 들어온 경우
-					    if (entry.isIntersecting) {
-					    	console.log('화면에 나타남');
-							
-					    	let typeId = $('#logBoxListWrapper').data('type-id');
-							cnt+=1;
-							
-							// cnt 테스트 -> 12개까지는 되는데 18개까지 되는지 확인해야함
-							timer = setTimeout(() => $.ajax({
-								url:"/training/more_list_view?typeId="+typeId,
-								data: {"cnt" : cnt},
-								success : function(data) { // 해석된 html 전체가 내려온다. 조각페이지가 내려오겠지
-									$('#logBoxListWrapper').html(data); // 이전내용을 지우고 새로운 내용을 넣는다.
-								}
-							}), 350)
-							
-					    }
-					    // 그 외의 경우
-					    else {
-					    	console.log('화면에서 제외됨');
-					    }
-					  })
-					}, option); */
-				
-				
-			
 			// 동적 추가된 log 클릭할 수 있게
 			$(document).on('click', '.type-log-box', function() {
 				let logId = $(this).data('log-id');
 				location.href = "/training/log_detail_view/" + logId;	
 			});
-			
-			/* let cnt = 1;
-			
-			$('#moreBtn').on('click', function() {
-				let typeId = $(this).data('type-id');
-				cnt+=1;
-				
-				$.ajax({
-					url:"/training/more_list_view?typeId="+typeId,
-					data: {"cnt" : cnt},
-					success : function(data) { // 해석된 html 전체가 내려온다. 조각페이지가 내려오겠지
-						$('#logBoxListWrapper').html(data); // 이전내용을 지우고 새로운 내용을 넣는다.
-					}
-				});
-				
-			}); */
 		})
 
 	</script>
