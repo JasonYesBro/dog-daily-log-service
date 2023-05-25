@@ -168,10 +168,17 @@ public class TrainingBO {
 	 * @return
 	 */
 	public List<TrainingLog> getTrainingLogListByUserIdAndTypeIdAndCnt(int userId, Integer typeId, int cnt) {
-
+		
+		int showLimitNum = POST_MAX_SIZE;
 		int showLogNum = POST_MAX_SIZE * cnt;
 		
-		return trainingMapper.selectTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, showLogNum);
+		int sie = trainingMapper.selectTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, showLogNum, showLimitNum).size();
+		
+		if (sie == 0) {
+			return null;
+		}
+		
+		return trainingMapper.selectTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, showLogNum, showLimitNum);
 	}
 
 	/**

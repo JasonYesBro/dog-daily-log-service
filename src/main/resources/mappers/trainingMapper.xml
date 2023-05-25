@@ -109,7 +109,7 @@
 			`userId` = #{userId}
 		AND
 			`typeId`= #{typeId}
-		LIMIT ${limit}
+		LIMIT #{limit}
 	</select>
 	
 	<select id="selectTrainingLogListByUserIdAndTypeIdAndCnt" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
@@ -130,7 +130,7 @@
 			`userId` = #{userId}
 		AND
 			`typeId`= #{typeId}
-		LIMIT ${limit}
+		LIMIT #{showLogNum}, #{showLimitNum}
 	</select>
 	
 	<select id="selectTrainingLogByLogIdAndUserId" parameterType="map" resultType="com.dogdailylog.training.model.TrainingLog">
