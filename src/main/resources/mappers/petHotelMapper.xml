@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.dogdailylog.pethotel.dao.PetHotelMapper">
+ 	<select id="selectPetHotelById" parameterType="int" resultType="com.dogdailylog.pethotel.model.PetHotel">
+ 		SELECT
+ 			`id`
+ 			, `preSchoolName`
+ 			, `location`
+ 			, `tel`
+ 			, `createdAt`
+ 			, `updatedAt`
+ 		FROM
+ 			`pet_hotel`
+ 		WHERE
+ 			`id` = #{id}
+ 	</select>
+ 	
+ 	<select id="selectPetHotelList" resultType="com.dogdailylog.pethotel.model.PetHotel">
+ 		SELECT
+ 			`id`
+ 			, `preSchoolName`
+ 			, `location`
+ 			, `tel`
+ 			, `createdAt`
+ 			, `updatedAt`
+ 		FROM
+ 			`pet_hotel`
+ 	</select>
+ 
+ 	<insert id="insertPetHotel" parameterType="map">
+ 		INSERT INTO `pet_hotel`
+ 		(
+ 			`preSchoolName`
+ 			, `location`
+ 			, `tel`
+ 			, `createdAt`
+ 			, `updatedAt`
+ 		)
+ 		VALUES
+ 		(
+ 			#{name}
+ 			, #{address}
+ 			, #{tel}
+ 			, NOW()
+ 			, NOW()
+ 		)
+ 	</insert>
+ </mapper>
