@@ -46,6 +46,12 @@ public class UserBO {
 		user = userMapper.selectUserByLoginEmail(email);
 		return user;
 	}
+	
+	public User getUserById(int id) {
+		User user = null;
+		user = userMapper.selectUserById(id);
+		return user;
+	}
 
 	public User getUserByLoginEmailAndPassword(String email, String password) {
 		User user = null;

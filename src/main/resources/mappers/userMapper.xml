@@ -67,6 +67,24 @@
 			`loginEmail` = #{email}
  	</select>
  	
+ 	<select id="selectUserById" resultType="com.dogdailylog.user.model.User">
+ 		SELECT
+	 		`id` 
+	 		, `loginEmail`
+			, `name`
+			, `puppyName`
+			, `profileImagePath`
+			, `password`
+			, `salt`
+			, `adoptionDate`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`user`
+		WHERE
+			`id` = #{id}
+ 	</select>
+ 	
  	<select id="selectUserByLoginEmailAndPassword" parameterType="map" resultType="com.dogdailylog.user.model.User">
  		SELECT
 	 		`id` 
