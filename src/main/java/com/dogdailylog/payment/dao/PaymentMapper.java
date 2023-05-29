@@ -15,5 +15,7 @@ public interface PaymentMapper {
 
 	public PaymentInfo selectLastPaymentByBookingId(int id);
 	
-	public int updatePaymentById(@Param("id") int id, @Param("approval") int approval);
+	public int updatePaymentById(
+			@Param("id") int id
+			, @Param("approval") int approval);
 }

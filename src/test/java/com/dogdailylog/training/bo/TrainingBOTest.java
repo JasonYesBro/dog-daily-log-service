@@ -37,7 +37,7 @@ class TrainingBOTest {
 	void test() {
 		fail("Not yet implemented");
 	}
-	
+
 	//@Transactional
 	//@Test
 	void 훈련타입생성() throws ParseException {
@@ -56,7 +56,6 @@ class TrainingBOTest {
 		
 		assertThat(rowCnt).isEqualTo(1);
 	}
-	
 	
 	// @Test
 	void 훈련타입리스트() {
@@ -93,7 +92,6 @@ class TrainingBOTest {
 		if(rowCnt > 0) {
 			log = trainingBO.getTrainingLogByLogIdAndUserId(28, 6);
 			assertNotNull(log);
-			
 		}
 	}
 	
@@ -113,7 +111,6 @@ class TrainingBOTest {
 		
 		TrainingLog beforeLog = trainingBO.getTrainingLogByLogIdAndUserId(27, 6);
 		
-		
 		trainingMapper.updateLogByLogId(beforeLog.getId(), "수정테스트", 1, "훈련원인", "수정테스트", "log/image");
 		TrainingLog afterLog = trainingBO.getTrainingLogByLogIdAndUserId(27, 6);
 		
@@ -122,23 +119,5 @@ class TrainingBOTest {
 		// 같지 않으면 성공
 		assertNotSame(beforeLog, afterLog);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
