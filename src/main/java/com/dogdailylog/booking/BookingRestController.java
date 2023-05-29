@@ -1,11 +1,14 @@
 package com.dogdailylog.booking;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,7 @@ import com.dogdailylog.booking.bo.BookingBO;
 @RestController
 @RequestMapping("/booking")
 public class BookingRestController {
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private BookingBO bookingBO;
@@ -32,7 +36,9 @@ public class BookingRestController {
 	@PostMapping("/create")
 	public Map<String, Object> createBooking(
 			@RequestParam("schoolId") int schoolId
-			, @RequestParam("bookedAt") @DateTimeFormat(pattern="yyyy-MM-dd") Date bookedAt
+			, @RequestParam("pickUpDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date pickUpDate
+			, @RequestParam("pickUpTime") String pickUpTime
+			, @RequestParam("price") int price
 			, HttpSession session) {
 		
 		Map<String, Object> result = new HashMap<>();
@@ -42,7 +48,12 @@ public class BookingRestController {
 		
 		// DB insert
 		int rowCnt = 0;
-		rowCnt = bookingBO.addBooking(userId, schoolId, bookedAt);
+		
+		try {
+			rowCnt = bookingBO.addBooking(userId, schoolId, pickUpDate, pickUpTime, price);
+		} catch (ParseException e) {
+			logger.debug("########## date parse error ########## {}", pickUpDate);
+		}
 		
 		// 반환된 행의 갯수로 분기
 		if (rowCnt > 0) {
