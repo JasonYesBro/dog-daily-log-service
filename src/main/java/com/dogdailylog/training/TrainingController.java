@@ -147,8 +147,6 @@ public class TrainingController {
 		
 		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, cnt);
 		
-		// TODO list 가 null 이라면 아무것도 안함
-		
 		model.addAttribute("trainingLogList", trainingLogList);
 		// 조각페이지 반환
 		return "log/moreList";

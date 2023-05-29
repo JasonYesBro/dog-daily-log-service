@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PetHotelRestController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@GetMapping("/pethotel") 
 	public Map<String, Object> petHotelList() throws ParseException {
 		
 		Map<String, Object> result = new HashMap<>();
@@ -40,7 +39,7 @@ public class PetHotelRestController {
 	        	logger.info("%%%%%%%%%%%% hotel %%%%%%%%%%%%% {}", hotel);
 	        }
 			
-			result.put("list", listHotel);
+			result.put("list", jsonArray);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
