@@ -3,12 +3,15 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <mapper namespace="com.dogdailylog.booking.dao.BookingMapper">
-	 <insert id="insertBooking" parameterType="map">
+	 <insert id="insertBooking" parameterType="com.dogdailylog.booking.model.BookingInfo" useGeneratedKeys="true" keyProperty="id">
 	 	INSERT INTO `booking_info`
 		(
 			`userId`
 			, `schoolId`
+			, `pickUpDate`
+			, `pickUpTime`
 			, `bookedAt`
+			, `price`
 			, `createdAt`
 			, `updatedAt`
 		)
@@ -16,9 +19,30 @@
 		(
 			#{userId}
 			, #{schoolId}
+			, #{pickUpDate}
+			, #{pickUpTime}
 			, #{bookedAt}
+			, #{price}
 			, NOW()
 			, NOW()
 		)
 	 </insert>
+
+	 <select id="selectBookingByUserIdAndId" parameterType="map" resultType="com.dogdailylog.booking.model.BookingInfo">
+	 	SELECT
+	 		`id`
+	 		, `userId`
+			, `schoolId`
+			, `pickUpDate`
+			, `pickUpTime`
+			, `bookedAt`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`booking_info`
+		WHERE
+			`userId` = #{userId}
+		AND
+			`id` = #{id}
+	 </select>
 </mapper>
