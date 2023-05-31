@@ -49,4 +49,11 @@
 	 	WHERE
 	 		`id` = #{id}
 	 </update>
+	 
+	 <delete id="deletePaymentByBookingId" parameterType="int">
+	 	DELETE FROM
+	 		`payment_info`
+	 	WHERE
+	 		`bookingId` = #{bookingId}
+	 </delete>
 </mapper>

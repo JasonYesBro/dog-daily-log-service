@@ -1,6 +1,7 @@
 package com.dogdailylog.payment;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -10,20 +11,17 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dogdailylog.booking.bo.BookingBO;
-import com.dogdailylog.booking.model.BookingInfo;
 import com.dogdailylog.payment.bo.PaymentBO;
-import com.dogdailylog.payment.model.PaymentInfo;
-import com.dogdailylog.payment.model.PaymentView;
-import com.dogdailylog.user.bo.UserBO;
-import com.dogdailylog.user.model.User;
+import com.dogdailylog.payment.bo.PaymentServiceBO;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -36,6 +34,9 @@ public class PaymentRestController {
 	
 	@Autowired
 	private PaymentBO paymentBO;
+	
+	@Autowired
+	private PaymentServiceBO paymentServiceBO;
 
 	// Iamport
 	private IamportClient iamportClient;
@@ -52,18 +53,21 @@ public class PaymentRestController {
 	
 	@PostMapping("/create")
 	public Map<String, Object> createPayment(
-			HttpSession session) {
+			@RequestParam("schoolId") int schoolId
+			, @RequestParam("pickUpDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date pickUpDate
+			, @RequestParam("pickUpTime") String pickUpTime
+			, @RequestParam("price") int price
+			, HttpSession session) {
 		
 		int userId = (int) session.getAttribute("userId");
 		Map<String, Object> result = new HashMap<>();
 
 		// PaymentInfo mapper
-		// TODO payment 넘겨줘야함
-		int rowCnt = paymentBO.addPayment(userId, "카드");
+		int rowCnt = paymentServiceBO.addBookAndPayTransaction(userId, schoolId, pickUpDate, pickUpTime, price, "카드");
+//		int rowCnt = paymentBO.addPayment(userId, "카드");
 		
 		if (rowCnt > 0) {
 			// ajax로 넘기기
-			// TODO view생성하여 booking의 정보와 payment의 정보넘겨야 하나?
 			result.put("code", 1);
 			result.put("paymentView", paymentBO.generatedPaymentView(userId));
 			result.put("result", "주문에 성공했습니다.");
@@ -98,13 +102,31 @@ public class PaymentRestController {
 		Map<Object, Object> map = new HashMap<>();
 
 		//주문번호, 결제고유번호, 결제상태를 인자로 넘겨준다
-		int res = paymentBO.updatePayment(paymentId, status);
-		if (res > 0) {
+		int rowCnt = paymentBO.updatePayment(paymentId, status);
+		if (rowCnt > 0) {
 			map.put("cnt", 1);
 		}else {
 			map.put("cnt", 0);
 		}
 		
 		return map;
+	}
+	
+	@DeleteMapping("/delete")
+	public Map<String, Object> deleteBookAndPayemnt(
+			@RequestParam("bookingId") int bookingId) {
+		Map<String, Object> result = new HashMap<>();
+		
+		int rowCnt = paymentServiceBO.deleteBookAndPayTransaction(bookingId);
+		
+		if (rowCnt > 0) {
+			result.put("code", 1);
+			result.put("result", "결제가 취소되었습니다.");
+		} else {
+			result.put("code", 500);
+			result.put("error", "결제내역삭제에 실패했습니다.");
+		}
+		
+		return result;
 	}
 }

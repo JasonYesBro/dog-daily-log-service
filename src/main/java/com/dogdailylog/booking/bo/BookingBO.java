@@ -19,7 +19,7 @@ public class BookingBO {
 	@Autowired
 	private BookingMapper bookingMapper;
 	
-	BookingInfo booking = null;
+	private BookingInfo booking = null;
 	
 	public int addBooking(int userId, int schoolId, Date pickUpDate, String pickUpTime, int price) throws ParseException {
 //		SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
@@ -50,6 +50,10 @@ public class BookingBO {
 	public BookingInfo getBookingByUserId(int userId) {
 		logger.info("@@@@@@@@@@@@@@ id @@@@@@@@@@@@@@ : {}", booking.getId());
 		return bookingMapper.selectBookingByUserIdAndId(userId, booking.getId());
+	}
+	
+	public void deleteBooking(int bookingId) {
+		bookingMapper.deleteBookingById(bookingId);
 	}
 	
 }

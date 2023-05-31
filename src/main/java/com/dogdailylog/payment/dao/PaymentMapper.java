@@ -18,4 +18,6 @@ public interface PaymentMapper {
 	public int updatePaymentById(
 			@Param("id") int id
 			, @Param("approval") int approval);
+
+	public int deletePaymentByBookingId(int bookingId);
 }

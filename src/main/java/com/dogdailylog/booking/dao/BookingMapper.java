@@ -22,5 +22,7 @@ public interface BookingMapper {
 			@Param("userId") int userId
 			, @Param("id") int id);
 
+	public int deleteBookingById(int id);
+
 }
 

@@ -2,9 +2,9 @@ package com.dogdailylog.payment.bo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dogdailylog.booking.bo.BookingBO;
-import com.dogdailylog.booking.dao.BookingMapper;
 import com.dogdailylog.booking.model.BookingInfo;
 import com.dogdailylog.payment.dao.PaymentMapper;
 import com.dogdailylog.payment.model.PaymentInfo;
@@ -18,14 +18,12 @@ public class PaymentBO {
 	private PaymentMapper paymentMapper;
 	
 	@Autowired
-	private BookingMapper bookingMapper;
-	
-	@Autowired
 	private BookingBO bookingBO;
 	
 	@Autowired
 	private UserBO userBO;
 	
+	@Transactional
 	public int addPayment(int userId, String payment) {
 		
 		BookingInfo bookinInfo = bookingBO.getBookingByUserId(userId);
@@ -33,7 +31,7 @@ public class PaymentBO {
 		int price = 100;
 		
 		// TODO
-		int bookingId = 0;
+		int bookingId;
 		
 		// 단일상품 결제
 		price = bookinInfo.getPrice();
@@ -50,6 +48,10 @@ public class PaymentBO {
 	public int updatePayment(int id, int status) {
 		// bookingMapper. // booking의 status를 업데이트 해줘야함
 		return paymentMapper.updatePaymentById(id, status);
+	}
+	
+	public int deletePayment(int bookingId) {
+		return paymentMapper.deletePaymentByBookingId(bookingId);
 	}
 	
 	public PaymentView generatedPaymentView(int userId) {
