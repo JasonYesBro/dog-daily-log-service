@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
-<header>
+<header style="background-color: #fff;">
 	<div id="navWrapper">
 		<div id="navContainer">
 			<img src="/static/img/menu-bar.png" alt="메뉴바이미지" id="navImg" width="30" height="30">
@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<div id="navBackground"></div>
-	<div id="headerWrapper">
+	<div id="headerWrapper" style="background-color: #fff;">
 		<div id="headerContainer" class="d-flex align-items-center">
 			<div id="title">
 				<p><a href="/main">우리집 강형욱</a></p>
@@ -31,11 +31,11 @@
 				<p>반려견 훈련일지를 작성해보세요!</p>
 			</div>
 			<div>
-			    <span><a href="/map">댕댕이를 데리러왔단다.</a></span>
+			    <span><a href="/hotel/list_view">댕댕이를 데리러왔단다.</a></span>
 			</div>	
 		</div>
 		<div>
-			<div class="d-flex justify-content-center align-items-center">
+			<div class="d-flex justify-content-center align-items-center" style="background-color: #fff;">
 				<hr>
 				<div id="signStatus" class="d-flex justify-content-around ml-2">
 				<c:if test="${ empty userId }">

@@ -15,7 +15,7 @@
             <div class="">
                 <img src="" alt="" width="200">
             </div>
-            <a href="/hotel/detail?id=${hotel.id}">
+            <a href="/hotel/detail_view?id=${hotel.id}">
 	            <div class="d-flex flex-column" class="hotel-content-box">
 	                <span class="name">호텔 이름 : ${hotel.preSchoolName}</span>
 	                <span class="address">호텔 위치 : ${hotel.location}</span>
