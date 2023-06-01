@@ -55,6 +55,7 @@
 		</div>
 		<div class="form-group input-box">
 		    <label for="password">비밀번호</label>
+		    <span class="text-danger" style="font-size:13px; display:block;">대문자, 소문자, 숫자, 특수문자를 포함한 8자이상이어야 합니다.</span>
 		    <input type="password" name="password" class="form-control col-10 mb-1" id="password" placeholder="비밀번호를 입력해주세요">
 		    <input type="password" name="passwordConfirm" class="form-control col-10" id="passwordConfirm" placeholder="비밀번호를 재입력 입력해주세요">
 		</div>
@@ -116,10 +117,10 @@
     				// response
     				, success : function(data) {
     					if(data.result) {
-    						$('#nameCheckDuplicated').removeClass("d-none");
+    						$('#nameCheckOk').removeClass("d-none");
     						$("#nameDupCheck").val(1);
     					} else {
-    						$('#nameCheckOk').removeClass("d-none");
+    						$('#nameCheckDuplicated').removeClass("d-none");
     					}
     				}
     				, error : function(request, status, error) {
@@ -136,8 +137,16 @@
             	
 				let email = $("#email").val().trim();
 				let domain = $("#domain option:selected").val();
-            	
+				
+				let emailRegex = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
 				let emailAddress = email + '@' + domain;
+				
+				let emailValueCheck = emailRegex.test(emailAddress);
+				
+				if(!emailValueCheck) {
+					alert('이메일을 확인해주세요.');
+					return false;
+				}
 				if (emailAddress != null) {
 	            	$.ajax({
 	            		type : "post"
@@ -202,6 +211,9 @@
 	            let file = $("#imgUrl").val();
 	            let nameDupCheck = $("#nameDupCheck").val();
 	            
+	            let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&#]{8,}$/;
+	            let passwordValueCheck = passwordRegex.test(password);
+	            
 	            // validation
 	            if (!name) {
 	            	alert("닉네임을 입력해주세요.");
@@ -231,6 +243,12 @@
 	            	alert("비밀번호를 입력해주세요.");
 	            	return false;
 	            }
+	            
+	            if (!passwordValueCheck) {
+	            	alert('비밀번호를 확인해주세요.');
+	            	return false;
+	            }
+	            
 	            if (!password || !confirmPassword) {
 	            	alert("비밀번호를 확인해주세요.");
 	            	return false;
