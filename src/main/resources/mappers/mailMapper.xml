@@ -28,5 +28,6 @@
 			`smtp_pwd`
 		WHERE
 			`verifyCode` = #{verifyCode}
+		ORDER BY `id` DESC limit 1
 	</select>
 </mapper>
