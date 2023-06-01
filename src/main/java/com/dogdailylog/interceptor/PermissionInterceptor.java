@@ -28,8 +28,8 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		Integer userId = (Integer)session.getAttribute("userId"); // 비로그인일 수 있음
 		
-		// 비로그인 이면서 training 로 시작하는 주소로 접속한 경우 => 로그인페이지로 이동 redirect , return false 를 하여 기존 controller 수행 방지
-		if (userId == null && uri.startsWith("/training")) {
+		// 비로그인 이면서 training or hotel 로 시작하는 주소로 접속한 경우 => 로그인페이지로 이동 redirect , return false 를 하여 기존 controller 수행 방지
+		if (userId == null && (uri.startsWith("/training") || uri.startsWith("/hotel"))) {
 			response.sendRedirect("/user/sign_in_view");
 			
 			return false; // 컨트롤러 수행안함
