@@ -33,38 +33,38 @@ public class BookingRestController {
 	 * @param session
 	 * @return
 	 */
-	@PostMapping("/create")
-	public Map<String, Object> createBooking(
-			@RequestParam("schoolId") int schoolId
-			, @RequestParam("pickUpDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date pickUpDate
-			, @RequestParam("pickUpTime") String pickUpTime
-			, @RequestParam("price") int price
-			, HttpSession session) {
-		
-		Map<String, Object> result = new HashMap<>();
-		
-		// session 에서 user 정보
-		int userId = (int) session.getAttribute("userId");
-		
-		// DB insert
-		int rowCnt = 0;
-		
-		try {
-			rowCnt = bookingBO.addBooking(userId, schoolId, pickUpDate, pickUpTime, price);
-		} catch (ParseException e) {
-			logger.debug("########## date parse error ########## {}", pickUpDate);
-		}
-		
-		// 반환된 행의 갯수로 분기
-		if (rowCnt > 0) {
-			result.put("code", 1);
-			result.put("result", "예약에 성공하였습니다.");
-		} else {
-			result.put("code", 500);
-			result.put("errorMessage", "예약에 실패하였습니다.");
-		}
-		
-		return result;
-	}
+//	@PostMapping("/create")
+//	public Map<String, Object> createBooking(
+//			@RequestParam("schoolId") int schoolId
+//			, @RequestParam("pickUpDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date pickUpDate
+//			, @RequestParam("pickUpTime") String pickUpTime
+//			, @RequestParam("price") int price
+//			, HttpSession session) {
+//		
+//		Map<String, Object> result = new HashMap<>();
+//		
+//		// session 에서 user 정보
+//		int userId = (int) session.getAttribute("userId");
+//		
+//		// DB insert
+//		int rowCnt = 0;
+//		
+//		try {
+//			rowCnt = bookingBO.addBooking(userId, schoolId, pickUpDate, pickUpTime, price);
+//		} catch (ParseException e) {
+//			logger.debug("########## date parse error ########## {}", pickUpDate);
+//		}
+//		
+//		// 반환된 행의 갯수로 분기
+//		if (rowCnt > 0) {
+//			result.put("code", 1);
+//			result.put("result", "예약에 성공하였습니다.");
+//		} else {
+//			result.put("code", 500);
+//			result.put("errorMessage", "예약에 실패하였습니다.");
+//		}
+//		
+//		return result;
+//	}
 	
 }

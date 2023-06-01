@@ -20,9 +20,9 @@ public interface BookingMapper {
 
 	public BookingInfo selectBookingByUserIdAndId(
 			@Param("userId") int userId
-			, @Param("id") int id);
+			, @Param("id") Long id);
 
-	public int deleteBookingById(int id);
+	public int deleteBookingById(Long id);
 
 }
 

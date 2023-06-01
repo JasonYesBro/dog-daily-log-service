@@ -47,7 +47,7 @@
 			`id` = #{id}
 	 </select>
 	 
-	 <delete id="deleteBookingById" parameterType="int">
+	 <delete id="deleteBookingById" parameterType="Long">
 	 	DELETE FROM
 	 		`booking_info`
 	 	WHERE
