@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dogdailylog.payment.bo.PaymentBO;
 import com.dogdailylog.payment.bo.PaymentServiceBO;
+import com.dogdailylog.payment.model.PaymentInfo;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -63,10 +64,13 @@ public class PaymentRestController {
 		Map<String, Object> result = new HashMap<>();
 
 		// PaymentInfo mapper
-		int rowCnt = paymentServiceBO.addBookAndPayTransaction(userId, schoolId, pickUpDate, pickUpTime, price, "카드");
+//		int rowCnt = paymentServiceBO.addBookAndPayTransaction(userId, schoolId, pickUpDate, pickUpTime, price, "카드");
 //		int rowCnt = paymentBO.addPayment(userId, "카드");
+
+		// 분기문을 위해 return Payment로 받음
+		PaymentInfo paymentInfo = paymentServiceBO.addBookAndPayTransaction(userId, schoolId, pickUpDate, pickUpTime, price, "카드");
 		
-		if (rowCnt > 0) {
+		if (paymentInfo != null) {
 			// ajax로 넘기기
 			result.put("code", 1);
 			result.put("paymentView", paymentBO.generatedPaymentView(userId));
@@ -114,7 +118,7 @@ public class PaymentRestController {
 	
 	@DeleteMapping("/delete")
 	public Map<String, Object> deleteBookAndPayemnt(
-			@RequestParam("bookingId") int bookingId) {
+			@RequestParam("bookingId") Long bookingId) {
 		Map<String, Object> result = new HashMap<>();
 		
 		int rowCnt = paymentServiceBO.deleteBookAndPayTransaction(bookingId);

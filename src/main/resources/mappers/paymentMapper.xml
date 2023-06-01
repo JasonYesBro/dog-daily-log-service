@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
 
 <mapper namespace="com.dogdailylog.payment.dao.PaymentMapper">
 	 <insert id="insertPayment" parameterType="map">
@@ -25,7 +24,7 @@
 	 	)
 	 </insert>
 	 
-	 <select id="selectLastPaymentByBookingId" parameterType="int" resultType="com.dogdailylog.payment.model.PaymentInfo">
+	 <select id="selectLastPaymentByBookingId" parameterType="Long" resultType="com.dogdailylog.payment.model.PaymentInfo">
 	 	SELECT
 	 		`id`
 	 		, `bookingId`
@@ -50,7 +49,7 @@
 	 		`id` = #{id}
 	 </update>
 	 
-	 <delete id="deletePaymentByBookingId" parameterType="int">
+	 <delete id="deletePaymentByBookingId" parameterType="Long">
 	 	DELETE FROM
 	 		`payment_info`
 	 	WHERE

@@ -1,22 +1,56 @@
 package com.dogdailylog.payment.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 
-@Setter
-@NoArgsConstructor
+@ToString
+@Builder(toBuilder = true)  
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "payment_info")
+@Entity
 public class PaymentInfo {
-	private int id;
-	private int bookingId;
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name="bookingId")
+	private Long bookingId;
+	
+	@Column(name="userId")
 	private int userId;
+	
 	private int price;
+	
+	@Column(name="payment")
 	private String payment;
-	private String approval;
-	private Date createdAt;
-	private Date updatedAt;
+	
+	@Column(name="approval")
+	@ColumnDefault("0")
+	private int approval;
+	
+	@UpdateTimestamp    // 현재시간 디폴트값
+    @Column(name="createdAt", updatable = false)
+	private LocalDateTime createdAt;
+	
+	@UpdateTimestamp    // 현재시간 디폴트값
+    @Column(name="updatedAt")
+	private LocalDateTime updatedAt;
 
 }

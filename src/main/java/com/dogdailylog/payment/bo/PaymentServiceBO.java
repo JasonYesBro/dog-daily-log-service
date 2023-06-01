@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dogdailylog.booking.bo.BookingBO;
+import com.dogdailylog.payment.model.PaymentInfo;
 
 @Service
 public class PaymentServiceBO {
@@ -22,18 +23,19 @@ public class PaymentServiceBO {
 	private PaymentBO paymentBO;
 	
 	@Transactional
-	public int addBookAndPayTransaction(int userId, int schoolId, Date pickUpDate, String pickUpTime, int price, String payment) {
+	public PaymentInfo addBookAndPayTransaction(int userId, int schoolId, Date pickUpDate, String pickUpTime, int price, String payment) {
 		try {
 			bookingBO.addBooking(userId, schoolId, pickUpDate, pickUpTime, price);
 		} catch (ParseException e) {
 			logger.debug("########## 예약insert - ParseException ##########");
 		}
-		int rowCnt = paymentBO.addPayment(userId, payment);
-		return rowCnt;
+		
+//		return rowCnt;
+		return paymentBO.addPayment(userId, payment); 
 	}
 	
 	@Transactional
-	public int deleteBookAndPayTransaction(int bookingId) {
+	public int deleteBookAndPayTransaction(Long bookingId) {
 		
 		bookingBO.deleteBooking(bookingId);
 		int rowCnt = paymentBO.deletePayment(bookingId);
