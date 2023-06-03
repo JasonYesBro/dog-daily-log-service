@@ -24,22 +24,25 @@ public class PaymentServiceBO {
 	
 	@Transactional
 	public PaymentInfo addBookAndPayTransaction(int userId, int schoolId, Date pickUpDate, String pickUpTime, int price, String payment) {
+		
+		Long bookingId = 0L;
 		try {
-			bookingBO.addBooking(userId, schoolId, pickUpDate, pickUpTime, price);
+			bookingId = bookingBO.addBooking(userId, schoolId, pickUpDate, pickUpTime, price);
 		} catch (ParseException e) {
 			logger.debug("########## 예약insert - ParseException ##########");
 		}
 		
 //		return rowCnt;
-		return paymentBO.addPayment(userId, payment); 
+		return paymentBO.addPayment(userId, payment, bookingId); 
 	}
 	
 	@Transactional
 	public int deleteBookAndPayTransaction(Long bookingId) {
 		
 		bookingBO.deleteBooking(bookingId);
-		int rowCnt = paymentBO.deletePayment(bookingId);
+		paymentBO.deletePayment(bookingId);
 		
-		return rowCnt;
+		
+		return 1;
 	}
 }

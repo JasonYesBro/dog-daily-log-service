@@ -1,5 +1,8 @@
 package com.dogdailylog.payment.bo;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,21 +34,22 @@ public class PaymentBO {
 	@Autowired
 	private PaymentRepository paymentRepository;
 	
+	private Optional <BookingInfo> bookingInfoOptional = null;
+	private Optional <PaymentInfo> paymentInfoOptional = null;
+	int price = 100;
+	
 	@Transactional
-	public PaymentInfo addPayment(int userId, String payment) {
+	public PaymentInfo addPayment(int userId, String payment, Long bookingId) {
 		
 //		BookingInfo bookinInfo = bookingBO.getBookingByUserId(userId);
-		
-		BookingInfo bookinInfo = bookingRepository.getByUserId(userId);
-		
-		int price = 100;
-		
-		Long bookingId;
+		bookingInfoOptional = bookingRepository.findByUserIdAndId(userId, bookingId);
 		
 		// 단일상품 결제
-		price = bookinInfo.getPrice();
-		bookingId = bookinInfo.getId();
+		bookingInfoOptional.ifPresent( b -> price = bookingInfoOptional.get().getPrice() );
+//		bookingId = bookinInfo.getId();
 		
+		
+		// TODO Optional로 바꿔야 함?
 		PaymentInfo paymentInfo = null;
 		
 		paymentInfo = paymentRepository.save(PaymentInfo.builder()
@@ -56,7 +60,6 @@ public class PaymentBO {
 					.approval(0)
 					.build());
 		
-		// TODO 현재 void 처리해주고 있음
 		return paymentInfo;
 //		return paymentMapper.insertPayment(bookingId, userId, price, payment);
 	}
@@ -66,25 +69,51 @@ public class PaymentBO {
 		return paymentMapper.selectLastPaymentByBookingId(id);
 	}
 
-	public int updatePayment(int id, int status) {
+	public PaymentInfo updatePayment(Long id, int status) {
+		PaymentInfo paymentInfo = paymentRepository.findById(id).orElse(null);
+		paymentInfo = paymentInfo.toBuilder() // 기존 내용은 그대로
+                .approval(1)
+                .updatedAt(LocalDateTime.now())
+                .build();
+		
+		return paymentRepository.save(paymentInfo);
+		
 		// PaymentMapper. // Payment의 status를 업데이트 해줘야함 // status가 아닌 approval임
-		return paymentMapper.updatePaymentById(id, status);
+//		return paymentMapper.updatePaymentById(id, status);
 	}
 	
-	public int deletePayment(Long bookingId) {
-		return paymentMapper.deletePaymentByBookingId(bookingId);
+	public void deletePayment(Long bookingId) {
+		Optional<PaymentInfo> paymentInfoOptional = paymentRepository.findByBookingId(bookingId);
+		paymentInfoOptional.ifPresent(
+				p -> paymentRepository.delete(p)
+				);
+		
+//		return paymentRepository.deletePaymentByBookingId(bookingId);
+//		return paymentMapper.deletePaymentByBookingId(bookingId);
 	}
+	
 	
 	public PaymentView generatedPaymentView(int userId) {
 		PaymentView paymentView = new PaymentView();
 		
 		User user = userBO.getUserById(userId);
 		// get booking by userId
-		BookingInfo booking = bookingBO.getBookingByUserId(userId);
-		PaymentInfo paymentInfo = getLastPaymentInfoByBookingId(booking.getId());
+//		BookingInfo booking = bookingBO.getBookingByUserId(userId);
+//		PaymentInfo paymentInfo = getLastPaymentInfoByBookingId(booking.getId());
 		
-		paymentView.setBookingInfo(booking);
-		paymentView.setPaymentInfo(paymentInfo);
+		// repository에 메서드 생성
+		
+//		bookingInfoOptional = bookingRepository.getByUserId(userId);
+//		Optional <PaymentInfo> paymentInfoOptional = null;
+		
+		// Optional 타입을 사용하여 booking이 있으면 payment를 가져온다.
+		// lambda안에서 로컬변수의 값을 바꾸지 못하므로 클래스변수를 선언함.
+		bookingInfoOptional.ifPresent(
+				b -> paymentInfoOptional = paymentRepository.getLastPaymentInfoByBookingId(b.getId())
+				);
+		
+		paymentView.setBookingInfoOptional(bookingInfoOptional);
+		paymentView.setPaymentInfoOptional(paymentInfoOptional);
 		paymentView.setUser(user);
 		
 		return paymentView;

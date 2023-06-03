@@ -98,7 +98,7 @@ public class PaymentRestController {
 			@RequestParam("imp_uid") String imp_uid
 			, @RequestParam("merchant_uid") String merchant_uid){
 		
-		int paymentId = Integer.parseInt(merchant_uid);
+		Long paymentId = (long) Integer.parseInt(merchant_uid);
 		int status = 1;
 		
 		logger.info("######### merchant_uid :{}", paymentId);
@@ -106,8 +106,11 @@ public class PaymentRestController {
 		Map<Object, Object> map = new HashMap<>();
 
 		//주문번호, 결제고유번호, 결제상태를 인자로 넘겨준다
-		int rowCnt = paymentBO.updatePayment(paymentId, status);
-		if (rowCnt > 0) {
+//		int rowCnt = paymentBO.updatePayment(paymentId, status);
+		PaymentInfo payment = null;
+		payment = paymentBO.updatePayment(paymentId, status);
+		
+		if (payment != null) {
 			map.put("cnt", 1);
 		}else {
 			map.put("cnt", 0);
