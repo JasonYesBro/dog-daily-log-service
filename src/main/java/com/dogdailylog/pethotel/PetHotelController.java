@@ -2,7 +2,8 @@ package com.dogdailylog.pethotel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -38,18 +39,22 @@ public class PetHotelController {
 		return "template/layout";
 	}
 	
-	@GetMapping("/detail")
+	@GetMapping("/detail_view")
 	public String hotelDetail(
 			Model model
-			, @RequestParam("id") int id) {
+			, @RequestParam("id") int id
+			, HttpSession session) {
 		
 //		int id = Integer.parseInt(num);
-		
+		String name = (String) session.getAttribute("userName");
+		// TODO 예약자 정보까지 넘겨야함
 		PetHotel petHotel = petHotelBO.getPetHotelById(id);
 		
 		model.addAttribute("petHotel", petHotel);
+		model.addAttribute("name", name);
 		model.addAttribute("view", "pethotel/hotelDetail");
 		
 		return "template/layout";
 	}
+	
 }
