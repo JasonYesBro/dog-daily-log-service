@@ -88,7 +88,7 @@ public class UserRestController {
 		User user = null;
 		user = userBO.getUserByName(name);
 		
-		if(user != null) {
+		if(user == null) {
 			result.put("code", 1);
 			result.put("result", true);
 			
