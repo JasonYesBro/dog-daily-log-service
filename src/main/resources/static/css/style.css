@@ -581,6 +581,20 @@ hr {
 
 
 /* 호텔 상세 */
+#busImg {
+	position: relative;
+	animation-name: bus;
+	animation-duration: 5s;
+	animation-timing-function: ease-out;
+	/* animation-iteration-count: infinite; */
+	/* animation-direction: alternate; */
+}
+
+@keyframes bus {
+	0% {left:0px; top:0px;}
+	100% {left:700px; top:0px;}
+}
+
 #pickUpTime > td {
 	width:33.3%;
 	text-align:center;
@@ -598,6 +612,7 @@ hr {
 
 #pickUpTime {
 	width:320px;
+	
 }
 
 #loading {
