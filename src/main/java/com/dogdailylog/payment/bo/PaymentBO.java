@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dogdailylog.booking.bo.BookingBO;
 import com.dogdailylog.booking.dao.BookingRepository;
 import com.dogdailylog.booking.model.BookingInfo;
 import com.dogdailylog.payment.dao.PaymentMapper;
@@ -22,8 +21,8 @@ public class PaymentBO {
 	@Autowired
 	private PaymentMapper paymentMapper;
 	
-	@Autowired
-	private BookingBO bookingBO;
+//	@Autowired
+//	private BookingBO bookingBO;
 	
 	@Autowired
 	private UserBO userBO;

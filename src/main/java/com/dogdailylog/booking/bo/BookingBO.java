@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dogdailylog.booking.dao.BookingMapper;
 import com.dogdailylog.booking.dao.BookingRepository;
 import com.dogdailylog.booking.model.BookingInfo;
 
@@ -19,8 +18,8 @@ import com.dogdailylog.booking.model.BookingInfo;
 public class BookingBO {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired
-	private BookingMapper bookingMapper;
+//	@Autowired
+//	private BookingMapper bookingMapper;
 	
 	@Autowired
 	private BookingRepository bookingRepository;
