@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dogdailylog.booking.dao.BookingRepository;
+import com.dogdailylog.booking.model.BookingInfo;
 import com.dogdailylog.pethotel.bo.PetHotelBO;
 import com.dogdailylog.pethotel.model.PetHotel;
 
@@ -25,6 +27,9 @@ public class PetHotelController {
 	
 	@Autowired
 	private PetHotelBO petHotelBO;
+	
+	@Autowired
+	private BookingRepository bookingRepository;
 	
 	// TODO bo로 로직 refactor	
 	@RequestMapping("/list_view")
@@ -56,5 +61,19 @@ public class PetHotelController {
 		
 		return "template/layout";
 	}
-	
+
+	@GetMapping("/history_view")
+	public String bookingHistoryView(
+			Model model
+			, HttpSession session) {
+		
+		int userId = (int) session.getAttribute("userId");
+		
+		List<BookingInfo> bookingList = bookingRepository.getByUserId(userId);
+		
+		model.addAttribute("bookingList", bookingList);
+		model.addAttribute("view", "pethotel/bookingHistory");
+		
+		return "template/layout";
+	}
 }

@@ -627,3 +627,10 @@ hr {
 @keyframes spin {
 	100% {transform: rotate(360deg)}
 }
+
+/* 예약목록 */
+#bookingContainer {
+	background-color: #fff;
+    border-radius: 18px;
+    box-shadow: 10px 8px 14px 6px rgba(232, 232, 232, 0.988);
+}

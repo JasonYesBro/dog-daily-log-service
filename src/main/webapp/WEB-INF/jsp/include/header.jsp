@@ -13,12 +13,13 @@
 			<a href="/training/calendar_view">
 				훈련일지 보기
 			</a> 
-			<a href="">
+			<!-- <a href="">
 				유기견을 보살펴주세요!
-			</a> 
+			</a>  -->
 			<a href="/youtube/search_view">
 				훈련 꿀팁 보러가기
 			</a> 
+			<a href="/hotel/list_view">댕댕이를 데리러왔단다.</a>
 		</div>
 	</div>
 	<div id="navBackground"></div>
@@ -30,9 +31,6 @@
 			<div id="subTitle" class="d-flex align-items-end">
 				<p>반려견 훈련일지를 작성해보세요!</p>
 			</div>
-			<div>
-			    <span><a href="/hotel/list_view">댕댕이를 데리러왔단다.</a></span>
-			</div>	
 		</div>
 		<div>
 			<div class="d-flex justify-content-center align-items-center" style="background-color: #fff;">
