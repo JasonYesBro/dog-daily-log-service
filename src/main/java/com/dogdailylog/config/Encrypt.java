@@ -15,6 +15,11 @@ public class Encrypt{
 		return hashingPassword;
 	}
 	
+	
+	/**
+	 * salt값 얻기
+	 * @return String salt
+	 */
 	public static String getSalt() {
 		// random , byte 객체 생성
 		SecureRandom secureRandom = new SecureRandom();
@@ -26,6 +31,7 @@ public class Encrypt{
 		//byte to String (10진수의 문자열로 변경)
 		StringBuffer sb = new StringBuffer();
 		for (byte b : salt) {
+			// %02x : 2자리 16진수(헥사)를 대문자로, 그리고 1자리 헥사는 앞에 0을 붙임
 			sb.append(String.format("%02x", b));
 		}
 		
@@ -33,6 +39,12 @@ public class Encrypt{
 		
 	}
 	
+	/**
+	 * 암호화된 비밀번호 얻기
+	 * @param pwd
+	 * @param salt
+	 * @return String
+	 */
 	public static String getEncrypt(String pwd, String salt) {
 		String encData = "";
 		
@@ -40,11 +52,11 @@ public class Encrypt{
 			// SHA-256 알고리즘 객체 생성 후 할당
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			
-			// pwd와 salt 합친 문자열에 SHA-256 알고리즘 적용
-			logger.debug("[before hashing] pwd : {}, salt : {}", pwd, salt);
+//			logger.debug("[before hashing] pwd : {}, salt : {}", pwd, salt);
 			
+			// pwd와 salt 합친 문자열에 SHA-256 알고리즘 적용
 			md.update((pwd+salt).getBytes());
-			byte[] pwdSalt = md.digest();
+			byte[] pwdSalt = md.digest(); // hash값 byte array로 리턴해줌
 			
 			// byte to string 256비트로 생성 => 32Byte => 1Byte(8bit) =>  16진수 2자리로 변환 => 16진수 한 자리는 4bit
 			StringBuffer sb = new StringBuffer();

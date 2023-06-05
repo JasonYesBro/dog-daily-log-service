@@ -130,15 +130,11 @@ public class UserRestController {
 			result.put("code", 1);
 			result.put("result", "로그인에 성공하였습니다.");
 			
-			// 프로필 이미지
-//			model.addAttribute("profileImagePath", user.getProfileImagePath());
-			
 			// 세션에 유저 정보 저장
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userEmail", user.getLoginEmail());
 			session.setAttribute("userName", user.getName());
 			session.setAttribute("puppyName", user.getPuppyName());
-			
 			
 		} else {
 			result.put("code", 500);

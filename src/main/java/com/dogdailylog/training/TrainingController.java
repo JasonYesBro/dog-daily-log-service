@@ -69,6 +69,7 @@ public class TrainingController {
 	@GetMapping("/log_create_view")
 	public String logCreateView(Model model, HttpSession session, @RequestParam(value="typeId", required=false) Integer typeId) {
 		
+		// typeId param이 들어오지 않을 경우
 		if (typeId == null) {
 			return "redirect:/training/my_page_view";
 		}
