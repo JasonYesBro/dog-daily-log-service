@@ -3,8 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="container" id="myPageWrapper">
-    <div id="myPageTitleContainer">
+    <div id="myPageTitleContainer" class="d-flex justify-content-between">
         <h3 id="myPageTitle">마이페이지</h3>
+       	<h4><a href="/hotel/history_view">예약 내역</a></h4>
     </div>
     <div id="infoContainer" class="d-flex align-items-center mt-5 justify-content-center">
         <div>
@@ -71,19 +72,19 @@
 	                <!-- 진행상황 기준에 따른 응원의 말 동적 변화 -->
 	                <c:choose>
 	                	<c:when test="${result eq 'NaN' || result < 25 }">
-			                <p class="cheerUpStatus">시작이 반이에요!</p>
+			                <p class="cheerUpStatus">시작이 반이에요! 👋</p>
 	                	</c:when>
 	                	
 	                	<c:when test="${ result >= 25 && result < 50 }">
-			                <p class="cheerUpStatus">조금만 더 화이팅해요!</p>
+			                <p class="cheerUpStatus">조금만 더 화이팅해요! 🔥</p>
 	                	</c:when>
 	                	
 	                	<c:when test="${ result >= 50 && result < 75 }">
-			                <p class="cheerUpStatus">아주 잘하고 있어요!</p>
+			                <p class="cheerUpStatus">아주 잘하고 있어요! 👍</p>
 	                	</c:when>
 	                	
 	                	<c:when test="${ result >= 75}">
-			                <p class="cheerUpStatus">대회에 나가도 되겠어요!</p>
+			                <p class="cheerUpStatus">대회에 나가도 되겠어요! 🎉</p>
 	                	</c:when>
 	                </c:choose>
 	            </div>
