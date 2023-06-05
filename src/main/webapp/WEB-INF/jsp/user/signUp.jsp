@@ -70,7 +70,7 @@
 	<!-- signIn page로 -->
 	
 	<div class="mt-2">
-	    <a href="" id="goSignIn">다른 계정으로 로그인하기</a>
+	    <a href="/kakao/oauth" id="goSignIn">카카오 계정으로 로그인하기</a>
 	</div>
 	<script>	    
         $(document).ready(function() {

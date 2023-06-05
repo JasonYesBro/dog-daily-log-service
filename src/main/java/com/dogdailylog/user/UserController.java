@@ -70,5 +70,11 @@ public class UserController {
 		return "redirect:/user/sign_in_view";
 	}
 	
-
+	@GetMapping("/kakao_sign_up_view")
+	public String kakaoSignUpView(Model model) {
+		
+		model.addAttribute("title", "회원가입 페이지입니다.");
+		model.addAttribute("view", "user/kakaoSignUp");
+		return "template/layout";
+	}
 }
