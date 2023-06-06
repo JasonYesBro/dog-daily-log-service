@@ -25,12 +25,6 @@
 			</div>
 		</div>
 		<div class="form-group input-box">
-		    <label for="password">비밀번호</label>
-		    <span class="text-danger" style="font-size:13px; display:block;">대문자, 소문자, 숫자, 특수문자를 포함한 8자이상이어야 합니다.</span>
-		    <input type="password" name="password" class="form-control col-10 mb-1" id="password" placeholder="비밀번호를 입력해주세요">
-		    <input type="password" name="passwordConfirm" class="form-control col-10" id="passwordConfirm" placeholder="비밀번호를 재입력 입력해주세요">
-		</div>
-		<div class="form-group input-box">
 		    <label for="datepicker">입양날짜</label>
 		    <input type="text" name="adoptionDate" class="adoptionDate form-control col-5" id="datepicker" placeholder="">
 		</div>
@@ -45,60 +39,40 @@
 	
 	<script>
 		$(document).ready(function() {
+			$.datepicker.setDefaults({
+                dateFormat: 'yy-mm-dd'
+            });
+    
+            $( "#datepicker" ).datepicker();
+			$('#targetImg').click(function (e) {
+                e.preventDefault();
+				$('#file').click();
+            });
+			
+			$('#file').on('change', function() {
+	            let file = $('#file').val();
+	          	$('#imgUrl').val(file);
+            });
 			// 회원가입
             $('#signUpForm').on('submit', function(e) {
             	e.preventDefault();
             	
-	            let name = $("#name").val().trim();
+	            let name = '${userName}';
 	            let puppyName = $("#puppyName").val().trim();
 				let email = '${userEmail}';
-				alert(email);
-	            let password = $("#password").val();
-	            let confirmPassword = $("#passwordConfirm").val();
+				/* let userId = '${userId}'; */
 	            let adoptionDate = $(".adoptionDate").val();
 	            let file = $("#imgUrl").val();
-	            let nameDupCheck = $("#nameDupCheck").val();
-	            
-	            let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&#]{8,}$/;
-	            let passwordValueCheck = passwordRegex.test(password);
 	            
 	            // validation
-	            if (!name) {
-	            	alert("닉네임을 입력해주세요.");
-					return false;
-	            }
-	            if (nameDupCheck == 0) {
-	            	alert("닉네임 중복확인을 해주세요.");
-	            	return false;
-	            }
 	            if (!puppyName) {
 	            	alert("반려견이름을 입력해주세요.");
 	            	return false;
 	            }
-
-	            if(verifyCheck == 0) {
-    				alert("인증코드를 인증해주세요.");
-    				return false;
-    			}
 	            if (!adoptionDate) {
 	            	alert("입양날짜를 입력해주세요.");
 	            	return false;
 	            }
-	            if (!password) {
-	            	alert("비밀번호를 입력해주세요.");
-	            	return false;
-	            }
-	            
-	            if (!passwordValueCheck) {
-	            	alert('비밀번호를 확인해주세요.');
-	            	return false;
-	            }
-	            
-	            if (!password || !confirmPassword) {
-	            	alert("비밀번호를 확인해주세요.");
-	            	return false;
-	            }
-	            
 	            
 	            let url = $(this).attr('action');
 	            let params = $(this).serialize();
@@ -107,10 +81,10 @@
 	            formData.append("name", name);
 	            formData.append("puppyName", puppyName);
 	            formData.append("email", email);
-	            formData.append("password", password);
 	            formData.append("adoptionDate", adoptionDate);
 				formData.append("file", $('#file')[0].files[0]);
-	            
+	            formData.append("signUpType", 1);
+				
 	            $.ajax({
 	            	type: "post",
 	            	url : url,

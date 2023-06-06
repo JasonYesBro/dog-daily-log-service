@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.dogdailylog.config.Encrypt;
 import com.dogdailylog.user.bo.UserBO;
+import com.dogdailylog.user.model.SignUpType;
 import com.dogdailylog.user.model.User;
 
 import io.swagger.annotations.Api;
@@ -48,21 +49,30 @@ public class UserRestController {
 			, @RequestParam("name") String name
 			, @RequestParam("puppyName") String puppyName
 			, @RequestParam("file") MultipartFile file
-			, @RequestParam("password") String password
+			, @RequestParam(value="password", required=false) String password
 			, @RequestParam("adoptionDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date adoptionDate
 			) {
 		Map<String, Object> result = new HashMap<>();
 
+
 		// TODO salt 값
 		String salt = Encrypt.getSalt();
-		
 		// 해싱 처리완료된 비밀번호
-		String hashedPassword = Encrypt.md5(password, salt);
-		
+		String hashedPassword = "";
 		int rowCnt = 0;
+		int signUpType = 0;
 		
-		// TODO salt 값 넣어야 함
-		rowCnt = userBO.addUser(email, name, puppyName, file, hashedPassword, salt, adoptionDate);
+		// 카카오 로그인인 경우
+		if(password == null) {
+			password = "kakao";
+			hashedPassword = Encrypt.md5(password, salt);
+			signUpType = SignUpType.KAKAO.ordinal();
+		} else {
+			hashedPassword = Encrypt.md5(password, salt);
+			signUpType = SignUpType.NORMAL.ordinal();
+		}
+		
+		rowCnt = userBO.addUser(email, name, puppyName, file, hashedPassword, salt, adoptionDate, signUpType);
 		
 		if(rowCnt > 0) {
 			result.put("code", 1);
