@@ -15,6 +15,6 @@ public interface PaymentRepository extends JpaRepository<PaymentInfo, Long> {
 	Optional<PaymentInfo> findByBookingId(Long bookingId);
 
 	@Query(value="select * from payment_info where bookingId = :bookingId", nativeQuery=true)
-	Optional<PaymentInfo> getLastPaymentInfoByBookingId(@Param("bookingId")Long bookingId);
+	Optional<PaymentInfo> findLastPaymentInfoByBookingId(@Param("bookingId")Long bookingId);
 
 }

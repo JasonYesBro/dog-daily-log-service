@@ -69,7 +69,7 @@ public class PetHotelController {
 		
 		int userId = (int) session.getAttribute("userId");
 		
-		List<BookingInfo> bookingList = bookingRepository.getByUserId(userId);
+		List<BookingInfo> bookingList = bookingRepository.findAllByUserId(userId);
 		
 		model.addAttribute("bookingList", bookingList);
 		model.addAttribute("view", "pethotel/bookingHistory");

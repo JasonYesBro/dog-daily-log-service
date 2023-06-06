@@ -14,7 +14,8 @@ public interface BookingRepository extends JpaRepository<BookingInfo, Long>  {
 //    BookingInfo findByUserIdAndId(@Param("userId") int userId, @Param("id") Long id);
 	
 	// JPQL 네이티브 쿼리를 쓰지 않아도 메서드명 통해 원하는 데이터를 조회해 올 수 있음(칼럼명과 동일해야함)
-	Optional<BookingInfo> findByUserIdAndId(int userId, Long id);
+	Optional<BookingInfo> findByUserIdAndId(Integer userId, Long id);
 
-	List<BookingInfo> getByUserId(int userId);
+	// findAll로 변경
+	List<BookingInfo> findAllByUserId(Integer userId);
 }

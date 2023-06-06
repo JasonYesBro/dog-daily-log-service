@@ -23,7 +23,7 @@ public class PaymentServiceBO {
 	private PaymentBO paymentBO;
 	
 	@Transactional
-	public PaymentInfo addBookAndPayTransaction(int userId, int schoolId, Date pickUpDate, String pickUpTime, int price, String payment) {
+	public PaymentInfo addBookAndPayTransaction(Integer userId, int schoolId, Date pickUpDate, String pickUpTime, int price, String payment) {
 		
 		Long bookingId = 0L;
 		try {

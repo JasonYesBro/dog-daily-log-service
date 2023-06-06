@@ -26,7 +26,7 @@ public class BookingBO {
 	
 	private BookingInfo booking = null;
 	
-	public Long addBooking(int userId, int schoolId, Date pickUpDate, String pickUpTime, int price) throws ParseException {
+	public Long addBooking(Integer userId, int schoolId, Date pickUpDate, String pickUpTime, int price) throws ParseException {
 //		SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
 //	    Date parsedDate = dateFormat.parse(pickUpTime);
 		
@@ -68,7 +68,7 @@ public class BookingBO {
 		return booking.getId();
 	}
 	
-	public Optional<BookingInfo> getBookingByUserId(int userId) {
+	public Optional<BookingInfo> getBookingByUserId(Integer userId) {
 		logger.info("@@@@@@@@@@@@@@ id @@@@@@@@@@@@@@ : {}", booking.getId());
 //		return bookingMapper.selectBookingByUserIdAndId(userId, booking.getId());
 

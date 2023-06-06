@@ -32,7 +32,7 @@ public class BookingInfo {
 	private Long id;
 	
 	@Column(name="userId") // 카멜케이스는 직접 name값을 정의해주지않으면 snakecase로 찾으려 함
-	private int userId;
+	private Integer userId;
 	
 	@Column(name="schoolId")
 	private int schoolId;

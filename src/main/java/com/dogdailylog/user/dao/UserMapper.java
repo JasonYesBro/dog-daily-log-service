@@ -17,13 +17,14 @@ public interface UserMapper {
 			, @Param("profileImagePath") String profileImagePath
 			, @Param("password")  String password
 			, @Param("salt") String salt
-			, @Param("adoptionDate")  Date adoptionDate);
+			, @Param("adoptionDate")  Date adoptionDate
+			, @Param("signUpType") int signUpType);
 
 	public User selectUserByName(String name);
 	
 	public User selectUserByLoginEmail(String email);
 	
-	public User selectUserById(int id);
+	public User selectUserById(Integer id);
 
 	public User selectUserByLoginEmailAndPassword(
 			@Param("email") String email

@@ -60,7 +60,7 @@ public class PaymentRestController {
 			, @RequestParam("price") int price
 			, HttpSession session) {
 		
-		int userId = (int) session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");
 		Map<String, Object> result = new HashMap<>();
 
 		// PaymentInfo mapper

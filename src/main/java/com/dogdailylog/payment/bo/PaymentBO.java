@@ -38,7 +38,7 @@ public class PaymentBO {
 	int price = 100;
 	
 	@Transactional
-	public PaymentInfo addPayment(int userId, String payment, Long bookingId) {
+	public PaymentInfo addPayment(Integer userId, String payment, Long bookingId) {
 		
 //		BookingInfo bookinInfo = bookingBO.getBookingByUserId(userId);
 		bookingInfoOptional = bookingRepository.findByUserIdAndId(userId, bookingId);
@@ -92,7 +92,7 @@ public class PaymentBO {
 	}
 	
 	
-	public PaymentView generatedPaymentView(int userId) {
+	public PaymentView generatedPaymentView(Integer userId) {
 		PaymentView paymentView = new PaymentView();
 		
 		User user = userBO.getUserById(userId);
@@ -108,7 +108,7 @@ public class PaymentBO {
 		// Optional 타입을 사용하여 booking이 있으면 payment를 가져온다.
 		// lambda안에서 로컬변수의 값을 바꾸지 못하므로 클래스변수를 선언함.
 		bookingInfoOptional.ifPresent(
-				b -> paymentInfoOptional = paymentRepository.getLastPaymentInfoByBookingId(b.getId())
+				b -> paymentInfoOptional = paymentRepository.findLastPaymentInfoByBookingId(b.getId())
 				);
 		
 		paymentView.setBookingInfoOptional(bookingInfoOptional);

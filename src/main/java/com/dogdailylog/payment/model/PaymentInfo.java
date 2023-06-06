@@ -34,7 +34,7 @@ public class PaymentInfo {
 	private Long bookingId;
 	
 	@Column(name="userId")
-	private int userId;
+	private Integer userId;
 	
 	private int price;
 	

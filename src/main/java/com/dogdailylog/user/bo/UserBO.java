@@ -19,13 +19,13 @@ public class UserBO {
 	@Autowired
 	private FileManagerService fileManager;
 	
-	public int addUser(String email, String name, String puppyName, MultipartFile file, String password, String salt, Date adoptionDate) {
+	public int addUser(String email, String name, String puppyName, MultipartFile file, String password, String salt, Date adoptionDate, int signUpType) {
 		String profileImagePath = null;
 		if (file != null) {
 			// 서버에 이미지 업로드 후 profileImagePath 받아옴
 			profileImagePath = fileManager.saveFile(email, file);
 		}
-		int result = userMapper.insertUser(email, name, puppyName, profileImagePath, password, salt, adoptionDate);
+		int result = userMapper.insertUser(email, name, puppyName, profileImagePath, password, salt, adoptionDate, signUpType);
 		return result;
 	}
 
@@ -47,7 +47,7 @@ public class UserBO {
 		return user;
 	}
 	
-	public User getUserById(int id) {
+	public User getUserById(Integer id) {
 		User user = null;
 		user = userMapper.selectUserById(id);
 		return user;
