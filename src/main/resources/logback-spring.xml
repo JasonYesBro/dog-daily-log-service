@@ -32,7 +32,7 @@
             <fileNamePattern>/Users/jasonmilian/Desktop/megaProject/6_spring_project/dogdailylog/workspace/log.%d{yyyy-MM-dd}-${MYPID}.log</fileNamePattern>
             <!-- keep 30 days' worth of history -->
             <maxHistory>3</maxHistory>
-            <totalSizeCap>15mb</totalSizeCap>
+            <totalSizeCap>50mb</totalSizeCap>
         </rollingPolicy>
 
         <encoder>
@@ -46,5 +46,6 @@
     <!-- Root Logger -->
     <root level="info">
         <appender-ref ref="console" />
+        <appender-ref ref="FILE" />
     </root>
 </configuration>
