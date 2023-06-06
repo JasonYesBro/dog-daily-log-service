@@ -15,6 +15,7 @@
 		, `password`
 		, `salt`
 		, `adoptionDate`
+		, `signUpType`
 		, `createdAt`
 		, `updatedAt`	
 		)
@@ -27,6 +28,7 @@
 		, #{password}
 		, #{salt}
 		, #{adoptionDate}
+		, #{signUpType}
 		, NOW()
 		, NOW() 
 		)
