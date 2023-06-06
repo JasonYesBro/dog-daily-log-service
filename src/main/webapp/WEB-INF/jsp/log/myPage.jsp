@@ -8,8 +8,8 @@
        	<h4><a href="/hotel/history_view">예약 내역</a></h4>
     </div>
     <div id="infoContainer" class="d-flex align-items-center mt-5 justify-content-center">
-        <div>
-            <img src="${userInfo.profileImagePath}" alt="반려견 사진" width="150">
+        <div style="">
+            <img src="${userInfo.profileImagePath}" alt="반려견 사진" style="width: 200px; height: 250px; object-fit: cover; border-radius: 15px;">
         </div>
         <div class="d-flex align-items-center ml-5">
             <span style="font-size:25px; font-weight:bold;">${userInfo.puppyName}</span>
