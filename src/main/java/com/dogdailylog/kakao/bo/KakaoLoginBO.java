@@ -7,9 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.dogdailylog.kakao.KakaoAPI;
-import com.dogdailylog.payment.IamportAPI;
 import com.google.common.net.HttpHeaders;
-import com.siot.IamportRestClient.IamportClient;
 
 @Service
 public class KakaoLoginBO {
