@@ -17,7 +17,7 @@ public class TestTask {
 	@Autowired
 	TrainingBO trainingBO;
 	
-	@Scheduled(cron="40 38 18 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
+	@Scheduled(cron="10 59 00 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
 	public void testTask() {
 		// job 내용이 들어감
 		// 훈련 종료 날짜를 기준으로 1주일 지났다 -> 삭제 1주일 마다 실행?
