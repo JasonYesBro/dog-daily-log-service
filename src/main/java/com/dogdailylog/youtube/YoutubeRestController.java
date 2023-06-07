@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/youtube")
+@Api(value = "/youtube")
 public class YoutubeRestController {
 	
 	@Autowired
-	private Youtube youtube;
+	private YoutubeAPI youtubeAPI;
 
 	/**
 	 * 반려견 훈련영상 API
@@ -29,21 +33,20 @@ public class YoutubeRestController {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
+	@ApiOperation(value = "유튜브검색 API")
 	@GetMapping("/search")
 	public Map<String, Object> search(Model model, @RequestParam(value="keyword", required=false) String keyword) throws IOException, ParseException {
 		Map<String, Object> result = new HashMap<>();
 		
-		// 검색어 값
+		// 검색어 값 (기본 검색어)
 		String search = "반려견 훈련";
 		
+		// 키워드 선택 시
 		if(keyword != null) {
 			search = keyword;
 		}
 		
-		String searchResult = youtube.search(search);
-		
-		JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(searchResult);
+        JSONObject jsonObject = youtubeAPI.search(search);
 		
 		result.put("searchResult", jsonObject);
 		

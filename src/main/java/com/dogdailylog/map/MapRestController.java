@@ -10,14 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/map")
+@Api(value="/map")
 public class MapRestController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private DistanceMatrixAPI distanceMatrixAPI;
 	
+	@ApiOperation(value="거리계산 API")	
 	@RequestMapping("/distance")
 	public JSONObject hotelDistance(
 			Model model

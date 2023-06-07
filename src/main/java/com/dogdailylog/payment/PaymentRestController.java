@@ -28,8 +28,12 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/payment")
+@Api(value = "/payment")
 public class PaymentRestController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -42,7 +46,6 @@ public class PaymentRestController {
 	// Iamport
 	private IamportClient iamportClient;
 	private IamportAPI iamportApi;
-	//IamportClient client = new IamportClient("{가입한 아임포트 계정의 API key}", "{가입한 아임포트 계정의 API secret}");
 	
 	public PaymentRestController(IamportAPI api) {
 		this.iamportApi = api;
@@ -52,6 +55,16 @@ public class PaymentRestController {
 		logger.info("########## import API 호출 ########## {}, {}",api.getApi(), api.getApiSecret());
 	}
 	
+	/**
+	 * 결제정보생성
+	 * @param schoolId
+	 * @param pickUpDate
+	 * @param pickUpTime
+	 * @param price
+	 * @param session
+	 * @return
+	 */
+	@ApiOperation(value = "결제 API")
 	@PostMapping("/create")
 	public Map<String, Object> createPayment(
 			@RequestParam("schoolId") int schoolId
@@ -62,10 +75,6 @@ public class PaymentRestController {
 		
 		Integer userId = (Integer) session.getAttribute("userId");
 		Map<String, Object> result = new HashMap<>();
-
-		// PaymentInfo mapper
-//		int rowCnt = paymentServiceBO.addBookAndPayTransaction(userId, schoolId, pickUpDate, pickUpTime, price, "카드");
-//		int rowCnt = paymentBO.addPayment(userId, "카드");
 
 		// 분기문을 위해 return Payment로 받음
 		PaymentInfo paymentInfo = paymentServiceBO.addBookAndPayTransaction(userId, schoolId, pickUpDate, pickUpTime, price, "카드");
@@ -83,6 +92,16 @@ public class PaymentRestController {
 		return result;
 	}
 
+	/**
+	 * iamport서버에 요청
+	 * @param model
+	 * @param locale
+	 * @param session
+	 * @param imp_uid
+	 * @throws IamportResponseException
+	 * @throws IOException
+	 */
+	@ApiOperation(value = "iamport요청 API")
 	@PostMapping("/verify/{imp_uid}")
 	public IamportResponse<Payment> paymentByImpUid(
 			Model model
@@ -93,6 +112,13 @@ public class PaymentRestController {
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
 	
+	/**
+	 * 결제완료 시 update
+	 * @param imp_uid
+	 * @param merchant_uid
+	 * @return
+	 */
+	@ApiOperation(value = "결제완료update API")
 	@PostMapping("/succeed")
 	public Map<Object, Object> updateStatus(
 			@RequestParam("imp_uid") String imp_uid
@@ -106,7 +132,6 @@ public class PaymentRestController {
 		Map<Object, Object> map = new HashMap<>();
 
 		//주문번호, 결제고유번호, 결제상태를 인자로 넘겨준다
-//		int rowCnt = paymentBO.updatePayment(paymentId, status);
 		PaymentInfo payment = null;
 		payment = paymentBO.updatePayment(paymentId, status);
 		
@@ -119,6 +144,11 @@ public class PaymentRestController {
 		return map;
 	}
 	
+	/**
+	 * 결제 취소시 삭제
+	 * @param bookingId
+	 * @return
+	 */
 	@DeleteMapping("/delete")
 	public Map<String, Object> deleteBookAndPayemnt(
 			@RequestParam("bookingId") Long bookingId) {
