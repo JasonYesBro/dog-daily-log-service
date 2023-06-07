@@ -13,25 +13,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dogdailylog.mail.bo.MailBO;
 import com.dogdailylog.mail.model.SmtpCode;
+import com.dogdailylog.user.bo.UserBO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api")
-@Api(value = "Mail API")
+@Api(value = "/api")
 public class MailRestController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private MailBO mailBO;
 	
-	@PostMapping("/mail")
+	@Autowired
+	private UserBO userBO;
+	
 	@ApiOperation(value = "인증코드 메일보내기 API")
+	@PostMapping("/mail")
 	public Map<String, Object> verifyCodeMail(
 			@RequestParam("email") String email) {
 		
 		Map<String, Object> result = new HashMap<>();
+		
+		if(userBO.getUserByLoginEmail(email) != null) {
+			result.put("code", 500);
+			result.put("result", false);
+			result.put("errorMessage", "이미 사용중인 이메일입니다.");
+			return result;
+		}
 		
 		// 인증코드 생성
 		String code = mailBO.createKey();
@@ -54,12 +65,12 @@ public class MailRestController {
 		return result;
 	}
 	
-	@PostMapping("/verify")
 	@ApiOperation(value = "인증하기 API")
+	@PostMapping("/verify")
 	public Map<String, Object> checkVerifyCode(
-			@RequestParam("verifyCode") String verifyCode) { // email 과 verifyCode 두가지로 조회할 필요?
+			@RequestParam("verifyCode") String verifyCode) {
 		Map<String, Object> result = new HashMap<>();
-		
+
 		SmtpCode smtpCode = null;
 		smtpCode = mailBO.getSmtpCodeByVerifyCode(verifyCode);
 		
