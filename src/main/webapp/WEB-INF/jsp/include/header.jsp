@@ -8,18 +8,17 @@
 		</div>
 		<div id="liContainer">
 			<a href="/training/my_page_view">
-				일지 작성하러가기
+				<img src="/static/img/footprint.png" alt="" width="30" class="mr-3" /><span>일지 작성하러가기</span>
 			</a>
 			<a href="/training/calendar_view">
-				훈련일지 보기
-			</a> 
-			<!-- <a href="">
-				유기견을 보살펴주세요!
-			</a>  -->
+				<img src="/static/img/footprint.png" alt="" width="30" class="mr-3" /><span>훈련일지 보기</span>
+			</a>
 			<a href="/youtube/search_view">
-				훈련 꿀팁 보러가기
+				<img src="/static/img/footprint.png" alt="" width="30" class="mr-3" /><span>훈련 꿀팁 보러가기</span>
 			</a> 
-			<a href="/hotel/list_view">댕댕이를 데리러왔단다.</a>
+			<a href="/hotel/list_view">
+				<img src="/static/img/footprint.png" alt="" width="30" class="mr-3" /><span>댕댕이를 데리러왔단다</span>
+			</a>
 		</div>
 	</div>
 	<div id="navBackground"></div>
@@ -35,7 +34,7 @@
 		<div>
 			<div class="d-flex justify-content-center align-items-center" style="background-color: #fff;">
 				<hr>
-				<div id="signStatus" class="d-flex justify-content-around ml-2">
+				<div id="signStatus" class="d-flex align-items-center justify-content-around ml-2">
 				<c:if test="${ empty userId }">
 					<!-- session 유무 -->
 					<span><a href="/user/sign_in_view">로그인</a></span>
@@ -43,8 +42,7 @@
 				</c:if>
 				<c:if test="${ not empty userId }">
 					<!-- 프로필 이미지 나 닉네임 클릭 시 mypage로 이동 -->
-					<span><a href="/training/my_page_view">${userName}</a></span>
-					<span><a href="">${puppyName}</a></span>
+					<a href="/training/my_page_view" class="" style="background-color: #EEEEEE; border-radius:23px;"><img src="${profileLogo}" width=45 alt="프로필로고이미지" style="border-radius:30px;" /></a>
 					<span><a href="/user/sign_out">로그아웃</a></span>	
 				</c:if>
 				</div>
