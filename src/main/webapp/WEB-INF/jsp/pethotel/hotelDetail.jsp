@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=apikey&callback=initMap&region=kr"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl_Pd_tt-bsWhqukpBncgQNw51UtnleUA&callback=initMap&region=kr"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <div class="container" style="padding-top:200px">
 	<!-- 애견 호텔 정보 -->
@@ -205,10 +205,6 @@
 		$('#goMoalBtn').on('click', function() {
    			let date = $("#datepicker").val();
    			
-   			// 거리행렬서비스를 통해 나온 가격을 input에 넣어줘야 함
-   			/* let price = $("#pickUpPrice").val(); */
-   			let price = 100; /* test용 */
-   			
    			// validation
    			if(!date) {
    				alert('날짜를 입력하세요.');
@@ -257,25 +253,6 @@
    			});
    			
    		});
-		
-   		/* function proceedPay(){
-				$.ajax({  
-				 url : '/payment/create',
-				 type : 'POST',
-				 async : true,
-				 success : function(data){
-					 if(data.code == 1){
-						 
-						 
-					 }else{
-						 alert(data.error);
-					 }
-				 }, 
-				 error : function() {
-					 alert("관리자에게 문의바랍니다.")
-				 }
-				});
-			} */
 			
 		function requestPay(data) {
 			//var IMP = window.IMP; // 생략 가능
@@ -290,10 +267,7 @@
 					name : data.paymentView.user.name,
 					amount : 100, //data.paymentInfo.price // 현재 결제테스트 최소금액으로 설정해놓음
 					buyer_email : data.paymentView.user.loginEmail,
-					buyer_name : data.paymentView.user.name,
-					//buyer_tel: "010-4242-4242",
-					//buyer_addr : data.paymentInfo.bookingId,
-				    //buyer_postcode: "01181"
+					buyer_name : data.paymentView.user.name
 				}, function(rsp) { // callback
 					if (rsp.success) {
 						// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
@@ -350,9 +324,6 @@
 						});
 						
 						return false;
-						/* var msg = '결제에 실패하였습니다.';
-						msg += '에러내용 : ' + rsp.error_msg;
-						alert(msg); */
 					}
 				});
 			}
@@ -361,8 +332,6 @@
 				$.ajax({
 					url : '/payment/succeed',
 					type : 'POST',
-					/* async : true,
-					dataType : "Json", */
 					data : {
 						imp_uid : imp_uid, // 결제 고유번호
 						merchant_uid : merchant_uid
@@ -372,11 +341,10 @@
 						if (data.cnt > 0) {
 							var msg = '결제가 완료되었습니다.'
 							alert(msg);
-
+							location.href="/hotel/history_view";
 						} else {
 							var msg = '결제가 완료되었으나 에러가 발생했습니다.'
 							alert(msg);
-
 						}
 					},
 					error : function(e) {
@@ -405,8 +373,6 @@
 			geocodeAddress(geocoder, map, address);
 			// 검색 주소 찾기 함수
 			function geocodeAddress(geocoder, resultMap, address) {
-
-				/* let address = document.getElementById('address').value; */
 
 				/**
 				 * 입력받은 주소로 좌표에 맵 마커를 찍는다.
