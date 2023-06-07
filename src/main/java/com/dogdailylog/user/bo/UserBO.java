@@ -38,6 +38,10 @@ public class UserBO {
 	// getUser 가 아닌 getSalt 가 맞음 + getUser를 하나더 생성 ByLoginEmail
 	public String getSaltByLoginEmail(String email) {
 		User user = userMapper.selectUserByLoginEmail(email);
+		
+		if(user == null) {
+			return "";
+		}
 		return user.getSalt();
 	}
 	
