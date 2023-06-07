@@ -20,10 +20,7 @@ import com.dogdailylog.user.model.User;
 public class PaymentBO {
 	@Autowired
 	private PaymentMapper paymentMapper;
-	
-//	@Autowired
-//	private BookingBO bookingBO;
-	
+
 	@Autowired
 	private UserBO userBO;
 	
@@ -39,16 +36,12 @@ public class PaymentBO {
 	
 	@Transactional
 	public PaymentInfo addPayment(Integer userId, String payment, Long bookingId) {
-		
-//		BookingInfo bookinInfo = bookingBO.getBookingByUserId(userId);
+
 		bookingInfoOptional = bookingRepository.findByUserIdAndId(userId, bookingId);
 		
 		// 단일상품 결제
 		bookingInfoOptional.ifPresent( b -> price = bookingInfoOptional.get().getPrice() );
-//		bookingId = bookinInfo.getId();
 		
-		
-		// TODO Optional로 바꿔야 함?
 		PaymentInfo paymentInfo = null;
 		
 		paymentInfo = paymentRepository.save(PaymentInfo.builder()
@@ -60,7 +53,6 @@ public class PaymentBO {
 					.build());
 		
 		return paymentInfo;
-//		return paymentMapper.insertPayment(bookingId, userId, price, payment);
 	}
 
 	public PaymentInfo getLastPaymentInfoByBookingId(Long id) {
@@ -76,9 +68,6 @@ public class PaymentBO {
                 .build();
 		
 		return paymentRepository.save(paymentInfo);
-		
-		// PaymentMapper. // Payment의 status를 업데이트 해줘야함 // status가 아닌 approval임
-//		return paymentMapper.updatePaymentById(id, status);
 	}
 	
 	public void deletePayment(Long bookingId) {
@@ -86,9 +75,6 @@ public class PaymentBO {
 		paymentInfoOptional.ifPresent(
 				p -> paymentRepository.delete(p)
 				);
-		
-//		return paymentRepository.deletePaymentByBookingId(bookingId);
-//		return paymentMapper.deletePaymentByBookingId(bookingId);
 	}
 	
 	
@@ -96,14 +82,6 @@ public class PaymentBO {
 		PaymentView paymentView = new PaymentView();
 		
 		User user = userBO.getUserById(userId);
-		// get booking by userId
-//		BookingInfo booking = bookingBO.getBookingByUserId(userId);
-//		PaymentInfo paymentInfo = getLastPaymentInfoByBookingId(booking.getId());
-		
-		// repository에 메서드 생성
-		
-//		bookingInfoOptional = bookingRepository.getByUserId(userId);
-//		Optional <PaymentInfo> paymentInfoOptional = null;
 		
 		// Optional 타입을 사용하여 booking이 있으면 payment를 가져온다.
 		// lambda안에서 로컬변수의 값을 바꾸지 못하므로 클래스변수를 선언함.

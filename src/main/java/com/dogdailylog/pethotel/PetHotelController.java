@@ -23,7 +23,7 @@ import com.dogdailylog.pethotel.model.PetHotel;
 @Controller
 @RequestMapping("/hotel")
 public class PetHotelController {
-	Logger logger = LoggerFactory.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private PetHotelBO petHotelBO;
@@ -31,7 +31,6 @@ public class PetHotelController {
 	@Autowired
 	private BookingRepository bookingRepository;
 	
-	// TODO bo로 로직 refactor	
 	@RequestMapping("/list_view")
 	public String petHotelView(Model model) throws ParseException {
 		List<PetHotel> hotelList = new ArrayList<>();
@@ -50,9 +49,7 @@ public class PetHotelController {
 			, @RequestParam("id") int id
 			, HttpSession session) {
 		
-//		int id = Integer.parseInt(num);
 		String name = (String) session.getAttribute("userName");
-		// TODO 예약자 정보까지 넘겨야함
 		PetHotel petHotel = petHotelBO.getPetHotelById(id);
 		
 		model.addAttribute("petHotel", petHotel);
@@ -68,7 +65,6 @@ public class PetHotelController {
 			, HttpSession session) {
 		
 		int userId = (int) session.getAttribute("userId");
-		
 		List<BookingInfo> bookingList = bookingRepository.findAllByUserId(userId);
 		
 		model.addAttribute("bookingList", bookingList);

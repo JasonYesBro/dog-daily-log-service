@@ -52,7 +52,7 @@ public class KakaoLoginBO {
         .block();
 //		logger.info("##### token : {} ###", response.get("access_token").toString());
 		
-		return response.get("access_token").toString(); // 오타있었다..
+		return response.get("access_token").toString();
 	}
 	
 	public JSONObject getKakaoUserInfo(String accessToken) {

@@ -35,7 +35,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 			return false; // 컨트롤러 수행안함
 		}
 		
-		// 로그인 이면서 user로 시작하는 주소로 접속한 경우 => 글 목록페이지로 redirect, return false를 하여 기존 controller 수행 방지
+		// 로그인 이면서 user로 시작하는 주소로 접속한 경우 => 메인페이지로 redirect, return false를 하여 기존 controller 수행 방지
 		if (userId != null && uri.startsWith("/user")) {
 			if (uri.equals("/user/sign_out")) {
 				return true; 

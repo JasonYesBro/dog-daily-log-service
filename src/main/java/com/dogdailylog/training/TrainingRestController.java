@@ -151,8 +151,7 @@ public class TrainingRestController {
 		List<TrainingLog> trainingLogList = new ArrayList<>();
 		
 		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, cnt);
-		
-		// TODO list 가 null 이라면 아무것도 안함
+
 		if(trainingLogList == null) {
 			result.put("code", 500);
 		} else {

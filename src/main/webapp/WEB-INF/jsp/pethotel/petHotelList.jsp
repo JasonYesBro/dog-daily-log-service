@@ -12,7 +12,6 @@
 	<div class="d-flex flex-wrap justify-content-start">
         <!-- hotel item 목록 -->
         <c:forEach items="${hotelList}" var="hotel">
-        	
         <div class="hotel-box p-2" style="width:33.3%; height:300px;">
             <a href="/hotel/detail_view?id=${hotel.id}">
 	            <div class="width:100%; height:80%;">

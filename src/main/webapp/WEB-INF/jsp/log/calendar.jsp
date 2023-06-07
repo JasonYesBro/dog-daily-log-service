@@ -19,7 +19,6 @@ padding-right: 1em;
     <!-- calendar 태그 -->
     <div id='calendar-container' style="padding-top:150px;" class="container">
         <div id='calendar'></div>
-       
     </div>
     <script>
        	
@@ -62,22 +61,6 @@ padding-right: 1em;
             eventRemove: function(obj){ // 이벤트가 삭제되면 발생하는 이벤트
                 //console.log(obj);
             },
-
-            // 캘린더에서도 바로 훈련일지를 작성할 수 있게?
-            /* select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
-                var title = prompt('Event Title:');
-
-                if (title) {
-                    calendar.addEvent({
-                        title: title,
-                        start: arg.start,
-                        end: arg.end,
-                        allDay: arg.allDay
-                    })
-                }
-
-                calendar.unselect()
-            }, */
             
             // 이벤트
             events: [
@@ -88,8 +71,7 @@ padding-right: 1em;
 	                {
 	                	id: '<%= log.getId() %>',
 		                title: '<%= log.getTitle() %>',
-		                start: "${createdDate}",
-		                /* end: "${finishedDate}" */
+		                start: "${createdDate}"
 	                },
                 	
                 <% }%>
@@ -98,6 +80,11 @@ padding-right: 1em;
             });
             // 캘린더 랜더링
             calendar.render();
+            
+            /* $(document).on('click', '.fc-daygrid-event', function() {
+            	console.log($(this).html());
+            }); */
+
             
         });
     </script>

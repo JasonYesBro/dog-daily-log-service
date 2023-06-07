@@ -26,13 +26,13 @@ public class PaymentServiceBO {
 	public PaymentInfo addBookAndPayTransaction(Integer userId, int schoolId, Date pickUpDate, String pickUpTime, int price, String payment) {
 		
 		Long bookingId = 0L;
+		
 		try {
 			bookingId = bookingBO.addBooking(userId, schoolId, pickUpDate, pickUpTime, price);
 		} catch (ParseException e) {
 			logger.debug("########## 예약insert - ParseException ##########");
 		}
-		
-//		return rowCnt;
+
 		return paymentBO.addPayment(userId, payment, bookingId); 
 	}
 	
@@ -41,7 +41,6 @@ public class PaymentServiceBO {
 		
 		bookingBO.deleteBooking(bookingId);
 		paymentBO.deletePayment(bookingId);
-		
 		
 		return 1;
 	}

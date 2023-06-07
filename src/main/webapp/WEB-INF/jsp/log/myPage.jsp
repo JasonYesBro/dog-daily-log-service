@@ -191,13 +191,6 @@
 	    			'width': filledBar+"%",
 	    			'background-color': '#fff' 
 	    	}
-	    	
-	    	/* if (filledBar > 0) {
-		    	$('.myBar').css(filledBarObj);
-	    		
-	    	} else {
-	    		$('.myBar').css(emptyBarObj);
-	    	} */
 	        
 	        // 타입 생성 img 클릭시
 	        $(".type-create-btn").on('click', function() {
@@ -247,13 +240,6 @@
 	        		}
 	        	});
 	        });
-	        
-	        /* $('.plus-training-img').on('click', function() {
-	        	
-	        	// typeId 넘겨주기
-	        	let typeId = $(this).data('type-id');
-	        
-	        }); */
 	        
 	        // type 클릭시 -> log List 화면
 	        $('.training-box').on('click', function() {

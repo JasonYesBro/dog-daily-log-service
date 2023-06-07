@@ -286,15 +286,15 @@ public class TrainingBO {
 		String strDate = sdf.format(today);
 		today = sdf.parse(strDate);
 		
-		// List<TrainingType> 돌면서 List<Date>에 담음
+		// List<TrainingType> 돌면서 날짜만 List<Date>에 담음
 		for(TrainingType type : typeList) {
 			finishedAtList.add(type.getFinishedAt());
 		}
 		
+		// 날짜를 반복하면서 오늘날짜보다 이후라면 삭제한 List에 담음
 		for (Date finishedAt : finishedAtList) {
 			if( today.after( finishedAt ) ) {
 				logger.info("@@@@@@@@@@@@@@@ 종료일이 지났습니다. @@@@@@@@@@@@@@@@@ 종료일 : {}, 오늘 :{}", finishedAt, today);
-				// logic - code 구현
 				overduedList.add(finishedAt);
 			}
 		}
