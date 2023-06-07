@@ -41,6 +41,7 @@ out/
 /src/main/java/com/dogdailylog/mail/bo
 
 ### api ###
+/src/main/resources/static/js/api.js
 /src/main/java/com/dogdailylog/youtube/YoutubeAPI.java
 /src/main/java/com/dogdailylog/pethotel/PetHotelAPI.java
 /src/main/java/com/dogdailylog/map/DistanceMatrixAPI.java
