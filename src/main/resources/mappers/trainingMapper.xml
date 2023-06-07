@@ -231,6 +231,8 @@
 			`status` = 0
 			, `updatedAt` = NOW()
 		WHERE
+			`status` = 1
+			AND
 			`finishedAt` IN
 		<foreach item="item" index="index" collection="list" open="(" close=")" separator=",">
         	#{item}
