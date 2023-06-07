@@ -156,6 +156,10 @@
 	            			if (data.result == true) {
 	            				alert("인증코드를 보냈습니다. 메일을 확인해 주세요.");
 	            			} else {
+	            				if(data.errorMessage != null) {
+	            					alert(data.errorMessage);
+	            					return false;
+	            				}
 	            				alert("메일발송에 실패했습니다.");
 	            			}
 	            		}

@@ -178,7 +178,6 @@
 	    	// progress bar
 	    	// width를 가지고 구현
 	    	let barItems = $('.my-bar');
-	    	console.log(barItems);
 	    	
 	    	let filledBar = ( $('.filled-bar').html() / $('.empty-bar').html() ) * 100;
 	    	

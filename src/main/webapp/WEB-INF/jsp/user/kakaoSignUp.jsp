@@ -2,17 +2,6 @@
     pageEncoding="UTF-8"%>
 <div id="signUpWrpper" class="container d-flex flex-column align-items-center font-weight-bold">
 	<form action="/user/sign_up" method="post" class="" id="signUpForm">
-<!-- 		<div class="form-group input-box">
-		    <label for="name">닉네임</label>
-		    <div class="d-flex justify-content-between">
-		        <input type="text" name="name" class="form-control col-8" id="name" placeholder="닉네임을 입력해주세요">
-		        <input type="hidden" id="nameDupCheck" value="0"/>
-		        <button class="btn sign-up-btn" id="nameCheckBtn">중복확인</button>
-		    </div>
-		    <small id="nameCheckLength" class="text-danger d-none">닉네임을 4자 이상 입력해주세요.</small>
-			<small id="nameCheckDuplicated" class="text-danger d-none">이미 사용중인 닉네임입니다.</small> 
-			<small id="nameCheckOk" class="text-primary d-none">사용가능한 닉네임입니다.</small>
-		</div> -->
 		<div class="form-group input-box">
 		    <label for="puppyName">강아지 이름</label>
 		    <div class="d-flex justify-content-between">

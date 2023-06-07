@@ -6,14 +6,6 @@
     <div id="logWrapper">
         <h3>일지 작성</h3>
         <div class="log-header d-flex justify-content-between">
-            <!-- <div>
-                <select name="" id="logType" class="custom-select form-control">
-                    <option value="0">배변훈련</option>
-                    <option value="1">사회화훈련</option>
-                    <option value="2">기본훈련</option>
-                    <option value="3">고급훈련</option>
-                </select>
-           </div> -->
            <input type="hidden" data-type-id="${trainingType.id}" id="logTypeValue"/>
            <fmt:formatDate var="startedAt" value="${trainingType.startedAt}" pattern="yyyy-MM-dd" />
            <fmt:formatDate var="finishedAt" value="${trainingType.finishedAt}" pattern="yyyy-MM-dd" />

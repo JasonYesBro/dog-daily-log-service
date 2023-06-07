@@ -4,22 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="container" id="pageWrapper">
     <div id="logWrapper">
-        <h3>일지</h3>
-        <div class="log-header d-flex justify-content-between">
-           <%-- <input type="hidden" data-type-id="${trainingType.id}" id="logTypeValue"/> --%>
-           <%-- <fmt:formatDate var="startedAt" value="${trainingType.startedAt}" pattern="yyyy-MM-dd" />
-           <fmt:formatDate var="finishedAt" value="${trainingType.finishedAt}" pattern="yyyy-MM-dd" />
-           <div>
-               <h5>훈련타입 : ${trainingType.trainingTitle}</h5>
-           </div>
-           <div class="d-flex">
-	           <span class="mr-3">훈련기간</span>
-	           <span>${startedAt}</span>
-	           <span>~</span>
-	           <span>${finishedAt}</span>
-           </div> --%>
-       </div>
-       <hr class="log-hr">
+
        <div class="d-flex mt-5 align-items-center justify-content-between">
            <div class="log-title-box">
                <p class="log-title">제목</p>
@@ -85,7 +70,7 @@
     		$("#logUpdateBtn").on('click', function() {
     			let logId = $(this).data('log-id');
 	            let title = $('#logTitle').val();
-	            let successCheck = $('input:radio[name=successCheck]').is(':checked');
+	            let successCheck = $('input:radio[name=successCheck]:checked').val();
 	            let problem = $('#logProblem').val();
 	            let content = $('#logContent').val();
 	            let file = $('#file').val();
