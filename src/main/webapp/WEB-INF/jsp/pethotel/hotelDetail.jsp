@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap&region=kr"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<script type="text/javascript" src="/static/js/api.js"></script>
+<script id="script" async defer></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <div class="container" style="padding-top:200px">
 	<!-- 애견 호텔 정보 -->
@@ -99,6 +102,9 @@
 	</div>
 	
 	<script>
+	// api key js에서 불러
+	const API_KEY = config.apikey;
+	document.getElementById("script").src = "https://maps.googleapis.com/maps/api/js?key="+API_KEY+"&callback=initMap&region=kr";
 	
 	// script 전역변수
 	let time = "";
