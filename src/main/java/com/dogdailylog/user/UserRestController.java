@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
@@ -28,6 +30,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "/user")
 public class UserRestController {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private UserBO userBO;
@@ -54,8 +57,7 @@ public class UserRestController {
 			) {
 		Map<String, Object> result = new HashMap<>();
 
-
-		// TODO salt 값
+		// salt 값
 		String salt = Encrypt.getSalt();
 		// 해싱 처리완료된 비밀번호
 		String hashedPassword = "";
@@ -145,6 +147,7 @@ public class UserRestController {
 			session.setAttribute("userEmail", user.getLoginEmail());
 			session.setAttribute("userName", user.getName());
 			session.setAttribute("puppyName", user.getPuppyName());
+			session.setAttribute("profileLogo", user.getProfileImagePath());
 			
 		} else {
 			result.put("code", 500);
