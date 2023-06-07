@@ -38,7 +38,7 @@ class UserBOTest {
 	
 	//@Test
 	void 닉네임중복확인() {
-		logger.info("############ 중복확인 #############");
+		logger.info("############ 중복확인테스트 #############");
 		
 		String name = "Jason J";
 		
@@ -50,7 +50,7 @@ class UserBOTest {
 	@Transactional // insert 후 다시 rollback
 	//@Test
 	void 회원가입() throws ParseException {
-		logger.info("############# 회원가입 ##############");
+		logger.info("############# 회원가입테스트 ##############");
 		
 		Date adoptionDate = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -67,9 +67,10 @@ class UserBOTest {
 		user.setSalt("123");
 		user.setProfileImagePath("user/images");
 		user.setAdoptionDate(adoptionDate);
+		user.setSignUpType(0);
 		
         // when
-        userMapper.insertUser("spsp@gmail.com", "hello", "willy", "user/images", "123123", "123", adoptionDate);
+        userMapper.insertUser("spsp@gmail.com", "hello", "willy", "user/images", "123123", "123", adoptionDate, 0);
 
         // then
         User findUser = userBO.getUserByLoginEmail(user.getLoginEmail());
@@ -79,7 +80,7 @@ class UserBOTest {
 	
 	//@Test
 	void 로그인() {
-		logger.info("############### 로그인 ###############");
+		logger.info("############### 로그인테스트 ###############");
 		// given
 		User user = new User();
 		user = userBO.getUserByLoginEmail("tmdgus5611@gmail.com");
@@ -115,8 +116,7 @@ class UserBOTest {
 			// 기댓값과 실제값이 다르면 성공
 			assertNotEquals(user.getPassword(), AfterResetPasswordUser.getPassword());
 		}
-		
-		
+				
 	}
 	
 }

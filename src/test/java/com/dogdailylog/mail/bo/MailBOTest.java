@@ -23,9 +23,13 @@ class MailBOTest {
 	void 인증코드생성() {
 		logger.info("@@@@@@@@@@@ 인증코드 생성 테스트 @@@@@@@@@@@@");
 		
+		// given
 		String key = "";
+		
+		// when
 		key = mailBO.createKey();
 		
+		// then
 		assertNotNull(key);
 	}
 	
@@ -33,6 +37,7 @@ class MailBOTest {
 	void 인증하기() {
 		logger.info("@@@@@@@@@@@ 인증코드 인증하기 테스트 @@@@@@@@@@@@");
 		
+		// given
 		String testEmail = "tmdgus5611@gmail.com";
 		
 		SmtpCode smtpCode = new SmtpCode();
@@ -48,6 +53,8 @@ class MailBOTest {
 		mailBO.setSmtpCodeByEmail(testEmail);
 		
 		SmtpCode testSmtpCode = new SmtpCode();
+		
+		// when
 		testSmtpCode = mailBO.getSmtpCodeByVerifyCode(smtpCode.getVerifyCode());
 		
 		if (ObjectUtils.isEmpty(smtpCode)) {
@@ -55,6 +62,7 @@ class MailBOTest {
 			return;
 		}
 		
+		// then
 		assertThat(smtpCode.getVerifyCode()).isEqualTo(testSmtpCode.getVerifyCode());
 		
 	}
