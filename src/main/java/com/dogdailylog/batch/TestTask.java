@@ -17,13 +17,10 @@ public class TestTask {
 	@Autowired
 	TrainingBO trainingBO;
 	
-	@Scheduled(cron="10 59 00 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
+	@Scheduled(cron="15 47 20 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
 	public void testTask() {
-		// job 내용이 들어감
-		// 훈련 종료 날짜를 기준으로 1주일 지났다 -> 삭제 1주일 마다 실행?
 		try {
 			int updateRowCnt = 0;
-			//deleteRowCnt = trainingBO.deleteOverduedTypeList();
 			updateRowCnt = trainingBO.updateOverduedTypeList();
 			if ( updateRowCnt > 0 ) {
 				logger.info("############## 기간이 지난 훈련은 종료처리되었습니다. ############## 처리된 행의 갯수 : {}", updateRowCnt);
