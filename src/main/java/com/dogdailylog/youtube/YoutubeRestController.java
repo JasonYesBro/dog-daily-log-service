@@ -46,9 +46,9 @@ public class YoutubeRestController {
 			search = keyword;
 		}
 		
-        JSONObject jsonObject = youtubeAPI.search(search);
-		
-		result.put("searchResult", jsonObject);
+//        JSONObject jsonObject = youtubeAPI.search(search);
+//		
+//		result.put("searchResult", jsonObject);
 		
 		return result;
 	}
