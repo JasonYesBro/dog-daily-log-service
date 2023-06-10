@@ -22,8 +22,8 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "/youtube")
 public class YoutubeRestController {
 	
-	@Autowired
-	private YoutubeAPI youtubeAPI;
+//	@Autowired
+//	private YoutubeAPI youtubeAPI;
 
 	/**
 	 * 반려견 훈련영상 API
