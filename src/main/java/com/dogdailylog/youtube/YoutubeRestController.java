@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -46,9 +45,9 @@ public class YoutubeRestController {
 			search = keyword;
 		}
 		
-//        JSONObject jsonObject = youtubeAPI.search(search);
-//		
-//		result.put("searchResult", jsonObject);
+        JSONObject jsonObject = youtubeAPI.search(search);
+		
+		result.put("searchResult", jsonObject);
 		
 		return result;
 	}
