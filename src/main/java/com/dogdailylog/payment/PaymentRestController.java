@@ -43,17 +43,8 @@ public class PaymentRestController {
 	@Autowired
 	private PaymentServiceBO paymentServiceBO;
 
-	// Iamport
-	private IamportClient iamportClient;
+	@Autowired
 	private IamportAPI iamportApi;
-	
-	public PaymentRestController(IamportAPI api) {
-		this.iamportApi = api;
-		String IAMPORT_API = api.getApi();
-		String IAMPORT_API_SECRET = api.getApiSecret();
-		this.iamportClient = new IamportClient(IAMPORT_API,IAMPORT_API_SECRET);
-		logger.info("########## import API 호출 ########## {}, {}",api.getApi(), api.getApiSecret());
-	}
 	
 	/**
 	 * 결제정보생성
@@ -108,6 +99,17 @@ public class PaymentRestController {
 			, Locale locale
 			, HttpSession session
 			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException{
+		
+		// Iamport
+		IamportClient iamportClient;
+		iamportClient = null;
+		String IAMPORT_API = null;
+		
+		IAMPORT_API = iamportApi.getApi();
+		String IAMPORT_API_SECRET = iamportApi.getApiSecret();
+		iamportClient = new IamportClient(IAMPORT_API,IAMPORT_API_SECRET);
+		
+		logger.info("########## import API 호출 ########## {}, {}",iamportApi.getApi(), iamportApi.getApiSecret());
 		
 		return iamportClient.paymentByImpUid(imp_uid);
 	}
