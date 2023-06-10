@@ -19,19 +19,19 @@ import io.swagger.annotations.ApiOperation;
 public class MapRestController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-//	@Autowired
-//	private DistanceMatrixAPI distanceMatrixAPI;
-//	
-//	@ApiOperation(value="거리계산 API")	
-//	@RequestMapping("/distance")
-//	public JSONObject hotelDistance(
-//			Model model
-//			, @RequestParam("originLat") String originLat
-//			, @RequestParam("originLng") String originLng
-//			, @RequestParam("destinationLat") String destinationLat
-//			, @RequestParam("destinationLng") String destinationLng) throws ParseException {
-//		
-//		JSONObject distanceObj = distanceMatrixAPI.map(originLat, originLng, destinationLat, destinationLng);
-//		return distanceObj;
-//	}
+	@Autowired
+	private DistanceMatrixAPI distanceMatrixAPI;
+	
+	@ApiOperation(value="거리계산 API")	
+	@RequestMapping("/distance")
+	public JSONObject hotelDistance(
+			Model model
+			, @RequestParam("originLat") String originLat
+			, @RequestParam("originLng") String originLng
+			, @RequestParam("destinationLat") String destinationLat
+			, @RequestParam("destinationLng") String destinationLng) throws ParseException {
+		
+		JSONObject distanceObj = distanceMatrixAPI.map(originLat, originLng, destinationLat, destinationLng);
+		return distanceObj;
+	}
 }
