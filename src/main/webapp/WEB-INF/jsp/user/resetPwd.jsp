@@ -33,7 +33,7 @@
 	    		
 	    		$.ajax({
 	    			type : "post",
-	    			url : "/api/mail",
+	    			url : "/api/resetmail",
 	    			data : {"email" : email},
 	    			
 	    			success : function(data) {

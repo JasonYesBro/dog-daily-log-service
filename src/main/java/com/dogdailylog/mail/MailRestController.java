@@ -65,6 +65,35 @@ public class MailRestController {
 		return result;
 	}
 	
+	// 임시코드
+	@ApiOperation(value = "비밀번호 재설정 중 인증코드 메일보내기 API")
+	@PostMapping("/resetmail")
+	public Map<String, Object> verifyCodeMailInReset(
+			@RequestParam("email") String email) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		// 인증코드 생성
+		String code = mailBO.createKey();
+		
+		if(!code.equals(null)) {
+			mailBO.send(email);
+			
+			// email - verifyCode DB insert
+			mailBO.setSmtpCodeByEmail(email);
+			
+			result.put("code", 1);
+			result.put("result", true);
+			
+		} else {
+			result.put("code", 500);
+			result.put("result", false);
+			result.put("errorMessage", "인증코드 메일을 보내는데 실패했습니다.");
+		}
+		
+		return result;
+	}
+	
 	@ApiOperation(value = "인증하기 API")
 	@PostMapping("/verify")
 	public Map<String, Object> checkVerifyCode(
