@@ -46,8 +46,10 @@ public class BookingInfo {
 	@Column(name="bookedAt")
 	private LocalDate bookedAt;
 	
+	@Column(name="price")
 	private int price;
 
+	@Column(name="status", columnDefinition = "TINYINT", length=1)
 	private int status;
 	
 	@UpdateTimestamp    // 현재시간 디폴트값
