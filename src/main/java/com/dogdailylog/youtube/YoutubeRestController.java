@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/youtube")
 @Api(value = "/youtube")
 public class YoutubeRestController {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private YoutubeAPI youtubeAPI;
@@ -34,20 +37,25 @@ public class YoutubeRestController {
 	 */
 	@ApiOperation(value = "유튜브검색 API")
 	@GetMapping("/search")
-	public Map<String, Object> search(Model model, @RequestParam(value="keyword", required=false) String keyword) throws IOException, ParseException {
+	public Map<String, Object> search(Model model, @RequestParam(value="keyword", required=false) String keyword) {
 		Map<String, Object> result = new HashMap<>();
 		
 		// 검색어 값 (기본 검색어)
 		String search = "반려견 훈련";
+		JSONObject jsonObject;
 		
 		// 키워드 선택 시
 		if(keyword != null) {
 			search = keyword;
 		}
-		
-        JSONObject jsonObject = youtubeAPI.search(search);
-		
-		result.put("searchResult", jsonObject);
+		        
+		try {
+			jsonObject = youtubeAPI.search(search);
+			result.put("searchResult", jsonObject);
+			
+		} catch (IOException | ParseException e) {
+			logger.debug("########### youtubeAPI-search parseException ############");
+		}
 		
 		return result;
 	}

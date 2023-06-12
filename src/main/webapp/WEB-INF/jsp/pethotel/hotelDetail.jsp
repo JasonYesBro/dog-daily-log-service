@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script type="text/javascript" src="/static/js/api.js"></script>
-<script id="script" async defer></script>
+<script id="script" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl_Pd_tt-bsWhqukpBncgQNw51UtnleUA&callback=initMap&region=kr"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <div class="container" style="padding-top:200px">
 	<!-- 애견 호텔 정보 -->
@@ -104,7 +104,12 @@
 	<script>
 	// api key js에서 불러
 	const API_KEY = config.apikey;
-	document.getElementById("script").src = "https://maps.googleapis.com/maps/api/js?key="+API_KEY+"&callback=initMap&region=kr";
+	//AIzaSyAl_Pd_tt-bsWhqukpBncgQNw51UtnleUA
+	// document.getElementById("script").src = "
+	//https://maps.googleapis.com/maps/api/js?key="+API_KEY+"&region=kr";
+	// callback=initMap&
+	
+	
 	
 	// script 전역변수
 	let time = "";
@@ -113,77 +118,18 @@
 	$(document).ready(function() {
 		
 		$('#delayInfo').removeClass('d-none');
-		
-		// document가 ready되고 나서 실행해야 새로고침후에도 다시 불러옴
-		// 내 현재위치 가져오기
-		$(window).on('load',function() {
-			window.navigator.geolocation.getCurrentPosition(success, error);//()를 붙여 자동호출하는것 x
-		});
-		
 		let myLat = 0;
 		let myLng = 0;
 		
-		function success(position) {
-			$('#delayInfo').addClass('d-none');
-			
-			myLat = position.coords.latitude;
-			myLng = position.coords.longitude;
-			
-			let here = {
-				lat : position.coords.latitude,
-				lng : position.coords.longitude
-			};
-
-			// 맵 생성
-			let map = new google.maps.Map(document.getElementById('myMap'),
-					{
-						zoom : 19,
-						center : here
-					});
-
-			// 마커 표시
-			new google.maps.Marker({
-				position : here,
-				map : map,
-				label : "현재위치"
-			});
-			
-			// 현재위치가 나오는데 시간이 걸리므로 후에 실행하도록
-			setTimeout(call(), 2000);
-			
-		}
-
-		function call() {
-			$('#mapInfoContainer').empty();
-			
-			$.ajax({
-				url : '/map/distance',
-				type : 'POST',
-				data : {
-					"originLat" : myLat,
-					"originLng" : myLng,
-					"destinationLat" : hotelLat,
-					"destinationLng" : hotelLng,
-				},
-				success : function(data) {
-					
-					let distance = data.rows[0].elements[0].distance.text;
-					$('#distance').val(distance);
-					$('#price').val((distance.split('km')[0] * 1000).toLocaleString('ko-KR'));
-					$('#loading').addClass('d-none');
-					$('#mapInfoContainer').append('<span>현재위치로부터 </span><span style="color:blue;">${petHotel.preSchoolName}</span><span> 까지의 거리는 </span><span style="color:red;">약 ' + distance + '</span><span>입니다.</span>');
-					
-					// modal에 표시
-					$('#bookHotelLocationModal').append('${petHotel.preSchoolName}');
-					$('#bookPriceModal').append($('#price').val());
-					
-				}
-			})
-		};
+		// document가 ready되고 나서 실행해야 새로고침후에도 다시 불러옴
+		// 내 현재위치 가져오기
+		/* $(window).on('load',function() { */
+		navigator.geolocation.getCurrentPosition(success, error);//()를 붙여 자동호출하는것 x
+			// initMap();
+		/* }); */
 		
-		function error(err) {
-			$('#locationResult').text("조회 실패 ==>" + err.code);
-		}
+		//
+		
 		
 		// input
 		$.datepicker.setDefaults({
@@ -360,7 +306,7 @@
 
 		});
 		
-	
+		//google.maps.event.addDomListener(window, "load", initMap);
 		function initMap() {
 			let address = document.getElementById('address').innerText;
 			// 서울 중심 좌표
@@ -422,6 +368,67 @@
 			
 		}
 		
+		function success(position) {
+			$('#delayInfo').addClass('d-none');
+			
+			myLat = position.coords.latitude;
+			myLng = position.coords.longitude;
+			
+			let here = {
+				lat : position.coords.latitude,
+				lng : position.coords.longitude
+			};
+
+			// 맵 생성
+			let map = new google.maps.Map(document.getElementById('myMap'),
+					{
+						zoom : 19,
+						center : here
+					});
+
+			// 마커 표시
+			new google.maps.Marker({
+				position : here,
+				map : map,
+				label : "현재위치"
+			});
+			
+			// 현재위치가 나오는데 시간이 걸리므로 후에 실행하도록
+			setTimeout(call(), 2000);
+			
+		}
+
+		function call() {
+			$('#mapInfoContainer').empty();
+			
+			$.ajax({
+				url : '/map/distance',
+				type : 'POST',
+				data : {
+					"originLat" : myLat,
+					"originLng" : myLng,
+					"destinationLat" : hotelLat,
+					"destinationLng" : hotelLng,
+				},
+				success : function(data) {
+					
+					let distance = data.rows[0].elements[0].distance.text;
+					$('#distance').val(distance);
+					$('#price').val((distance.split('km')[0] * 1000).toLocaleString('ko-KR'));
+					$('#loading').addClass('d-none');
+					$('#mapInfoContainer').append('<span>현재위치로부터 </span><span style="color:blue;">${petHotel.preSchoolName}</span><span> 까지의 거리는 </span><span style="color:red;">약 ' + distance + '</span><span>입니다.</span>');
+					
+					// modal에 표시
+					$('#bookHotelLocationModal').append('${petHotel.preSchoolName}');
+					$('#bookPriceModal').append($('#price').val());
+					
+				}
+			})
+		};
+		
+		function error(err) {
+			$('#locationResult').text("조회 실패 ==>" + err.code);
+		}
 		
 		
 	</script>

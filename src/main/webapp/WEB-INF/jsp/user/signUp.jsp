@@ -257,7 +257,7 @@
 	            	alert("비밀번호를 확인해주세요.");
 	            	return false;
 	            }
-	            
+	            console.log($('#file')[0].files[0]);
 	            
 	            let url = $(this).attr('action');
 	            let params = $(this).serialize();

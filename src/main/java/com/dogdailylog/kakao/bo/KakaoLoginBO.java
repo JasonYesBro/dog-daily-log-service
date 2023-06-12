@@ -15,7 +15,7 @@ public class KakaoLoginBO {
 	@Autowired
 	private KakaoAPI kakaoAPI;
 
-	String callbackUrl = "http://localhost:8080/kakao/callback";
+	String callbackUrl = "http://52.78.85.116:8080/kakao/callback";
 	String KAKAO_API_SECRET = "";
 	
 	public KakaoLoginBO(KakaoAPI api) {

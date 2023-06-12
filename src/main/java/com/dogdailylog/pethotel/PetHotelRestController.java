@@ -28,7 +28,6 @@ public class PetHotelRestController {
 	public Map<String, Object> petHotelList() throws ParseException {
 		
 		Map<String, Object> result = new HashMap<>();
-		List<Object> listHotel = new ArrayList<>();
 		PetHotelAPI api = new PetHotelAPI();
 		
 		try {

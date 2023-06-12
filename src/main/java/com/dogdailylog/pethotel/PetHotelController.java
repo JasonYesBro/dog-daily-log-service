@@ -32,8 +32,14 @@ public class PetHotelController {
 	private BookingRepository bookingRepository;
 	
 	@RequestMapping("/list_view")
-	public String petHotelView(Model model) throws ParseException {
+	public String petHotelView(Model model) {
 		List<PetHotel> hotelList = new ArrayList<>();
+		
+//		try {
+//			petHotelBO.addPetHotel();
+//		} catch (ParseException e) {
+//			logger.debug("########## hotel list parse Exception ############");
+//		}
 		
 		hotelList = petHotelBO.getPetHotelList();
 	

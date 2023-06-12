@@ -2,6 +2,8 @@ package com.dogdailylog.user.bo;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +15,8 @@ import com.dogdailylog.user.model.User;
 
 @Service
 public class UserBO {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private UserMapper userMapper;
 	
@@ -21,9 +25,11 @@ public class UserBO {
 	
 	public int addUser(String email, String name, String puppyName, MultipartFile file, String password, String salt, Date adoptionDate, int signUpType) {
 		String profileImagePath = null;
+		logger.info("@@@@ file @@@@:{}", file);
 		if (file != null) {
 			// 서버에 이미지 업로드 후 profileImagePath 받아옴
 			profileImagePath = fileManager.saveFile(email, file);
+			logger.info("@@@@ profileImagePath @@@@:{}", profileImagePath);
 		}
 		int result = userMapper.insertUser(email, name, puppyName, profileImagePath, password, salt, adoptionDate, signUpType);
 		return result;
