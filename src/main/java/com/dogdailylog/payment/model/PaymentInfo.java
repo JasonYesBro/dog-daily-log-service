@@ -41,8 +41,7 @@ public class PaymentInfo {
 	@Column(name="payment")
 	private String payment;
 	
-	@Column(name="approval")
-	@ColumnDefault("0")
+	@Column(name="approval", columnDefinition = "TINYINT", length=1)
 	private int approval;
 	
 	@UpdateTimestamp    // 현재시간 디폴트값
