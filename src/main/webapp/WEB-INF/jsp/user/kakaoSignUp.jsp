@@ -49,7 +49,6 @@
 	            let name = '${userName}';
 	            let puppyName = $("#puppyName").val().trim();
 				let email = '${userEmail}';
-				/* let userId = '${userId}'; */
 	            let adoptionDate = $(".adoptionDate").val();
 	            let file = $("#imgUrl").val();
 	            

@@ -35,11 +35,10 @@
 	<script>
 			// 하단 div
 			var footerDiv = document.getElementById('moreDiv');
-			// items 감싼 div
-			var logContainer = document.getElementById('logListContainer');
+
 			// 하단 div의 부모요소
 			var parent = footerDiv.parentElement;
-			
+
 			// item부르는 가중치
 			let cnt = 1;
 			
