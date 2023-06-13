@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dogdailylog.training.bo.TrainingBO;
 import com.dogdailylog.training.model.TrainingLog;
@@ -138,7 +139,7 @@ public class TrainingController {
 	}
 	
 	@GetMapping("/more_list_view")
-	public String moreLigListView(Model model, HttpSession session
+	public Object moreLigListView(Model model, HttpSession session
 			, @RequestParam(value="typeId", required=false) Integer typeId
 			, @RequestParam("cnt") int cnt) {
 		
@@ -147,9 +148,14 @@ public class TrainingController {
 		List<TrainingLog> trainingLogList = new ArrayList<>();
 		
 		trainingLogList = trainingBO.getTrainingLogListByUserIdAndTypeIdAndCnt(userId, typeId, cnt);
-		
-		model.addAttribute("trainingLogList", trainingLogList);
-		// 조각페이지 반환
-		return "log/moreList";
+		if(trainingLogList != null) {
+//			result.put("code", 500);
+			model.addAttribute("trainingLogList", trainingLogList);
+			// 조각페이지 반환
+			return "log/moreList";
+		} else {
+//			result.put("code", 1);
+			return "log/noneItem";
+		}
 	}
 }

@@ -43,76 +43,57 @@
 			// item부르는 가중치
 			let cnt = 1;
 			
-			// 스크롤 감지
-			logContainer.onscroll = function(e) {
-			    //추가
-			    
-			    // 하단의 박스의 높이에서 logListContainer의 높이를 뺌 -> 절대값
-			    var distance = footerDiv.getBoundingClientRect().top - parent.getBoundingClientRect().top;
-			    
-				// 옵션
-		    	let option = {
-					    threshold: 1.0,
-					};
-		    	
-		    	const io = new IntersectionObserver(entries => {
-		    	
-					  entries.forEach(entry => {
-					    // 관찰 대상이 viewport 안에 들어온 경우
-					    if (entry.isIntersecting) {
-					    	
-							let typeId = $('#logBoxListWrapper').data('type-id');
-							
-							// cnt 테스트 -> 12개까지는 되는데 18개까지 되는지 확인해야함
-							timer = setTimeout(() => $.ajax({
-								url:"/training/log/more?typeId="+typeId,
+			// 옵션
+			let option = { threshold: 1.0 };
+	    	
+	    	const io = new IntersectionObserver(entries => {
+				entries.forEach(entry => {
+				// 관찰 대상이 viewport 안에 들어온 경우
+					if (entry.isIntersecting) {
+						let typeId = $('#logBoxListWrapper').data('type-id');
+				
+						timer = setTimeout(() => 
+							$.ajax({
+								url:"/training/more_list_view?typeId="+typeId,
 								data: {"cnt" : cnt},
-								success : function(data) { // 해석된 html 전체가 내려온다. 조각페이지가 내려오겠지
-									
-									// 서버응답 성공 시
-									if(data.code == 1) {
-										$.ajax({
-											url:"/training/more_list_view?typeId="+typeId,
-											data: {"cnt" : cnt},
-											success : function(data) { 
-												cnt+=1;
-												$('#logBoxListWrapper').append(data); // 이전내용을 지우고 새로운 내용을 넣는다.
-												
-											}, 
-											error : function(request, error, status) {
-												alert("더보기를 실패했습니다. 관리자에게 문의바랍니다.");
-											}
-										});
-										
-									} else { // 서버에 요청했을때 더이상 부를 Item이 없을때
-										return;
+								success : function(data) { 
+									if(data != "") {
+										cnt+=1; // item부르는 가중치
+										$('#logBoxListWrapper').append(data); // 이전내용을 지우고 새로운 내용을 넣는다.
+									} else {
+										return false;
 									}
+								}, 
+								error : function(request, error, status) {
+									alert("더보기를 실패했습니다. 관리자에게 문의바랍니다.");
 								}
-							}), 750); // 불러지는 밀리세컨즈?설정
-							
-							io.unobserve(footerDiv);
-							
-							return;
-					    }
-					    // 화면에서 제외된경우
-					    else {
-					    	return;
-					    }
-					  })
-					}, option);
-			    
-					// 실제 실행 위치 하단부와 listContainer를 뺀 절댓값이 435고정
-					// console.log(distance); 자신의 영역의 값이 얼만지 알아야함
-					if(distance == 435) {
-					  	//실행할 로직 (콘텐츠 추가)
-						io.observe(footerDiv);
-					  	return;
-					} else {
+							})
+						, 750); // 불러지는 밀리세컨즈?설정
+						
+						// 관찰 중지
+						io.unobserve(footerDiv);
 						return;
 					}
+					// 화면에서 제외된경우
+					else {
+						return;
+					}
+				});
+			}, option);
+			
+			// 스크롤 감지
+			logContainer.onscroll = function(e) {
+			    // 하단의 박스의 높이에서 logListContainer의 높이를 뺌 -> 절대값
+			    var distance = footerDiv.getBoundingClientRect().top - parent.getBoundingClientRect().top;
+				// 실제 실행 위치 하단부와 listContainer를 뺀 절댓값이 435고정
+				// console.log(distance); 자신의 영역의 값이 얼만지 알아야함
+				if(distance == 435) {
+				  	//실행할 로직 (콘텐츠 추가)
+					io.observe(footerDiv);
+				  	return;
+				}
 			};
 
-	
 		$(document).ready(function() {
 			// 동적 추가된 log 클릭할 수 있게
 			$(document).on('click', '.type-log-box', function() {
