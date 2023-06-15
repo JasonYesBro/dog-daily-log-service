@@ -20,8 +20,11 @@ import com.dogdailylog.booking.model.BookingInfo;
 import com.dogdailylog.pethotel.bo.PetHotelBO;
 import com.dogdailylog.pethotel.model.PetHotel;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
 @RequestMapping("/hotel")
+@ApiIgnore
 public class PetHotelController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -34,7 +37,7 @@ public class PetHotelController {
 	@RequestMapping("/list_view")
 	public String petHotelView(Model model) throws ParseException {
 		List<PetHotel> hotelList = new ArrayList<>();
-		
+		petHotelBO.addPetHotel();
 		hotelList = petHotelBO.getPetHotelList();
 	
 		model.addAttribute("hotelList", hotelList);

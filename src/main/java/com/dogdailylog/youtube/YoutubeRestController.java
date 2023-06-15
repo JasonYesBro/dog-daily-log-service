@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/youtube")
-@Api(value = "/youtube")
+@Api(tags="유투브 API")
 public class YoutubeRestController {
 	
 	@Autowired
