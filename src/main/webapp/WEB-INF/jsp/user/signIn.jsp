@@ -16,7 +16,7 @@
 	
 	    <!-- signIn page로 -->
 	    <div class="mt-2">
-	        <a href="/kakao/oauth" id="goSignIn">카카오 계정으로 로그인하기</a>
+	        <a href="/kakao/oauth" id="goSignIn" class="d-flex justify-content-center"><img src="/static/img/kakaoImg.png" alt="카카오이미지"/></a>
 	    </div>
 	</form>
     
