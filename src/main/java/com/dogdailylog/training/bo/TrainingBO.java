@@ -230,6 +230,8 @@ public class TrainingBO {
 				// 기존 이미지 제거하기 때문에 파라미터 조심
 				fileManager.deleteFile(trainingLog.getImagePath());
 			}
+		} else {
+			imagePath = trainingLog.getImagePath();
 		}
 		trainingMapper.updateLogByLogId(logId, title, successCheck, problem, content, imagePath);
 	}

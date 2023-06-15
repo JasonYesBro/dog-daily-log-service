@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/training")
-@Api(value="/training")
+@Api(tags="훈련타입,일지 API")
 public class TrainingRestController {
 
 	@Autowired
@@ -97,7 +97,7 @@ public class TrainingRestController {
 		return result;
 	}
 	
-	@ApiOperation(value="일지 생성 API")	
+	@ApiOperation(value="일지 수정 API")	
 	@PutMapping("/log/update")
 	public Map<String, Object> logUpdate(
 			@RequestParam("logId") int logId
@@ -105,7 +105,7 @@ public class TrainingRestController {
 			, @RequestParam("successCheck") int successCheck
 			, @RequestParam(value="problem", required=false) String problem
 			, @RequestParam("content") String content
-			, @RequestParam("file") MultipartFile file
+			, @RequestParam(value="file", required=false) MultipartFile file
 			, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
 		
@@ -140,6 +140,7 @@ public class TrainingRestController {
 		return result;
 	}
 	
+	@ApiOperation(value="일지더보기 API")
 	@GetMapping("/log/more")
 	public Map<String, Object> moreLigListView(HttpSession session
 			, @RequestParam(value="typeId", required=false) Integer typeId

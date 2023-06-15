@@ -88,10 +88,6 @@
 	        		alert("내용을 입력해주세요.");
 	        		return false;
 	        	}
-	        	if (!file) {
-	        		alert("사진을 선택해주세요.");
-	        		return false;
-	        	}
 	        	
 	        	let formData = new FormData();
 	            formData.append("logId", logId);
