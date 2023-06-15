@@ -276,15 +276,12 @@
 				}, function(rsp) { // callback
 					if (rsp.success) {
 						// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-						// jQuery로 HTTP 요청
+						// ajax로 HTTP 요청
 						$.ajax({
 							url : "/payment/verify/" + rsp.imp_uid,
 							type : "POST",
 							success : function(data) {
 								// 위의 rsp.paid_amount 와 data.response.amount를 비교한후 로직 실행 (iamport 서버검증)
-								console.log(rsp.paid_amount);
-								console.log(data.response.amount);
-
 								if (rsp.paid_amount == data.response.amount) {
 									succeedPay(rsp.imp_uid, rsp.merchant_uid);
 								} else {
@@ -336,7 +333,7 @@
 			function succeedPay(imp_uid, merchant_uid) {
 				$.ajax({
 					url : '/payment/succeed',
-					type : 'POST',
+					type : 'PUT',
 					data : {
 						imp_uid : imp_uid, // 결제 고유번호
 						merchant_uid : merchant_uid

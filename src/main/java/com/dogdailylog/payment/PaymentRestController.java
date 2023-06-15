@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/payment")
-@Api(value = "/payment")
+@Api(tags="결제 API")
 public class PaymentRestController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -121,7 +122,7 @@ public class PaymentRestController {
 	 * @return
 	 */
 	@ApiOperation(value = "결제완료update API")
-	@PostMapping("/succeed")
+	@PutMapping("/succeed")
 	public Map<Object, Object> updateStatus(
 			@RequestParam("imp_uid") String imp_uid
 			, @RequestParam("merchant_uid") String merchant_uid){
@@ -133,7 +134,7 @@ public class PaymentRestController {
 		
 		Map<Object, Object> map = new HashMap<>();
 
-		//주문번호, 결제고유번호, 결제상태를 인자로 넘겨준다
+		// 결제고유번호, 결제상태를 인자로 넘겨준다
 		PaymentInfo payment = null;
 		payment = paymentBO.updatePayment(paymentId, status);
 		
@@ -151,6 +152,7 @@ public class PaymentRestController {
 	 * @param bookingId
 	 * @return
 	 */
+	@ApiOperation(value="결제취소 API")
 	@DeleteMapping("/delete")
 	public Map<String, Object> deleteBookAndPayemnt(
 			@RequestParam("bookingId") Long bookingId) {
