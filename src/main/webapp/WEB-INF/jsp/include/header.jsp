@@ -42,7 +42,7 @@
 				</c:if>
 				<c:if test="${ not empty userId }">
 					<!-- 프로필 이미지 나 닉네임 클릭 시 mypage로 이동 -->
-					<a href="/training/my_page_view" class="" style="background-color: #EEEEEE; border-radius:50%; object-fit:cover;"><img src="${profileLogo}" width=45 height=45 alt="프로필로고이미지" /></a>
+					<a href="/training/my_page_view" class=""><img src="${profileLogo}" width=45 height=45 alt="프로필로고이미지" style="background-color: #EEEEEE; border-radius:50%; object-fit:cover;" /></a>
 					<span><a href="/user/sign_out">로그아웃</a></span>	
 				</c:if>
 				</div>
