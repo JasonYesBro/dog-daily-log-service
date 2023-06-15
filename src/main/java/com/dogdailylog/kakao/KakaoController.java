@@ -19,8 +19,11 @@ import com.dogdailylog.kakao.bo.KakaoLoginBO;
 import com.dogdailylog.user.bo.UserBO;
 import com.dogdailylog.user.model.User;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
 @RequestMapping("/kakao")
+@ApiIgnore
 public class KakaoController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -65,6 +68,7 @@ public class KakaoController {
 			session.setAttribute("userId", user.getId());
 			session.setAttribute("userEmail", user.getLoginEmail());
 			session.setAttribute("userName", user.getName());
+			session.setAttribute("profileLogo", user.getProfileImagePath());
 			session.setAttribute("puppyName", user.getPuppyName());
 			
 			return "template/layout";

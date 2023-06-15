@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api")
-@Api(value = "/api")
+@Api(tags="메일 API")
 public class MailRestController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
