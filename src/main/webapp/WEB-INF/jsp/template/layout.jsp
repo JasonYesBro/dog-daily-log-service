@@ -21,6 +21,7 @@
 <!-- fullcalendar 언어 CDN -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
 <link rel="stylesheet" href="/static/css/style.css">
+<link rel="shortcut icon" href="/static/img/shortcutIcon.png">
 </head>
 <body>
 	<div id="wrap">
