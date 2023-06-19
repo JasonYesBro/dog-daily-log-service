@@ -17,7 +17,7 @@ public class TestTask {
 	@Autowired
 	TrainingBO trainingBO;
 	
-	@Scheduled(cron="15 47 20 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
+	@Scheduled(cron="59 59 23 * * *") //초 | 분 | 시간 | 날짜 | 월 | 요일 
 	public void testTask() {
 		try {
 			int updateRowCnt = 0;
