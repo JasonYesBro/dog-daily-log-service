@@ -9,6 +9,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import com.dogdailylog.pethotel.model.PetHotel;
 
 @Service
 public class PetHotelBO {
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private PetHotelMapper petHotelMapper;
@@ -38,6 +41,9 @@ public class PetHotelBO {
 	        JSONObject jsonObject = (JSONObject) parser.parse(list);
 	        JSONArray jsonArray = (JSONArray) parser.parse(jsonObject.get("data").toString());
 	        
+	        logger.info("### Object ### : {}", jsonObject);
+	        logger.info("### Array ### : {}", jsonArray);
+	        
 	        for(Object hotel : jsonArray) {
 	        	String hotelStr[] = hotel.toString().split(",");
 	        	
@@ -45,14 +51,14 @@ public class PetHotelBO {
 	        	String tel = hotelStr[2].split(":")[1].toString().replaceAll("\\\"","");
 	        	String address = hotelStr[4].split(":")[1].toString().replaceAll("\\\"","");
 	        	
-	        	Map<String, Object> map = new HashMap<>();
-	        	
-	        	map.put("name", name);
-	        	map.put("tel", tel);
-	        	map.put("address", address);
+//	        	Map<String, Object> map = new HashMap<>();
+//	        	
+//	        	map.put("name", name);
+//	        	map.put("tel", tel);
+//	        	map.put("address", address);
 	        	
 	        	//logger.info("%%%%%%%%%%%% hotel %%%%%%%%%%%%% {}", map);
-	        	rowCnt += petHotelMapper.insertPetHotel(name, tel, address);
+	        	//rowCnt += petHotelMapper.insertPetHotel(name, tel, address);
 	        	
 	        }
 
@@ -67,5 +73,6 @@ public class PetHotelBO {
 		return petHotelMapper.selectPetHotelList();
 		
 	}
+
 
 }

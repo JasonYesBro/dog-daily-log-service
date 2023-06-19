@@ -33,6 +33,8 @@ public class Encrypt{
 		for (byte b : salt) {
 			// %02x : 2자리 16진수(헥사)를 대문자로, 그리고 1자리 헥사는 앞에 0을 붙임
 			sb.append(String.format("%02x", b));
+			logger.debug("### before salt ### : {}",b);
+			logger.debug("### after salt ### : {}",String.format("%02x", b));
 		}
 		
 		return sb.toString();
